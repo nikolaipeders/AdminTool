@@ -29,6 +29,9 @@ public class DialogConsultants
 
     public void getDialog()
     {
+        // Max characters for a time input. We'll use this several times.
+        int maxCharacters = 4;
+
         final Stage dialog = new Stage();
         dialog.setResizable(false);
         dialog.initStyle(StageStyle.UNDECORATED);
@@ -48,7 +51,7 @@ public class DialogConsultants
         // TextFields
         TextFieldValidation nameTextField = new TextFieldValidation();
         nameTextField.setPromptText("Name");
-        nameTextField.setOnKeyReleased(event ->
+        nameTextField.setOnKeyTyped(event ->
         {
                 nameTextField.validate("text");
         });
@@ -73,6 +76,10 @@ public class DialogConsultants
         {
             workTimeTextField.validate("time");
         });
+        workTimeTextField.setOnKeyTyped(event ->
+        {
+            if(workTimeTextField.getText().length() > maxCharacters) event.consume();
+        });
 
         TextFieldValidation breakTimeTextField = new TextFieldValidation();
         breakTimeTextField.setPromptText("Break");
@@ -80,12 +87,20 @@ public class DialogConsultants
         {
             breakTimeTextField.validate("time");
         });
+        breakTimeTextField.setOnKeyTyped(event ->
+        {
+            if(breakTimeTextField.getText().length() > maxCharacters) event.consume();
+        });
 
         TextFieldValidation lBreakTimeTextField = new TextFieldValidation();
         lBreakTimeTextField.setPromptText("Long Break");
         lBreakTimeTextField.setOnKeyReleased(event ->
         {
             lBreakTimeTextField.validate("time");
+        });
+        lBreakTimeTextField.setOnKeyTyped(event ->
+        {
+            if(lBreakTimeTextField.getText().length() > maxCharacters) event.consume();
         });
 
         subRoot.getChildren().addAll(nameTextField, mailTextField, officeTextField, workTimeTextField, breakTimeTextField, lBreakTimeTextField);

@@ -17,7 +17,8 @@ import java.util.Objects;
 
 public class UIButton
 {
-    public static Button overViewButton, consultantsButton, officesButton, projectsButton, tasksButton, reportButton, addButton, editButton, deleteButton;
+    public static Button overViewButton, consultantsButton, officesButton, projectsButton, tasksButton,
+            reportButton, addButton, editButton, deleteButton, bindingsButton;
 
     // Multiple buttons will have to call this
     DialogConsultants dialogConsultants = new DialogConsultants(MainWindow.sender);
@@ -157,6 +158,29 @@ public class UIButton
         });
 
         return reportButton;
+    }
+
+    public Button bindingsButton()
+    {
+        Report report = new Report();
+
+        bindingsButton = new Button("Key Bindings");
+        bindingsButton.setMaxSize(150, 30);
+        bindingsButton.setMinSize(150, 30);
+
+        ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/resources/keyboard.png")).toExternalForm());
+
+        imageView.setPreserveRatio(true);
+        imageView.fitHeightProperty().bind(bindingsButton.heightProperty());
+
+        bindingsButton.setGraphic(imageView);
+
+        bindingsButton.setOnAction(event -> {
+            MainWindow.root.setCenter(report.getView());
+            MainWindow.sender = bindingsButton.getText();
+        });
+
+        return bindingsButton;
     }
 
     public Button addButton()

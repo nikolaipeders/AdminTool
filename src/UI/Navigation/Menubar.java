@@ -1,13 +1,13 @@
 package UI.Navigation;
 
+import Application.MainWindow;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class Menubar
 {
-    UIButton mb = new UIButton();
+    UIButton uiButton = new UIButton();
 
     public Menubar()
     {
@@ -21,8 +21,9 @@ public class Menubar
         menubarRoot.setAlignment(Pos.BASELINE_LEFT);
         menubarRoot.setStyle("-fx-background-color: #EEF5FD; -fx-border-radius: 7px;");
 
-        menubarRoot.getChildren().addAll(mb.overviewButton(), mb.consultantsButton(),
-                mb.officesButton(), mb.projectsButton(), mb.tasksButton(), mb.reportButton());
+        menubarRoot.getChildren().addAll(uiButton.overviewButton(), uiButton.consultantsButton(),
+                uiButton.officesButton(), uiButton.projectsButton(), uiButton.tasksButton(),
+                uiButton.reportButton(), uiButton.bindingsButton());
 
         return menubarRoot;
     }

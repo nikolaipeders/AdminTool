@@ -55,7 +55,7 @@ public class TextFieldValidation extends TextField
 
             if (regex.equalsIgnoreCase("time"))
             {
-                tooltipWrong.setText("Input must be of time format HH:MM");
+                tooltipWrong.setText("Input must be of time format MM:SS");
             }
             else if (regex.equalsIgnoreCase("text"))
             {
@@ -85,7 +85,7 @@ public class TextFieldValidation extends TextField
         }
         else
         {
-            setStyle("-fx-background-color" + getStyle());
+            setStyle("-fx-background-color: #FFFFFF");
         }
     }
 }
