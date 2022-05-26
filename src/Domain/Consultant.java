@@ -10,6 +10,8 @@ public class Consultant
     String longBreakTime;
     Boolean active;
 
+    public Consultant() {}
+
     public Consultant(String name, String mail, String office, String workTime, String breakTime, String longBreakTime, Boolean active)
     {
         this.name = name;

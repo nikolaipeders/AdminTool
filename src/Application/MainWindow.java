@@ -15,8 +15,9 @@ public class MainWindow extends Application {
     // Is public and static to enable changing the center from other classes
     public static BorderPane root = new BorderPane();
 
-    // We'll use this to keep track of latest button pressed!
+    // We'll use this to keep track of the latest button pressed!
     public static String sender;
+    public static String action;
     @Override
     public void start(Stage primaryStage) throws Exception
     {

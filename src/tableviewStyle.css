@@ -5,7 +5,7 @@
 
 .table-view .column-header .label{
     -fx-alignment:CENTER_LEFT;
-    -fx-padding: 2 0 2 10px;
+    -fx-padding: 2 0 2 0px;
 }
 
 .table-view .column-header-background .filler {
@@ -36,19 +36,16 @@
     -fx-background-color: transparent;
     -fx-border-color: lightgrey transparent lightgrey transparent;
     -fx-border-width: 0.5;
-
 }
 .table-row-cell:even{
     -fx-background-color: transparent;
     -fx-border-color: lightgrey transparent lightgrey transparent;
     -fx-border-width: 0.5;
-
 }
 .table-row-cell:selected {
     -fx-background-color: #f94c57;
     -fx-background-insets: 4 0 4 0;
     -fx-background-radius: 10;
-
 }
 
 .table-view .scroll-bar * {

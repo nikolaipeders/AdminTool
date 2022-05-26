@@ -1,10 +1,21 @@
 .text-field {
     -fx-background-color: #FFFFFF;
-    -fx-text-box-border: #f94c57;
+    -fx-border-color: black;
     -fx-background: #FFFFFF;
-    -fx-background-insets: 0, 0 0 1 0 ;
-    -fx-background-radius: 0 ;
+    -fx-border-radius: 7px;
+    -fx-background-radius: 7px;
 }
 .text-field:focused {
-    -fx-background-color: -fx-focus-color, -fx-background ;
+    -fx-background-color: #FFFFFF;
+    -fx-focus-color: #f94c57;
+}
+
+.button {
+    -fx-background-color: transparent;
+    -fx-alignment: center;
+}
+
+.button:focused {
+    -fx-border-color: #f94c57;
+    -fx-border-radius: 20px;
 }

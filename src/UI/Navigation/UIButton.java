@@ -1,7 +1,8 @@
 package UI.Navigation;
 
 import Application.MainWindow;
-import UI.Forms.AddDialog;
+import Domain.Consultant;
+import UI.Forms.DialogConsultants;
 import UI.Overview;
 import UI.Report;
 import UI.TableViews.TWConsultants;
@@ -10,12 +11,16 @@ import UI.TableViews.TWProjects;
 import UI.TableViews.TWTasks;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import jdk.jfr.internal.tool.Main;
 
 import java.util.Objects;
 
 public class UIButton
 {
     public static Button overViewButton, consultantsButton, officesButton, projectsButton, tasksButton, reportButton, addButton, editButton, deleteButton;
+
+    // Multiple buttons will have to call this
+    DialogConsultants dialogConsultants = new DialogConsultants(MainWindow.sender);
 
     public UIButton()
     {
@@ -156,10 +161,9 @@ public class UIButton
 
     public Button addButton()
     {
-        addButton = new Button();
-        addButton.setMinSize(50, 40);
-        addButton.setMaxSize(50, 40);
-        addButton.setStyle("-fx-alignment: center");
+        addButton = new Button("add");
+        addButton.setMinSize(30, 30);
+        addButton.setMaxSize(30, 30);
 
         ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/resources/add.png")).toExternalForm());
 
@@ -168,8 +172,22 @@ public class UIButton
 
         addButton.setGraphic(imageView);
 
-        AddDialog addForm = new AddDialog(MainWindow.sender);
-        addButton.setOnAction(event -> addForm.getDialog());
+        addButton.setOnAction(event -> {
+
+            MainWindow.action = addButton.getText();
+
+            switch (MainWindow.sender)
+            {
+                case "Consultants":
+                    TWConsultants.selected = new Consultant();
+                    dialogConsultants.getDialog();
+                case "Offices":
+                    // do something
+                case "Projects":
+                    // do something
+                case "Tasks":
+            }
+        });
 
         return addButton;
     }
@@ -177,10 +195,9 @@ public class UIButton
 
     public Button editButton()
     {
-        editButton = new Button();
-        editButton.setMinSize(50, 40);
-        editButton.setMaxSize(50, 40);
-        editButton.setStyle("-fx-alignment: center");
+        editButton = new Button("edit");
+        editButton.setMinSize(30, 30);
+        editButton.setMaxSize(30, 30);
 
         ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/resources/edit.png")).toExternalForm());
 
@@ -189,17 +206,32 @@ public class UIButton
 
         editButton.setGraphic(imageView);
 
-        // editButton.setOnAction(event -> editFunction(sender));
+        editButton.setOnAction(event -> {
 
+            MainWindow.action = editButton.getText();
+
+            switch (MainWindow.sender)
+            {
+                case "Consultants":
+                    if (TWConsultants.selected != null) // We can't edit something we haven't selected!
+                    {
+                        dialogConsultants.getDialog();
+                    }
+                case "Offices":
+                    // do something
+                case "Projects":
+                    // do something
+                case "Tasks":
+            }
+        });
         return editButton;
     }
 
     public Button deleteButton()
     {
-        deleteButton = new Button();
-        deleteButton.setMinSize(50, 40);
-        deleteButton.setMaxSize(50, 40);
-        deleteButton.setStyle("-fx-alignment: center");
+        deleteButton = new Button("delete");
+        deleteButton.setMinSize(30, 30);
+        deleteButton.setMaxSize(30, 30);
 
         ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/resources/delete.png")).toExternalForm());
 
@@ -208,9 +240,10 @@ public class UIButton
 
         deleteButton.setGraphic(imageView);
 
-        // deleteButton.setOnAction(event -> deleteFunction(sender));
+        deleteButton.setOnAction(event -> {
+            MainWindow.action = deleteButton().getText();
+        });
 
         return deleteButton;
     }
-
 }
