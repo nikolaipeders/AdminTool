@@ -1,19 +1,23 @@
 package Domain;
 
+import java.sql.Time;
+
 public class Consultant
 {
+    int orderNo;
     String name;
     String mail;
     String office;
-    String workTime;
-    String breakTime;
-    String longBreakTime;
+    Time workTime;
+    Time breakTime;
+    Time longBreakTime;
     Boolean active;
 
     public Consultant() {}
 
-    public Consultant(String name, String mail, String office, String workTime, String breakTime, String longBreakTime, Boolean active)
+    public Consultant(int orderNo, String name, String mail, String office, Time workTime, Time breakTime, Time longBreakTime, Boolean active)
     {
+        this.orderNo = orderNo;
         this.name = name;
         this.mail = mail;
         this.office = office;
@@ -21,6 +25,14 @@ public class Consultant
         this.breakTime = breakTime;
         this.longBreakTime = longBreakTime;
         this.active = active;
+    }
+
+    public int getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(int orderNo) {
+        this.orderNo = orderNo;
     }
 
     public String getName() {
@@ -47,27 +59,27 @@ public class Consultant
         this.office = office;
     }
 
-    public String getWorkTime() {
+    public Time getWorkTime() {
         return workTime;
     }
 
-    public void setWorkTime(String workTime) {
+    public void setWorkTime(Time workTime) {
         this.workTime = workTime;
     }
 
-    public String getBreakTime() {
+    public Time getBreakTime() {
         return breakTime;
     }
 
-    public void setBreakTime(String breakTime) {
+    public void setBreakTime(Time breakTime) {
         this.breakTime = breakTime;
     }
 
-    public String getLongBreakTime() {
+    public Time getLongBreakTime() {
         return longBreakTime;
     }
 
-    public void setLongBreakTime(String longBreakTime) {
+    public void setLongBreakTime(Time longBreakTime) {
         this.longBreakTime = longBreakTime;
     }
 

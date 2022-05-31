@@ -75,6 +75,17 @@
 
 }
 
+.text-field {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: transparent transparent black transparent;
+    -fx-background: #FFFFFF;
+}
+.text-field:focused {
+    -fx-background-color: #FFFFFF;
+    -fx-focus-color: #f94c57;
+}
+
+
 
 
 

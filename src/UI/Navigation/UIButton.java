@@ -2,8 +2,14 @@ package UI.Navigation;
 
 import Application.MainWindow;
 import Domain.Consultant;
+import Domain.Office;
+import Foundation.DAO.DBController;
 import UI.Forms.DialogConsultants;
-import UI.Overview;
+import UI.Forms.DialogOffices;
+import UI.Forms.DialogProjects;
+import UI.Forms.DialogTasks;
+import UI.Home;
+import UI.KeyBindings;
 import UI.Report;
 import UI.TableViews.TWConsultants;
 import UI.TableViews.TWOffices;
@@ -11,42 +17,47 @@ import UI.TableViews.TWProjects;
 import UI.TableViews.TWTasks;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
-import jdk.jfr.internal.tool.Main;
 
 import java.util.Objects;
 
 public class UIButton
 {
-    public static Button overViewButton, consultantsButton, officesButton, projectsButton, tasksButton,
-            reportButton, addButton, editButton, deleteButton, bindingsButton;
+    public static Button homeButton, consultantsButton, officesButton, projectsButton, tasksButton,
+            reportButton, addButton, editButton, deleteButton, bindingsButton, searchButton, moveUpButton, moveDownButton;
 
     // Multiple buttons will have to call this
     DialogConsultants dialogConsultants = new DialogConsultants(MainWindow.sender);
+    DialogOffices dialogOffices = new DialogOffices(MainWindow.sender);
+    DialogProjects dialogProjects = new DialogProjects();
+    DialogTasks dialogTasks = new DialogTasks();
+
+    // We'll use this several times
+    DBController controller = new DBController();
 
     public UIButton()
     {
     }
 
-    public Button overviewButton()
+    public Button homeButton()
     {
-        Overview overview = new Overview();
-        overViewButton = new Button("Overview");
-        overViewButton.setMaxSize(150, 30);
-        overViewButton.setMinSize(150, 30);
+        Home home = new Home();
+        homeButton = new Button("Home");
+        homeButton.setMaxSize(150, 30);
+        homeButton.setMinSize(150, 30);
 
         ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/resources/home.png")).toExternalForm());
 
         imageView.setPreserveRatio(true);
-        imageView.fitHeightProperty().bind(overViewButton.heightProperty());
+        imageView.fitHeightProperty().bind(homeButton.heightProperty());
 
-        overViewButton.setGraphic(imageView);
+        homeButton.setGraphic(imageView);
 
-        overViewButton.setOnAction(event -> {
-            MainWindow.root.setCenter(overview.getView());
-            MainWindow.sender = overViewButton.getText();
+        homeButton.setOnAction(event -> {
+            MainWindow.root.setCenter(home.getView());
+            MainWindow.sender = homeButton.getText();
         });
 
-        return overViewButton;
+        return homeButton;
     }
 
     public Button consultantsButton()
@@ -66,6 +77,7 @@ public class UIButton
         consultantsButton.setOnAction(event -> {
             MainWindow.root.setCenter(listViewConsultant.getView());
             MainWindow.sender = consultantsButton.getText();
+            TWConsultants.consultantTableView.requestFocus();
         });
 
         return consultantsButton;
@@ -155,6 +167,7 @@ public class UIButton
         reportButton.setOnAction(event -> {
             MainWindow.root.setCenter(report.getView());
             MainWindow.sender = reportButton.getText();
+            MainWindow.sender = reportButton.getText();
         });
 
         return reportButton;
@@ -162,7 +175,7 @@ public class UIButton
 
     public Button bindingsButton()
     {
-        Report report = new Report();
+        KeyBindings keyBindings = new KeyBindings();
 
         bindingsButton = new Button("Key Bindings");
         bindingsButton.setMaxSize(150, 30);
@@ -176,7 +189,7 @@ public class UIButton
         bindingsButton.setGraphic(imageView);
 
         bindingsButton.setOnAction(event -> {
-            MainWindow.root.setCenter(report.getView());
+            MainWindow.root.setCenter(keyBindings.getView());
             MainWindow.sender = bindingsButton.getText();
         });
 
@@ -205,14 +218,16 @@ public class UIButton
                 case "Consultants":
                     TWConsultants.selected = new Consultant();
                     dialogConsultants.getDialog();
+                    break;
                 case "Offices":
-                    // do something
+                    TWOffices.selected = new Office();
+                    dialogOffices.getDialog();
+                    break;
                 case "Projects":
                     // do something
                 case "Tasks":
             }
         });
-
         return addButton;
     }
 
@@ -241,8 +256,13 @@ public class UIButton
                     {
                         dialogConsultants.getDialog();
                     }
+                    break;
                 case "Offices":
-                    // do something
+                    if (TWOffices.selected != null) // We can't edit something we haven't selected!
+                    {
+                        dialogOffices.getDialog();
+                    }
+                    break;
                 case "Projects":
                     // do something
                 case "Tasks":
@@ -265,9 +285,103 @@ public class UIButton
         deleteButton.setGraphic(imageView);
 
         deleteButton.setOnAction(event -> {
-            MainWindow.action = deleteButton().getText();
+            switch (MainWindow.sender)
+            {
+                case "Consultants":
+                    if (TWConsultants.selected != null) // We can't edit something we haven't selected!
+                    {
+                        TWConsultants.consultants.remove(TWConsultants.selected);
+                        controller.deleteConsultant(TWConsultants.selected);
+                    }
+                    break;
+
+                case "Offices":
+                    // do something
+                case "Projects":
+                    // do something
+                case "Tasks":
+            }
         });
 
         return deleteButton;
+    }
+
+    public Button moveUpButton()
+    {
+        moveUpButton = new Button("moveUp");
+        moveUpButton.setMinSize(30, 30);
+        moveUpButton.setMaxSize(30, 30);
+
+        ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/resources/up.png")).toExternalForm());
+
+        imageView.setPreserveRatio(true);
+        imageView.fitHeightProperty().bind(moveUpButton.heightProperty());
+
+        moveUpButton.setGraphic(imageView);
+
+        moveUpButton.setOnAction(event -> {
+            MainWindow.action = moveUpButton().getText();
+
+            switch (MainWindow.sender)
+            {
+                case "Consultants":
+                    if (TWConsultants.selected != null) // We can't edit something we haven't selected!
+                    {
+                        controller.moveUpConsultant(TWConsultants.selected);
+                    }
+                    break;
+                case "Offices":
+                    if (TWOffices.selected != null)
+                    {
+                        controller.moveUpOffice(TWOffices.selected);
+                    }
+                    break;
+                case "Projects":
+                    // do something
+                case "Tasks":
+            }
+        });
+
+        return moveUpButton;
+    }
+
+    public Button moveDownButton()
+    {
+        moveDownButton = new Button("moveDown");
+        moveDownButton.setMinSize(30, 30);
+        moveDownButton.setMaxSize(30, 30);
+
+        ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/resources/down.png")).toExternalForm());
+
+        imageView.setPreserveRatio(true);
+        imageView.fitHeightProperty().bind(moveDownButton.heightProperty());
+
+        moveDownButton.setGraphic(imageView);
+
+        moveDownButton.setOnAction(event -> {
+            MainWindow.action = moveDownButton().getText();
+
+            switch (MainWindow.sender)
+            {
+                case "Consultants":
+                    if (TWConsultants.selected != null) // We can't edit something we haven't selected!
+                    {
+                        controller.moveDownConsultant(TWConsultants.selected);
+                    }
+                    break;
+
+                case "Offices":
+                    if (TWOffices.selected != null)
+                    {
+                        controller.moveDownOffice(TWOffices.selected);
+                    }
+                    break;
+                case "Projects":
+                    // do something
+                case "Tasks":
+            }
+        });
+
+        return moveDownButton;
     }
 }

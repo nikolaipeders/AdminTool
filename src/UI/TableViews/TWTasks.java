@@ -1,6 +1,5 @@
 package UI.TableViews;
 
-import Controller.Controller;
 import Domain.Task;
 import UI.Navigation.ActionBar;
 import UI.Navigation.UIButton;
@@ -57,8 +56,6 @@ public class TWTasks
 
         taskTableView.getColumns().addAll(column1, column2, column3, column4, column5, column6);
 
-        // Fill with data
-        Controller.getFromDB("Tasks");
 
         return taskTableView;
     }

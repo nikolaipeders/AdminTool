@@ -19,3 +19,24 @@
     -fx-border-color: #f94c57;
     -fx-border-radius: 20px;
 }
+
+.check-box .box {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: black;
+    -fx-border-radius: 7px;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: #f94c57;
+}
+
+.check-box:selected .box {
+
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 7px;
+}
+
+.label {
+    -fx-text-fill: black;
+}
+

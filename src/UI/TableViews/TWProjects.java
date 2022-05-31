@@ -1,6 +1,5 @@
 package UI.TableViews;
 
-import Controller.Controller;
 import Domain.Project;
 import UI.Navigation.ActionBar;
 import UI.Navigation.UIButton;
@@ -47,8 +46,6 @@ public class TWProjects
         // Testing
         projectTableView.getItems().add(new Project(1, "A project"));
 
-        // Fill with data
-        Controller.getFromDB("Projects");
 
         return projectTableView;
     }

@@ -1,23 +1,24 @@
 package UI.TableViews;
 
-import Application.MainWindow;
-import Controller.Controller;
 import Domain.Consultant;
-import UI.Forms.DialogConsultants;
+import Foundation.DAO.DBController;
 import UI.Navigation.ActionBar;
 import UI.Navigation.UIButton;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.BorderPane;
 
 public class TWConsultants
 {
 
     public static TableView<Consultant> consultantTableView;
+    public static ObservableList<Consultant> consultants;
     public static Consultant selected;
 
     public TWConsultants()
@@ -42,43 +43,56 @@ public class TWConsultants
         consultantTableView = new TableView<>();
         consultantTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        TableColumn<Consultant, String> column1 = new TableColumn<>("Name");
-        column1.setCellValueFactory(new PropertyValueFactory<>("name"));
+        TableColumn<Consultant, String> columnName = new TableColumn<>("Name");
+        columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
 
-        TableColumn<Consultant, String> column2 = new TableColumn<>("Mail");
-        column2.setCellValueFactory(new PropertyValueFactory<>("mail"));
+        TableColumn<Consultant, String> columnMail = new TableColumn<>("Mail");
+        columnMail.setCellValueFactory(new PropertyValueFactory<>("mail"));
 
-        TableColumn<Consultant, String> column3 = new TableColumn<>("Office");
-        column3.setCellValueFactory(new PropertyValueFactory<>("office"));
+        TableColumn<Consultant, String> columnOffice = new TableColumn<>("Office");
+        columnOffice.setCellValueFactory(new PropertyValueFactory<>("office"));
 
-        TableColumn<Consultant, String> column4 = new TableColumn<>("Work Time");
-        column4.setCellValueFactory(new PropertyValueFactory<>("workTime"));
+        TableColumn<Consultant, String> columnWorkTime = new TableColumn<>("Work Time");
+        columnWorkTime.setCellValueFactory(new PropertyValueFactory<>("workTime"));
 
-        TableColumn<Consultant, String> column5 = new TableColumn<>("Break Time");
-        column5.setCellValueFactory(new PropertyValueFactory<>("breakTime"));
+        TableColumn<Consultant, String> columnBreakTime = new TableColumn<>("Break Time");
+        columnBreakTime.setCellValueFactory(new PropertyValueFactory<>("breakTime"));
 
-        TableColumn<Consultant, String> column6 = new TableColumn<>("Long Break Time");
-        column6.setCellValueFactory(new PropertyValueFactory<>("longBreakTime"));
+        TableColumn<Consultant, String> columnLBreakTime = new TableColumn<>("Long Break Time");
+        columnLBreakTime.setCellValueFactory(new PropertyValueFactory<>("longBreakTime"));
 
-        TableColumn<Consultant, String> column7 = new TableColumn<>("Active");
-        column7.setCellValueFactory(new PropertyValueFactory<>("active"));
+        TableColumn<Consultant, Boolean> columnStatus = new TableColumn<>("Status");
+        columnStatus.setCellValueFactory(new PropertyValueFactory<>("active"));
+        // Show "active/inactive instead of true/false
+        columnStatus.setCellFactory(tc -> new TableCell<Consultant, Boolean>() {
+            @Override
+            protected void updateItem(Boolean item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty ? null :
+                        item ? "Active" : "Inactive");
+            }
+        });
 
-        consultantTableView.getColumns().addAll(column1, column2, column3, column4, column5, column6, column7);
+        consultantTableView.getColumns().addAll(columnName, columnMail, columnOffice, columnWorkTime, columnBreakTime, columnLBreakTime, columnStatus);
 
-        // Testing
-        for (int i = 0; i < 10; i++) {
-            consultantTableView.getItems().add(new Consultant("Astrid Paul", "astrid@mail.com", "Tiger Office",
-                    "20:00", "05:00", "15:00", true));
-            consultantTableView.getItems().add(new Consultant("Nikolai Pedersen", "nikolai@mail.com", "Polar Office",
-                    "20:00", "05:00", "15:00", true));
-        }
-
+        // Fill TableView
+        DBController controller = new DBController();
+        consultants = controller.getAllConsultants();
 
         // Enable selecting an item
-        consultantTableView.setOnMouseClicked(event -> {
+        consultantTableView.setOnMouseClicked(event ->
+        {
             if (consultantTableView.getSelectionModel().getSelectedItem() != null)
             {
+                System.out.println(consultantTableView.getSelectionModel().getSelectedIndex());
                 selected = consultantTableView.getSelectionModel().getSelectedItem();
+            }
+            if (event.getButton().equals(MouseButton.PRIMARY))
+            {
+                if (event.getClickCount() == 2)
+                {
+                    UIButton.editButton.fire();
+                }
             }
         });
 
@@ -96,11 +110,20 @@ public class TWConsultants
             {
                 UIButton.addButton.fire();
             }
+            if (e.getCode() == KeyCode.DELETE)
+            {
+                UIButton.deleteButton.fire();
+            }
+            if (e.isControlDown() && (e.getCode() == KeyCode.F)) {
+                ActionBar.searchField.requestFocus();
+            }
+            if (e.isControlDown() && (e.getCode() == KeyCode.UP)) {
+                UIButton.moveUpButton.fire();
+            }
+            if (e.isControlDown() && (e.getCode() == KeyCode.DOWN)) {
+                UIButton.moveDownButton.fire();
+            }
         });
-
-        // Fill with data
-        Controller.getFromDB("Consultants");
-
         return consultantTableView;
     }
 }

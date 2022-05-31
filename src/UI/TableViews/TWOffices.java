@@ -1,18 +1,23 @@
 package UI.TableViews;
 
-import Controller.Controller;
 import Domain.Office;
+import Foundation.DAO.DBController;
 import UI.Navigation.ActionBar;
 import UI.Navigation.UIButton;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.BorderPane;
 
 public class TWOffices
 {
-    TableView<Office> tableViewOffices;
+    public static TableView<Office> tableViewOffices;
+    public static ObservableList<Office> offices;
+    public static Office selected;
 
     public TWOffices()
     {
@@ -23,8 +28,6 @@ public class TWOffices
     {
         BorderPane subRoot = new BorderPane();
         subRoot.setPadding(new Insets(10, 20, 10, 20));
-
-        String sender = "";
 
         subRoot.setCenter(tableViewOffices());
 
@@ -53,19 +56,56 @@ public class TWOffices
 
         tableViewOffices.getColumns().addAll(column1, column2, column3, column4);
 
-        // Testing
-        for (int i = 0; i < 30; i++)
+        // Fill TableView
+        DBController controller = new DBController();
+        offices = controller.getAllOffices();
+
+        // Enable selecting an item
+        tableViewOffices.setOnMouseClicked(event ->
         {
-            tableViewOffices.getItems().add(new Office("The office", 30, 20, 10));
-            tableViewOffices.getItems().add(new Office("The other office", 30, 20, 10));
-        }
+            if (tableViewOffices.getSelectionModel().getSelectedItem() != null)
+            {
+                System.out.println(tableViewOffices.getSelectionModel().getSelectedIndex());
+                selected = tableViewOffices.getSelectionModel().getSelectedItem();
+            }
+            if (event.getButton().equals(MouseButton.PRIMARY))
+            {
+                if (event.getClickCount() == 2)
+                {
+                    UIButton.editButton.fire();
+                }
+            }
+        });
 
-
-        // Fill with data
-        Controller.getFromDB("Offices");
+        // Enable KEY bindings
+        tableViewOffices.setOnKeyPressed(e ->
+        {
+            // Enable opening an item with ENTER key
+            if (e.getCode() == KeyCode.ENTER)
+            {
+                selected = tableViewOffices.getSelectionModel().getSelectedItem();
+                UIButton.editButton.fire();
+            }
+            // Enable adding an item with PLUS key
+            if (e.getCode() == KeyCode.PLUS)
+            {
+                UIButton.addButton.fire();
+            }
+            if (e.getCode() == KeyCode.DELETE)
+            {
+                UIButton.deleteButton.fire();
+            }
+            if (e.isControlDown() && (e.getCode() == KeyCode.F)) {
+                ActionBar.searchField.requestFocus();
+            }
+            if (e.isControlDown() && (e.getCode() == KeyCode.UP)) {
+                UIButton.moveUpButton.fire();
+            }
+            if (e.isControlDown() && (e.getCode() == KeyCode.DOWN)) {
+                UIButton.moveDownButton.fire();
+            }
+        });
 
         return tableViewOffices;
     }
-
-
 }

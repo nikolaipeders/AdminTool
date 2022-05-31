@@ -1,7 +1,7 @@
 package Application;
 
 import UI.Navigation.Menubar;
-import UI.Overview;
+import UI.Home;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -21,7 +21,7 @@ public class MainWindow extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception
     {
-        int minWidth = 1200;
+        int minWidth = 1400;
         int minHeight = 700;
 
         primaryStage.setMinWidth(minWidth);
@@ -32,7 +32,7 @@ public class MainWindow extends Application {
         root.setLeft(menubar.GetMenubarRoot());
 
         // This will change in runtime but launches with the overview
-        Overview overview = new Overview();
+        Home overview = new Home();
         root.setCenter(overview.getView());
 
         // CSS

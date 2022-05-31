@@ -3,16 +3,22 @@ package Domain;
 public class Office
 {
     String name;
+    int order;
     int location;
     int capacity;
     int consultantsConnected;
 
-    public Office(String name, int location, int capacity, int consultantsConnected)
+    public Office(String name, int order, int location, int capacity, int consultantsConnected)
     {
         this.name = name;
+        this.order = order;
         this.location = location;
         this.capacity = capacity;
         this.consultantsConnected = consultantsConnected;
+    }
+
+    public Office()
+    {
     }
 
     public String getName() {
@@ -21,6 +27,14 @@ public class Office
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
     }
 
     public int getLocation() {
