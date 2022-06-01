@@ -43,7 +43,7 @@ public class TextFieldAutoCompletion extends TextFieldValidation
                 {
                     if (!resultMenu.isShowing())
                     {
-                        resultMenu.show(this, Side.BOTTOM, 0, 0);
+                        resultMenu.show(this, Side.BOTTOM, 0, 0); // dx and dy is off-set. We don't want that!
                     }
                     // Only fill menu if resultMenu is showing or else it won't have a place to fill data
                     fillMenu(matchingResults);

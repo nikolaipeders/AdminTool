@@ -125,6 +125,7 @@ public class UIButton
         projectsButton.setOnAction(event -> {
             MainWindow.root.setCenter(listViewProjects.getView());
             MainWindow.sender = projectsButton.getText();
+            TWProjects.projectTableView.requestFocus();
         });
 
         return projectsButton;
@@ -147,6 +148,7 @@ public class UIButton
         tasksButton.setOnAction(event -> {
             MainWindow.root.setCenter(listViewTasks.getView());
             MainWindow.sender = tasksButton.getText();
+            TWTasks.taskTableView.requestFocus();
         });
 
         return tasksButton;

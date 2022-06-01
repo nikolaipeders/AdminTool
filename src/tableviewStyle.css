@@ -71,9 +71,6 @@
 .button:hover {
     -fx-font-weight: bold;
 }
-.button:pressed {
-
-}
 
 .text-field {
     -fx-background-color: #FFFFFF;

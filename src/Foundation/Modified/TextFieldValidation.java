@@ -39,6 +39,7 @@ public class TextFieldValidation extends TextField
             pattern = Pattern.compile("^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$");
         }
 
+
         Matcher matcher = pattern.matcher(getText());
         boolean matchFound = matcher.find();
         if (matchFound)

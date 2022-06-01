@@ -28,7 +28,6 @@ public class DialogConsultants
 {
     public DialogConsultants(String sender)
     {
-
     }
 
     public void getDialog()
@@ -100,7 +99,7 @@ public class DialogConsultants
         subRoot.getChildren().addAll(nameTextField, mailTextField, officeTextField, workTimeTextField, breakTimeTextField, lBreakTimeTextField, statusCheckBox);
 
         // If the user has selected an item and pressed EDIT
-        if (TWConsultants.selected != null && MainWindow.action.equalsIgnoreCase("edit"))
+        if (TWConsultants.selected != null && MainWindow.action.equalsIgnoreCase(UIButton.editButton.getText()))
         {
             nameTextField.setText(TWConsultants.selected.getName());
             mailTextField.setText(TWConsultants.selected.getMail());
@@ -133,7 +132,6 @@ public class DialogConsultants
                     !lBreakTimeTextField.isWrongInput)
             {
                 // SAVE STUFF WITH DB METHOD IF NOT EXIST CREATE ELSE UPDATE
-                DBController consultantDAOImplementation = new DBController();
                 if (MainWindow.action.equalsIgnoreCase(UIButton.addButton.getText()))
                 {
                     TWConsultants.selected = new Consultant();
@@ -169,7 +167,7 @@ public class DialogConsultants
                 TWConsultants.selected.setActive(statusCheckBox.isSelected());
 
                 //TWConsultants.consultants.add(TWConsultants.selected);
-                consultantDAOImplementation.updateOrInsertConsultant(TWConsultants.selected);
+                dbController.updateOrInsertConsultant(TWConsultants.selected);
 
                 // If it's a new item
                 if (MainWindow.action.equalsIgnoreCase(UIButton.addButton.getText()))
@@ -213,7 +211,6 @@ public class DialogConsultants
                 saveButton.fire();
             }
         });
-
         // Initialize Window
         dialog.setScene(dialogScene);
         dialog.show();

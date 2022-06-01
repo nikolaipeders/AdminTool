@@ -30,7 +30,10 @@ public class Home
         Label lowerLabel = new Label("To get help with key bindings, press the lowest option in menubar");
         lowerLabel.setStyle("-fx-font-size: 18");
 
-        subRoot.getChildren().addAll(titleLabel, bodyLabel, lowerLabel);
+        Label bindingsLabel = new Label("Pressing 1-6 allows you to select a menu from the menubar");
+        lowerLabel.setStyle("-fx-font-size: 16");
+
+        subRoot.getChildren().addAll(titleLabel, bodyLabel, lowerLabel, bindingsLabel);
 
         return subRoot;
     }

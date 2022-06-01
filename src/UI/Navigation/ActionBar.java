@@ -38,19 +38,19 @@ public class ActionBar
         leftSide.setAlignment(Pos.CENTER_LEFT);
         HBox.setHgrow(leftSide, Priority.ALWAYS);
 
-        if (sender.equalsIgnoreCase("consultants"))
+        if (sender.equalsIgnoreCase(UIButton.consultantsButton.getText()))
         {
             leftSide.getChildren().add(searchBarConsultants());
         }
-        else if (sender.equalsIgnoreCase("offices"))
+        else if (sender.equalsIgnoreCase(UIButton.officesButton.getText()))
         {
             leftSide.getChildren().add(searchBarOffices());
         }
-        else if (sender.equalsIgnoreCase("projects"))
+        else if (sender.equalsIgnoreCase(UIButton.projectsButton.getText()))
         {
             leftSide.getChildren().add(searchBarProjects());
         }
-        else if (sender.equalsIgnoreCase("tasks"))
+        else if (sender.equalsIgnoreCase(UIButton.tasksButton.getText()))
         {
             leftSide.getChildren().add(searchBarTasks());
         }
