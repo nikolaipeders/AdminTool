@@ -63,10 +63,6 @@ public class TWTasks
 
         taskTableView.getColumns().addAll(column1, column2, column3, column4, column5, column6);
 
-        // Fill TableView
-        DBController controller = new DBController();
-        tasks = controller.getAllTasks();
-
         // Enable selecting an item
         taskTableView.setOnMouseClicked(event ->
         {

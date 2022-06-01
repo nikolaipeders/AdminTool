@@ -20,7 +20,7 @@ public class Menubar
         menubarRoot.setAlignment(Pos.BASELINE_LEFT);
         menubarRoot.setStyle("-fx-background-color: #EEF5FD; -fx-border-radius: 7px;");
 
-        menubarRoot.getChildren().addAll(uiButton.homeButton(), uiButton.consultantsButton(),
+        menubarRoot.getChildren().addAll(uiButton.consultantsButton(),
                 uiButton.officesButton(), uiButton.projectsButton(), uiButton.tasksButton(),
                 uiButton.reportButton(), uiButton.bindingsButton());
 

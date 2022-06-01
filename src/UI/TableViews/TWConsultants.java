@@ -75,10 +75,6 @@ public class TWConsultants
 
         consultantTableView.getColumns().addAll(columnName, columnMail, columnOffice, columnWorkTime, columnBreakTime, columnLBreakTime, columnStatus);
 
-        // Fill TableView
-        DBController controller = new DBController();
-        consultants = controller.getAllConsultants();
-
         // Enable selecting an item
         consultantTableView.setOnMouseClicked(event ->
         {

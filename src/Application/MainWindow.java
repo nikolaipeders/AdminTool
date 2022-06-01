@@ -1,16 +1,7 @@
 package Application;
 
-import Domain.Consultant;
-import Domain.Office;
-import Domain.Project;
-import Domain.Task;
-import UI.Navigation.Menubar;
-import UI.Home;
+import UI.Misc.Splash;
 import UI.Navigation.UIButton;
-import UI.TableViews.TWConsultants;
-import UI.TableViews.TWOffices;
-import UI.TableViews.TWProjects;
-import UI.TableViews.TWTasks;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -28,6 +19,7 @@ public class MainWindow extends Application {
     // We'll use this to keep track of the latest button pressed!
     public static String sender;
     public static String action;
+
     @Override
     public void start(Stage primaryStage) throws Exception
     {
@@ -37,13 +29,9 @@ public class MainWindow extends Application {
         primaryStage.setMinWidth(minWidth);
         primaryStage.setMinHeight(minHeight);
 
-        // This will not change
-        Menubar menubar = new Menubar();
-        root.setLeft(menubar.GetMenubarRoot());
-
         // This will change in runtime but launches with the home screen
-        Home homeScreen = new Home();
-        root.setCenter(homeScreen.getView());
+        Splash loadScreen = new Splash();
+        loadScreen.loadSplashScreen();
 
         // CSS
         root.getStylesheets().add("tableviewStyle.css");

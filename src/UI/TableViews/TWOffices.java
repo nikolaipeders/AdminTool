@@ -56,10 +56,6 @@ public class TWOffices
 
         tableViewOffices.getColumns().addAll(column1, column2, column3, column4);
 
-        // Fill TableView
-        DBController controller = new DBController();
-        offices = controller.getAllOffices();
-
         // Enable selecting an item
         tableViewOffices.setOnMouseClicked(event ->
         {

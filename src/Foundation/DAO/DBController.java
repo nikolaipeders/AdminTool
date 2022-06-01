@@ -59,12 +59,6 @@ public class DBController implements ConsultantDAO, OfficeDAO, ProjectDAO, TaskD
     }
 
     @Override
-    public Consultant getConsultant(int ID)
-    {
-        return null;
-    }
-
-    @Override
     public void updateOrInsertConsultant(Consultant consultant)
     {
         PreparedStatement cs = null;
@@ -215,11 +209,6 @@ public class DBController implements ConsultantDAO, OfficeDAO, ProjectDAO, TaskD
     }
 
     @Override
-    public Office getOffice(String OfficeName) {
-        return null;
-    }
-
-    @Override
     public void updateOrInsertOffice(Office office)
     {
         PreparedStatement cs = null;
@@ -345,16 +334,6 @@ public class DBController implements ConsultantDAO, OfficeDAO, ProjectDAO, TaskD
     }
 
     @Override
-    public LinkedList<String> getProjectNames() {
-        return null;
-    }
-
-    @Override
-    public Project getProject(String projectName) {
-        return null;
-    }
-
-    @Override
     public void updateOrInsertProject(Project project)
     {
         PreparedStatement cs = null;
@@ -381,7 +360,9 @@ public class DBController implements ConsultantDAO, OfficeDAO, ProjectDAO, TaskD
             cs = con.prepareCall("{call Delete_Project (?)}");
             cs.setInt(1, project.getId());
             cs.execute();
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             e.printStackTrace();
         }
     }

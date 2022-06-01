@@ -47,10 +47,6 @@ public class TWProjects
 
         projectTableView.getColumns().addAll(column1);
 
-        // Fill TableView
-        DBController controller = new DBController();
-        projects = controller.getAllProjects();
-
         // Enable selecting an item
         projectTableView.setOnMouseClicked(event ->
         {
