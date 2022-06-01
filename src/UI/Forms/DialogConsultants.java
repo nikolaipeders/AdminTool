@@ -105,9 +105,9 @@ public class DialogConsultants
             nameTextField.setText(TWConsultants.selected.getName());
             mailTextField.setText(TWConsultants.selected.getMail());
             officeTextField.setText(TWConsultants.selected.getOffice());
-            workTimeTextField.setText(TWConsultants.selected.getWorkTime().toString());
-            breakTimeTextField.setText(TWConsultants.selected.getBreakTime().toString());
-            lBreakTimeTextField.setText(TWConsultants.selected.getLongBreakTime().toString());
+            workTimeTextField.setText(TWConsultants.selected.getWorkTime().toString().substring(3));
+            breakTimeTextField.setText(TWConsultants.selected.getBreakTime().toString().substring(3));
+            lBreakTimeTextField.setText(TWConsultants.selected.getLongBreakTime().toString().substring(3));
             statusCheckBox.setSelected(TWConsultants.selected.getActive());
         }
 

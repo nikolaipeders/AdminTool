@@ -1,15 +1,18 @@
 package Domain;
 
+import java.sql.Time;
+
 public class Task
 {
     int id;
     String consultantMail;
     int projectId;
     String name;
-    String timeSpent;
+    Time timeSpent;
     Boolean completed;
+    int order;
 
-    public Task(int id, String consultantMail, int projectId, String name, String timeSpent, Boolean completed)
+    public Task(int id, String consultantMail, int projectId, String name, Time timeSpent, Boolean completed, int order)
     {
         this.id = id;
         this.consultantMail = consultantMail;
@@ -17,6 +20,11 @@ public class Task
         this.name = name;
         this.timeSpent = timeSpent;
         this.completed = completed;
+        this.order = order;
+    }
+
+    public Task() {
+
     }
 
     public int getId() {
@@ -51,11 +59,11 @@ public class Task
         this.name = name;
     }
 
-    public String getTimeSpent() {
+    public Time getTimeSpent() {
         return timeSpent;
     }
 
-    public void setTimeSpent(String timeSpent) {
+    public void setTimeSpent(Time timeSpent) {
         this.timeSpent = timeSpent;
     }
 
@@ -65,5 +73,15 @@ public class Task
 
     public void setCompleted(Boolean completed) {
         this.completed = completed;
+    }
+
+    public int getOrder()
+    {
+        return order;
+    }
+
+    public void setOrder(int order)
+    {
+        this.order = order;
     }
 }

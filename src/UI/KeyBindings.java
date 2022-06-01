@@ -38,13 +38,16 @@ public class KeyBindings
         Label tip4 = new Label("[CTRL] + [F] to search in a tableview");
         tip4.setStyle("-fx-font-size: 18");
 
-        Label tip5 = new Label("[CTRL] + [UP ARROW] to move item up in a tableview");
+        Label tip5 = new Label("[ESCAPE] in the search field to clear search results");
         tip5.setStyle("-fx-font-size: 18");
 
-        Label tip6 = new Label("[CTRL] + [DOWN ARROW] to move item down in a tableview");
+        Label tip6 = new Label("[CTRL] + [UP ARROW] to move item up in a tableview");
         tip6.setStyle("-fx-font-size: 18");
 
-        tips.getChildren().addAll(tip1, tip2, tip3, tip4, tip5, tip6);
+        Label tip7 = new Label("[CTRL] + [DOWN ARROW] to move item down in a tableview");
+        tip7.setStyle("-fx-font-size: 18");
+
+        tips.getChildren().addAll(tip1, tip2, tip3, tip4, tip5, tip6, tip7);
 
         subRoot.getChildren().addAll(titleLabel, tips);
 

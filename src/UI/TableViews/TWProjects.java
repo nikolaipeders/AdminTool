@@ -1,17 +1,24 @@
 package UI.TableViews;
 
+import Domain.Office;
 import Domain.Project;
+import Foundation.DAO.DBController;
 import UI.Navigation.ActionBar;
 import UI.Navigation.UIButton;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.BorderPane;
 
 public class TWProjects
 {
     public static TableView<Project> projectTableView;
+    public static ObservableList<Project> projects;
+    public static Project selected;
     public TWProjects()
     {
 
@@ -35,17 +42,59 @@ public class TWProjects
         projectTableView = new TableView<>();
         projectTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        TableColumn<Project, String> column1 = new TableColumn<>("ID");
-        column1.setCellValueFactory(new PropertyValueFactory<>("id"));
+        TableColumn<Project, String> column1 = new TableColumn<>("Name");
+        column1.setCellValueFactory(new PropertyValueFactory<>("name"));
 
-        TableColumn<Project, String> column2 = new TableColumn<>("Name");
-        column2.setCellValueFactory(new PropertyValueFactory<>("name"));
+        projectTableView.getColumns().addAll(column1);
 
-        projectTableView.getColumns().addAll(column1, column2);
+        // Fill TableView
+        DBController controller = new DBController();
+        projects = controller.getAllProjects();
 
-        // Testing
-        projectTableView.getItems().add(new Project(1, "A project"));
+        // Enable selecting an item
+        projectTableView.setOnMouseClicked(event ->
+        {
+            if (projectTableView.getSelectionModel().getSelectedItem() != null)
+            {
+                selected = projectTableView.getSelectionModel().getSelectedItem();
+            }
+            if (event.getButton().equals(MouseButton.PRIMARY))
+            {
+                if (event.getClickCount() == 2)
+                {
+                    UIButton.editButton.fire();
+                }
+            }
+        });
 
+        // Enable KEY bindings
+        projectTableView.setOnKeyPressed(e ->
+        {
+            // Enable opening an item with ENTER key
+            if (e.getCode() == KeyCode.ENTER)
+            {
+                selected = projectTableView.getSelectionModel().getSelectedItem();
+                UIButton.editButton.fire();
+            }
+            // Enable adding an item with PLUS key
+            if (e.getCode() == KeyCode.PLUS)
+            {
+                UIButton.addButton.fire();
+            }
+            if (e.getCode() == KeyCode.DELETE)
+            {
+                UIButton.deleteButton.fire();
+            }
+            if (e.isControlDown() && (e.getCode() == KeyCode.F)) {
+                ActionBar.searchField.requestFocus();
+            }
+            if (e.isControlDown() && (e.getCode() == KeyCode.UP)) {
+                UIButton.moveUpButton.fire();
+            }
+            if (e.isControlDown() && (e.getCode() == KeyCode.DOWN)) {
+                UIButton.moveDownButton.fire();
+            }
+        });
 
         return projectTableView;
     }

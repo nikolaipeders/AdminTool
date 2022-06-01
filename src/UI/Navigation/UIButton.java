@@ -3,6 +3,8 @@ package UI.Navigation;
 import Application.MainWindow;
 import Domain.Consultant;
 import Domain.Office;
+import Domain.Project;
+import Domain.Task;
 import Foundation.DAO.DBController;
 import UI.Forms.DialogConsultants;
 import UI.Forms.DialogOffices;
@@ -28,8 +30,8 @@ public class UIButton
     // Multiple buttons will have to call this
     DialogConsultants dialogConsultants = new DialogConsultants(MainWindow.sender);
     DialogOffices dialogOffices = new DialogOffices(MainWindow.sender);
-    DialogProjects dialogProjects = new DialogProjects();
-    DialogTasks dialogTasks = new DialogTasks();
+    DialogProjects dialogProjects = new DialogProjects(MainWindow.sender);
+    DialogTasks dialogTasks = new DialogTasks(MainWindow.sender);
 
     // We'll use this several times
     DBController controller = new DBController();
@@ -100,6 +102,7 @@ public class UIButton
         officesButton.setOnAction(event -> {
             MainWindow.root.setCenter(listViewOffices.getView());
             MainWindow.sender = officesButton.getText();
+            TWOffices.tableViewOffices.requestFocus();
         });
 
         return officesButton;
@@ -224,8 +227,13 @@ public class UIButton
                     dialogOffices.getDialog();
                     break;
                 case "Projects":
-                    // do something
+                    TWProjects.selected = new Project();
+                    dialogProjects.getDialog();
+                    break;
                 case "Tasks":
+                    TWTasks.selected = new Task();
+                    dialogTasks.getDialog();
+                    break;
             }
         });
         return addButton;
@@ -264,8 +272,16 @@ public class UIButton
                     }
                     break;
                 case "Projects":
-                    // do something
+                    if (TWProjects.selected != null) // We can't edit something we haven't selected!
+                    {
+                        dialogProjects.getDialog();
+                    }
+                    break;
                 case "Tasks":
+                    if (TWTasks.selected != null) // We can't edit something we haven't selected!
+                    {
+                        dialogTasks.getDialog();
+                    }
             }
         });
         return editButton;
@@ -296,13 +312,28 @@ public class UIButton
                     break;
 
                 case "Offices":
-                    // do something
+                    if (TWOffices.selected != null) // We can't edit something we haven't selected!
+                    {
+                        TWOffices.offices.remove(TWOffices.selected);
+                        controller.deleteOffice(TWOffices.selected);
+                    }
+                    break;
                 case "Projects":
-                    // do something
+                    if (TWProjects.selected != null) // We can't edit something we haven't selected!
+                    {
+                        TWProjects.projects.remove(TWProjects.selected);
+                        controller.deleteProject(TWProjects.selected);
+                    }
+                    break;
                 case "Tasks":
+                    if (TWTasks.selected != null) // We can't edit something we haven't selected!
+                    {
+                        TWTasks.tasks.remove(TWTasks.selected);
+                        controller.deleteTask(TWTasks.selected);
+                    }
+                    break;
             }
         });
-
         return deleteButton;
     }
 
@@ -337,11 +368,19 @@ public class UIButton
                     }
                     break;
                 case "Projects":
-                    // do something
+                    if (TWProjects.selected != null)
+                    {
+                        controller.moveUpProject(TWProjects.selected);
+                    }
+                    break;
                 case "Tasks":
+                    if (TWTasks.selected != null)
+                    {
+                        controller.moveUpTask(TWTasks.selected);
+                    }
+                    break;
             }
         });
-
         return moveUpButton;
     }
 
@@ -377,11 +416,19 @@ public class UIButton
                     }
                     break;
                 case "Projects":
-                    // do something
+                    if (TWProjects.selected != null)
+                    {
+                        controller.moveDownProject(TWProjects.selected);
+                    }
+                    break;
                 case "Tasks":
+                    if (TWTasks.selected != null)
+                    {
+                        controller.moveDownTask(TWTasks.selected);
+                    }
+                    break;
             }
         });
-
         return moveDownButton;
     }
 }

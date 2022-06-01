@@ -2,6 +2,8 @@ package Foundation.DAO;
 
 import Domain.Consultant;
 import Domain.Office;
+import Domain.Project;
+import Domain.Task;
 import Foundation.Database.DatabaseConnection;
 import Foundation.Interfaces.ConsultantDAO;
 import Foundation.Interfaces.OfficeDAO;
@@ -9,6 +11,7 @@ import Foundation.Interfaces.ProjectDAO;
 import Foundation.Interfaces.TaskDAO;
 import UI.TableViews.TWConsultants;
 import UI.TableViews.TWOffices;
+import UI.TableViews.TWProjects;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -237,8 +240,17 @@ public class DBController implements ConsultantDAO, OfficeDAO, ProjectDAO, TaskD
     }
 
     @Override
-    public void deleteOffice(Office office) {
-
+    public void deleteOffice(Office office)
+    {
+        PreparedStatement cs = null;
+        try
+        {
+            cs = con.prepareCall("{call Delete_Office (?)}");
+            cs.setString(1, office.getName());
+            cs.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -304,5 +316,197 @@ public class DBController implements ConsultantDAO, OfficeDAO, ProjectDAO, TaskD
                 }
             }
         }
+    }
+
+    @Override
+    public ObservableList<Project> getAllProjects()
+    {
+        ResultSet rs = null;
+        PreparedStatement cs = null;
+        ObservableList<Project> projects = FXCollections.observableArrayList();
+        try
+        {
+            cs = con.prepareCall("{call getProjects}");
+            rs = cs.executeQuery();
+            while (rs.next())
+            {
+                Project p = new Project();
+                p.setId(rs.getInt(1));
+                p.setName(rs.getString(2));
+                p.setOrder(rs.getInt(3));
+
+                projects.add(p);
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return projects;
+    }
+
+    @Override
+    public LinkedList<String> getProjectNames() {
+        return null;
+    }
+
+    @Override
+    public Project getProject(String projectName) {
+        return null;
+    }
+
+    @Override
+    public void updateOrInsertProject(Project project)
+    {
+        PreparedStatement cs = null;
+        try
+        {
+            cs = con.prepareCall("{call updatingProject (?,?,?)}");
+            cs.setInt(1, project.getId());
+            cs.setString(2, project.getName());
+            cs.setInt(3, project.getOrder());
+
+            cs.execute();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void deleteProject(Project project)
+    {
+        PreparedStatement cs = null;
+        try
+        {
+            cs = con.prepareCall("{call Delete_Project (?)}");
+            cs.setInt(1, project.getId());
+            cs.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void moveUpProject(Project project)
+    {
+        if (TWProjects.projectTableView.getSelectionModel().getSelectedItem() != null)
+        {
+            if (TWProjects.projectTableView.getSelectionModel().getSelectedIndex() != 0)
+            {
+                // The index of the item we want to move up
+                int index = TWProjects.projectTableView.getSelectionModel().getSelectedIndex();
+
+                // Swap with the index above
+                Collections.swap(TWProjects.projects, index, index -1);
+
+                index = TWProjects.projectTableView.getSelectionModel().getSelectedIndex();
+
+                PreparedStatement cs = null;
+
+                try
+                {
+                    cs = con.prepareCall("{call move_project_up (?,?)}");
+                    cs.setInt(1, index );
+                    cs.setInt(2, project.getId());
+                    cs.execute();
+                }
+                catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    @Override
+    public void moveDownProject(Project project)
+    {
+        if (TWProjects.projectTableView.getSelectionModel().getSelectedItem() != null)
+        {
+            if (TWProjects.projectTableView.getSelectionModel().getSelectedIndex() != 0)
+            {
+                // The index of the item we want to move up
+                int index = TWProjects.projectTableView.getSelectionModel().getSelectedIndex();
+
+                // Swap with the index above
+                Collections.swap(TWProjects.projects, index, index +1);
+
+                index = TWProjects.projectTableView.getSelectionModel().getSelectedIndex();
+
+                PreparedStatement cs = null;
+
+                try
+                {
+                    cs = con.prepareCall("{call move_project_down (?,?)}");
+                    cs.setInt(1, index );
+                    cs.setInt(2, project.getId());
+                    cs.execute();
+                }
+                catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    @Override
+    public ObservableList<Task> getAllTasks()
+    {
+        ResultSet rs = null;
+        PreparedStatement cs = null;
+        ObservableList<Task> tasks = FXCollections.observableArrayList();
+        try
+        {
+            cs = con.prepareCall("{call getTasks}");
+            rs = cs.executeQuery();
+            while (rs.next())
+            {
+                Task t = new Task();
+                t.setId(rs.getInt(1));
+                t.setConsultantMail(rs.getString(2));
+                t.setProjectId(rs.getInt(3));
+                t.setName(rs.getString(4));
+                t.setTimeSpent(rs.getTime(5));
+                t.setCompleted(rs.getBoolean(6));
+                t.setOrder(rs.getInt(7));
+
+                tasks.add(t);
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return tasks;
+    }
+
+    @Override
+    public void updateOrInsertTask(Task task)
+    {
+
+    }
+
+    @Override
+    public void deleteTask(Task task)
+    {
+        PreparedStatement cs = null;
+        try
+        {
+            cs = con.prepareCall("{call Delete_Task (?)}");
+            cs.setInt(1, task.getId());
+            cs.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void moveUpTask(Task task)
+    {
+
+    }
+
+    @Override
+    public void moveDownTask(Task task)
+    {
+
     }
 }
