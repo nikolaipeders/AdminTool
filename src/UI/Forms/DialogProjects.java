@@ -1,22 +1,16 @@
 package UI.Forms;
 
 import Application.MainWindow;
-import Domain.Consultant;
-import Domain.Office;
 import Domain.Project;
 import Foundation.DAO.DBController;
-import Foundation.Modified.TextFieldAutoCompletion;
 import Foundation.Modified.TextFieldValidation;
 import UI.Misc.PopUp;
 import UI.Navigation.UIButton;
-import UI.TableViews.TWConsultants;
-import UI.TableViews.TWOffices;
 import UI.TableViews.TWProjects;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
@@ -24,13 +18,12 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.sql.Time;
 import java.util.Objects;
 
 
 public class DialogProjects
 {
-    public DialogProjects(String sender)
+    public DialogProjects(Button sender)
     {
 
     }

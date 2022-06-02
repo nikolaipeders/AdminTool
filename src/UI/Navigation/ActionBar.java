@@ -61,7 +61,8 @@ public class ActionBar
         rightSide.setPadding(new Insets(0, 20, 0, 0));
         rightSide.setMaxHeight(50);
         rightSide.setMinHeight(50);
-        rightSide.getChildren().addAll(uib.addButton(), uib.editButton(), uib.deleteButton(), uib.moveUpButton(), uib.moveDownButton());
+        rightSide.getChildren().addAll(uib.addButton(), uib.editButton(), uib.deleteButton(),
+                uib.moveUpButton(), uib.moveDownButton(), uib.chartButton());
 
         searchField.setOnKeyPressed(e ->
         {

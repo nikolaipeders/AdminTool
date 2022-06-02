@@ -4,6 +4,7 @@ import UI.Misc.Splash;
 import UI.Navigation.UIButton;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
@@ -17,7 +18,7 @@ public class MainWindow extends Application {
     public static BorderPane root = new BorderPane();
 
     // We'll use this to keep track of the latest button pressed!
-    public static String sender;
+    public static Button sender;
     public static String action;
 
     @Override
@@ -42,35 +43,35 @@ public class MainWindow extends Application {
         // Enabling switching menu with numpad
         scene.setOnKeyPressed(e ->
                 {
-                    if (e.getCode() == KeyCode.DIGIT1)
+                    if (loadScreen.isDone)
                     {
-                        UIButton.homeButton.fire();
-                    }
-                    if (e.getCode() == KeyCode.DIGIT2)
-                    {
-                        UIButton.consultantsButton.fire();
-                    }
-                    if (e.getCode() == KeyCode.DIGIT3)
-                    {
-                        UIButton.officesButton.fire();
-                    }
-                    if (e.getCode() == KeyCode.DIGIT4)
-                    {
-                        UIButton.projectsButton.fire();
-                    }
-                    if (e.getCode() == KeyCode.DIGIT5)
-                    {
-                        UIButton.tasksButton.fire();
-                    }
-                    if (e.getCode() == KeyCode.DIGIT6)
-                    {
-                        UIButton.reportButton.fire();
-                    }
-                    if (e.getCode() == KeyCode.DIGIT7)
-                    {
-                        UIButton.bindingsButton.fire();
+                        if (e.getCode() == KeyCode.DIGIT1)
+                        {
+                            UIButton.consultantsButton.fire();
+                        }
+                        if (e.getCode() == KeyCode.DIGIT2)
+                        {
+                            UIButton.officesButton.fire();
+                        }
+                        if (e.getCode() == KeyCode.DIGIT3)
+                        {
+                            UIButton.projectsButton.fire();
+                        }
+                        if (e.getCode() == KeyCode.DIGIT4)
+                        {
+                            UIButton.tasksButton.fire();
+                        }
+                        if (e.getCode() == KeyCode.DIGIT5)
+                        {
+                            UIButton.reportButton.fire();
+                        }
+                        if (e.getCode() == KeyCode.DIGIT6)
+                        {
+                            UIButton.bindingsButton.fire();
+                        }
                     }
                 });
+
 
         primaryStage.setScene(scene);
         primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResource("/resources/logo.png")).toExternalForm()));

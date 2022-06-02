@@ -12,6 +12,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 
 public class TWProjects
@@ -19,6 +20,7 @@ public class TWProjects
     public static TableView<Project> projectTableView;
     public static ObservableList<Project> projects;
     public static Project selected;
+    public static BorderPane subRoot;
     public TWProjects()
     {
 
@@ -26,7 +28,7 @@ public class TWProjects
 
     public BorderPane getView()
     {
-        BorderPane subRoot = new BorderPane();
+        subRoot = new BorderPane();
         subRoot.setPadding(new Insets(10, 20, 10, 20));
 
         subRoot.setCenter(tableViewProjects());

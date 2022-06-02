@@ -18,6 +18,7 @@ public class TWOffices
     public static TableView<Office> tableViewOffices;
     public static ObservableList<Office> offices;
     public static Office selected;
+    public static BorderPane subRoot;
 
     public TWOffices()
     {
@@ -26,7 +27,7 @@ public class TWOffices
 
     public BorderPane getView()
     {
-        BorderPane subRoot = new BorderPane();
+        subRoot = new BorderPane();
         subRoot.setPadding(new Insets(10, 20, 10, 20));
 
         subRoot.setCenter(tableViewOffices());

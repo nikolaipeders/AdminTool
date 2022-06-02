@@ -26,7 +26,7 @@ import java.util.Objects;
 
 public class DialogConsultants
 {
-    public DialogConsultants(String sender)
+    public DialogConsultants(Button sender)
     {
     }
 

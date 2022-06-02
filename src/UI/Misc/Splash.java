@@ -6,6 +6,7 @@ import Foundation.Loading.LoadOffices;
 import Foundation.Loading.LoadProjects;
 import Foundation.Loading.LoadTasks;
 import UI.Navigation.Menubar;
+import UI.Navigation.UIButton;
 import UI.TableViews.TWConsultants;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
@@ -15,12 +16,12 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
-import javafx.scene.shape.Circle;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
 public class Splash
 {
+    public boolean isDone = false;
 
     public void loadSplashScreen() {
 
@@ -29,12 +30,12 @@ public class Splash
         // Load splash screen with fade in effect
         FadeTransition fadeIn = new FadeTransition(Duration.seconds(2),loadingScreen());
         fadeIn.setFromValue(0);
-        fadeIn.setToValue(2);
+        fadeIn.setToValue(1);
         fadeIn.setCycleCount(1);
 
         // Finish splash with fade out effect
         FadeTransition fadeOut = new FadeTransition(Duration.seconds(2), loadingScreen());
-        fadeOut.setFromValue(2);
+        fadeOut.setFromValue(1);
         fadeOut.setToValue(0);
         fadeOut.setCycleCount(1);
 
@@ -65,6 +66,10 @@ public class Splash
 
             TWConsultants twConsultants = new TWConsultants();
             MainWindow.root.setCenter(twConsultants.getView());
+
+            isDone = true;
+
+            MainWindow.sender = UIButton.consultantsButton;
 
         });
     }

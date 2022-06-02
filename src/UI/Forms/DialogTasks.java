@@ -1,10 +1,8 @@
 package UI.Forms;
 
 import Application.MainWindow;
-import Domain.Consultant;
 import Domain.Task;
 import Foundation.DAO.DBController;
-import Foundation.Modified.TextFieldAutoCompletion;
 import Foundation.Modified.TextFieldValidation;
 import UI.Misc.PopUp;
 import UI.Navigation.UIButton;
@@ -28,7 +26,7 @@ import java.util.Objects;
 
 public class DialogTasks
 {
-    public DialogTasks(String sender)
+    public DialogTasks(Button sender)
     {
 
     }

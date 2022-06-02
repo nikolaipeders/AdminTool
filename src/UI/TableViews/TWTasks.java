@@ -19,6 +19,7 @@ public class TWTasks
     public static TableView<Task> taskTableView;
     public static ObservableList<Task> tasks;
     public static Task selected;
+    public static BorderPane subRoot;
 
     public TWTasks()
     {
@@ -27,7 +28,7 @@ public class TWTasks
 
     public BorderPane getView()
     {
-        BorderPane subRoot = new BorderPane();
+        subRoot = new BorderPane();
         subRoot.setPadding(new Insets(10, 20, 10, 20));
 
         subRoot.setCenter(tableViewTasks());

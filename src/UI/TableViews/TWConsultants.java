@@ -20,6 +20,7 @@ public class TWConsultants
     public static TableView<Consultant> consultantTableView;
     public static ObservableList<Consultant> consultants;
     public static Consultant selected;
+    public static BorderPane subRoot;
 
     public TWConsultants()
     {
@@ -27,8 +28,8 @@ public class TWConsultants
 
     public BorderPane getView()
     {
-        BorderPane subRoot = new BorderPane();
-        subRoot.setPadding(new Insets(0, 20, 10, 20));
+        subRoot = new BorderPane();
+        subRoot.setPadding(new Insets(10, 20, 10, 20));
 
         subRoot.setCenter(tableViewConsultant());
 

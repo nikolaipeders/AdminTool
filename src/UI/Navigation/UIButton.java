@@ -6,11 +6,14 @@ import Domain.Office;
 import Domain.Project;
 import Domain.Task;
 import Foundation.DAO.DBController;
+import UI.Charts.ChartConsultants;
+import UI.Charts.ChartOffices;
+import UI.Charts.ChartProjects;
+import UI.Charts.ChartTasks;
 import UI.Forms.DialogConsultants;
 import UI.Forms.DialogOffices;
 import UI.Forms.DialogProjects;
 import UI.Forms.DialogTasks;
-import UI.Home;
 import UI.KeyBindings;
 import UI.Report;
 import UI.TableViews.TWConsultants;
@@ -18,14 +21,17 @@ import UI.TableViews.TWOffices;
 import UI.TableViews.TWProjects;
 import UI.TableViews.TWTasks;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
+import jdk.jfr.internal.tool.Main;
 
+import java.io.IOException;
 import java.util.Objects;
 
 public class UIButton
 {
-    public static Button homeButton, consultantsButton, officesButton, projectsButton, tasksButton,
-            reportButton, addButton, editButton, deleteButton, bindingsButton, searchButton, moveUpButton, moveDownButton;
+    public static Button consultantsButton, officesButton, projectsButton, tasksButton, reportButton,
+            addButton, editButton, deleteButton, bindingsButton, moveUpButton, moveDownButton, chartButton;
 
     // Multiple buttons will have to call this
     DialogConsultants dialogConsultants = new DialogConsultants(MainWindow.sender);
@@ -38,28 +44,6 @@ public class UIButton
 
     public UIButton()
     {
-    }
-
-    public Button homeButton()
-    {
-        Home home = new Home();
-        homeButton = new Button("Home");
-        homeButton.setMaxSize(150, 30);
-        homeButton.setMinSize(150, 30);
-
-        ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/resources/home.png")).toExternalForm());
-
-        imageView.setPreserveRatio(true);
-        imageView.fitHeightProperty().bind(homeButton.heightProperty());
-
-        homeButton.setGraphic(imageView);
-
-        homeButton.setOnAction(event -> {
-            MainWindow.root.setCenter(home.getView());
-            MainWindow.sender = homeButton.getText();
-        });
-
-        return homeButton;
     }
 
     public Button consultantsButton()
@@ -78,8 +62,12 @@ public class UIButton
 
         consultantsButton.setOnAction(event -> {
             MainWindow.root.setCenter(listViewConsultant.getView());
-            MainWindow.sender = consultantsButton.getText();
+            MainWindow.sender.setStyle(null);
+            MainWindow.sender = consultantsButton;
             TWConsultants.consultantTableView.requestFocus();
+
+            // Keep visual track of selected menu button
+            MainWindow.sender.setStyle("-fx-background-color: #FFFFFF; -fx-background-insets: -10 0 -10 0");
         });
 
         return consultantsButton;
@@ -101,8 +89,12 @@ public class UIButton
 
         officesButton.setOnAction(event -> {
             MainWindow.root.setCenter(listViewOffices.getView());
-            MainWindow.sender = officesButton.getText();
+            MainWindow.sender.setStyle(null);
+            MainWindow.sender = officesButton;
             TWOffices.tableViewOffices.requestFocus();
+
+            // Keep visual track of selected menu button
+            MainWindow.sender.setStyle("-fx-background-color: #FFFFFF; -fx-background-insets: -10 0 -10 0");
         });
 
         return officesButton;
@@ -124,8 +116,12 @@ public class UIButton
 
         projectsButton.setOnAction(event -> {
             MainWindow.root.setCenter(listViewProjects.getView());
-            MainWindow.sender = projectsButton.getText();
+            MainWindow.sender.setStyle(null);
+            MainWindow.sender = projectsButton;
             TWProjects.projectTableView.requestFocus();
+
+            // Keep visual track of selected menu button
+            MainWindow.sender.setStyle("-fx-background-color: #FFFFFF; -fx-background-insets: -10 0 -10 0");
         });
 
         return projectsButton;
@@ -147,8 +143,12 @@ public class UIButton
 
         tasksButton.setOnAction(event -> {
             MainWindow.root.setCenter(listViewTasks.getView());
-            MainWindow.sender = tasksButton.getText();
+            MainWindow.sender.setStyle(null);
+            MainWindow.sender = tasksButton;
             TWTasks.taskTableView.requestFocus();
+
+            // Keep visual track of selected menu button
+            MainWindow.sender.setStyle("-fx-background-color: #FFFFFF; -fx-background-insets: -10 0 -10 0");
         });
 
         return tasksButton;
@@ -170,9 +170,18 @@ public class UIButton
         reportButton.setGraphic(imageView);
 
         reportButton.setOnAction(event -> {
-            MainWindow.root.setCenter(report.getView());
-            MainWindow.sender = reportButton.getText();
-            MainWindow.sender = reportButton.getText();
+            try
+            {
+                MainWindow.root.setCenter(report.getView());
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+            MainWindow.sender.setStyle(null);
+            MainWindow.sender = reportButton;
+
+            // Keep visual track of selected menu button
+            MainWindow.sender.setStyle("-fx-background-color: #FFFFFF; -fx-background-insets: -10 0 -10 0");
         });
 
         return reportButton;
@@ -195,7 +204,12 @@ public class UIButton
 
         bindingsButton.setOnAction(event -> {
             MainWindow.root.setCenter(keyBindings.getView());
-            MainWindow.sender = bindingsButton.getText();
+            MainWindow.sender.setStyle(null);
+            MainWindow.sender = bindingsButton;
+
+            // Keep visual track of selected menu button
+            MainWindow.sender.setStyle("-fx-background-color: #FFFFFF; -fx-background-insets: -10 0 -10 0");
+
         });
 
         return bindingsButton;
@@ -206,6 +220,7 @@ public class UIButton
         addButton = new Button("add");
         addButton.setMinSize(30, 30);
         addButton.setMaxSize(30, 30);
+        addButton.setTooltip(new Tooltip("Add new item"));
 
         ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/resources/add.png")).toExternalForm());
 
@@ -218,7 +233,7 @@ public class UIButton
 
             MainWindow.action = addButton.getText();
 
-            switch (MainWindow.sender)
+            switch (MainWindow.sender.getText())
             {
                 case "Consultants":
                     TWConsultants.selected = new Consultant();
@@ -247,6 +262,7 @@ public class UIButton
         editButton = new Button("edit");
         editButton.setMinSize(30, 30);
         editButton.setMaxSize(30, 30);
+        editButton.setTooltip(new Tooltip("Edit selected item"));
 
         ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/resources/edit.png")).toExternalForm());
 
@@ -259,7 +275,7 @@ public class UIButton
 
             MainWindow.action = editButton.getText();
 
-            switch (MainWindow.sender)
+            switch (MainWindow.sender.getText())
             {
                 case "Consultants":
                     if (TWConsultants.selected != null) // We can't edit something we haven't selected!
@@ -294,6 +310,7 @@ public class UIButton
         deleteButton = new Button("delete");
         deleteButton.setMinSize(30, 30);
         deleteButton.setMaxSize(30, 30);
+        deleteButton.setTooltip(new Tooltip("Delete selected item"));
 
         ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/resources/delete.png")).toExternalForm());
 
@@ -303,7 +320,7 @@ public class UIButton
         deleteButton.setGraphic(imageView);
 
         deleteButton.setOnAction(event -> {
-            switch (MainWindow.sender)
+            switch (MainWindow.sender.getText())
             {
                 case "Consultants":
                     if (TWConsultants.selected != null) // We can't edit something we haven't selected!
@@ -344,6 +361,7 @@ public class UIButton
         moveUpButton = new Button("moveUp");
         moveUpButton.setMinSize(30, 30);
         moveUpButton.setMaxSize(30, 30);
+        moveUpButton.setTooltip(new Tooltip("Move selected item up"));
 
         ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/resources/up.png")).toExternalForm());
 
@@ -355,7 +373,7 @@ public class UIButton
         moveUpButton.setOnAction(event -> {
             MainWindow.action = moveUpButton().getText();
 
-            switch (MainWindow.sender)
+            switch (MainWindow.sender.getText())
             {
                 case "Consultants":
                     if (TWConsultants.selected != null) // We can't edit something we haven't selected!
@@ -391,6 +409,7 @@ public class UIButton
         moveDownButton = new Button("moveDown");
         moveDownButton.setMinSize(30, 30);
         moveDownButton.setMaxSize(30, 30);
+        moveDownButton.setTooltip(new Tooltip("Move selected item down"));
 
         ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/resources/down.png")).toExternalForm());
 
@@ -402,7 +421,7 @@ public class UIButton
         moveDownButton.setOnAction(event -> {
             MainWindow.action = moveDownButton().getText();
 
-            switch (MainWindow.sender)
+            switch (MainWindow.sender.getText())
             {
                 case "Consultants":
                     if (TWConsultants.selected != null) // We can't edit something we haven't selected!
@@ -432,5 +451,88 @@ public class UIButton
             }
         });
         return moveDownButton;
+    }
+
+    public Button chartButton()
+    {
+        chartButton = new Button("chart");
+        chartButton.setMinSize(30, 30);
+        chartButton.setMaxSize(30, 30);
+        chartButton.setTooltip(new Tooltip("Show statistics"));
+
+        ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/resources/bar.png")).toExternalForm());
+        imageView.setPreserveRatio(true);
+        imageView.fitHeightProperty().bind(chartButton.heightProperty());
+
+        ImageView alternativeView = new ImageView(Objects.requireNonNull(getClass().getResource("/resources/cancel.png")).toExternalForm());
+        alternativeView.setPreserveRatio(true);
+        alternativeView.fitHeightProperty().bind(chartButton.heightProperty());
+
+        chartButton.setGraphic(imageView);
+
+        chartButton.setOnAction(event -> {
+            MainWindow.action = chartButton.getText();
+
+            if (chartButton.getGraphic() == imageView)
+            {
+                chartButton.setGraphic(alternativeView);
+            }
+            else
+            {
+                chartButton.setGraphic(imageView);
+            }
+
+            switch (MainWindow.sender.getText())
+            {
+                case "Consultants":
+                    ChartConsultants chartConsultants = new ChartConsultants();
+                    if (TWConsultants.subRoot.getCenter() == ChartConsultants.barChart)
+                    {
+                        TWConsultants.subRoot.setCenter(TWConsultants.consultantTableView);
+                    }
+                    else
+                    {
+                        TWConsultants.subRoot.setCenter(chartConsultants.getBarChart());
+                    }
+                    break;
+
+                case "Offices":
+                    ChartOffices chartOffices = new ChartOffices();
+                    if (TWOffices.subRoot.getCenter() == ChartOffices.pieChart)
+                    {
+                        TWOffices.subRoot.setCenter(TWOffices.tableViewOffices);
+                    }
+                    else
+                    {
+                        TWOffices.subRoot.setCenter(chartOffices.getPieChart());
+                    }
+                    break;
+
+                case "Projects":
+                    ChartProjects chartProjects = new ChartProjects();
+                    if (TWProjects.subRoot.getCenter() == ChartProjects.barChart)
+                    {
+                        TWProjects.subRoot.setCenter(TWProjects.projectTableView);
+                    }
+                    else
+                    {
+                        TWProjects.subRoot.setCenter(chartProjects.getBarChart());
+                    }
+                    break;
+
+                case "Tasks":
+                    ChartTasks chartTasks = new ChartTasks();
+                    if (TWTasks.subRoot.getCenter() == ChartTasks.barChart)
+                    {
+                        TWTasks.subRoot.setCenter(TWTasks.taskTableView);
+                    }
+                    else
+                    {
+                        TWTasks.subRoot.setCenter(chartTasks.getBarChart());
+                    }
+                    break;
+            }
+        });
+        return chartButton;
     }
 }
