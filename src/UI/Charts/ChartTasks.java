@@ -25,11 +25,13 @@ public class ChartTasks
         // Defining the x-axis
         CategoryAxis xAxis = new CategoryAxis();
 
-        xAxis.setCategories(FXCollections.observableArrayList(Collections.singletonList("Number of tasks")));
-        xAxis.setLabel("consultants");
+        xAxis.setCategories(FXCollections.observableArrayList(Collections.singletonList("Consultants")));
+        xAxis.setLabel("");
 
         // Defining the y-axis
         NumberAxis yAxis = new NumberAxis();
+        yAxis.setAutoRanging(false);
+        yAxis.setUpperBound(TWTasks.tasks.size());
         yAxis.setTickUnit(1);
         yAxis.setMinorTickVisible(false);
         yAxis.setLabel("tasks");
@@ -53,7 +55,7 @@ public class ChartTasks
                 }
             }
 
-            series.getData().add(new XYChart.Data<>("Number of tasks", value));
+            series.getData().add(new XYChart.Data<>("Consultants", value));
 
             barChart.getData().add(series);
         }

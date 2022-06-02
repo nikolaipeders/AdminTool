@@ -40,3 +40,26 @@
     -fx-text-fill: black;
 }
 
+.context-menu {
+    -fx-background-radius: 7px;
+}
+
+.menu-item .label {
+    -fx-background-radius: 7px;
+}
+
+.menu-item:focused {
+    -fx-background-radius: 7px;
+    -fx-background-color: #f94c57;
+}
+
+.menu-item:visited {
+    -fx-background-radius: 7px;
+    -fx-background-color: #f94c57;
+}
+
+.menu-item:hover {
+    -fx-background-radius: 7px;
+    -fx-background-color: #f94c57;
+}
+

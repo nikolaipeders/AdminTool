@@ -20,10 +20,9 @@ import UI.TableViews.TWConsultants;
 import UI.TableViews.TWOffices;
 import UI.TableViews.TWProjects;
 import UI.TableViews.TWTasks;
-import javafx.scene.control.Button;
-import javafx.scene.control.Tooltip;
+import javafx.geometry.Side;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import jdk.jfr.internal.tool.Main;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -94,7 +93,7 @@ public class UIButton
             TWOffices.tableViewOffices.requestFocus();
 
             // Keep visual track of selected menu button
-            MainWindow.sender.setStyle("-fx-background-color: #FFFFFF; -fx-background-insets: -10 0 -10 0");
+            MainWindow.sender.setStyle("-fx-background-color: #FFFFFF; -fx-background-insets: -10 0 -10 0;");
         });
 
         return officesButton;
@@ -256,7 +255,6 @@ public class UIButton
         return addButton;
     }
 
-
     public Button editButton()
     {
         editButton = new Button("edit");
@@ -319,39 +317,52 @@ public class UIButton
 
         deleteButton.setGraphic(imageView);
 
-        deleteButton.setOnAction(event -> {
-            switch (MainWindow.sender.getText())
-            {
-                case "Consultants":
-                    if (TWConsultants.selected != null) // We can't edit something we haven't selected!
-                    {
-                        TWConsultants.consultants.remove(TWConsultants.selected);
-                        controller.deleteConsultant(TWConsultants.selected);
-                    }
-                    break;
+        deleteButton.setOnAction(event ->
+        {
+            ContextMenu confirmMenu = new ContextMenu();
+            MenuItem confirm = new MenuItem("Confirm");
+            MenuItem cancel = new MenuItem("Cancel");
+            SeparatorMenuItem separator = new SeparatorMenuItem();
+            confirmMenu.getItems().addAll(cancel, separator, confirm);
 
-                case "Offices":
-                    if (TWOffices.selected != null) // We can't edit something we haven't selected!
-                    {
-                        TWOffices.offices.remove(TWOffices.selected);
-                        controller.deleteOffice(TWOffices.selected);
-                    }
-                    break;
-                case "Projects":
-                    if (TWProjects.selected != null) // We can't edit something we haven't selected!
-                    {
-                        TWProjects.projects.remove(TWProjects.selected);
-                        controller.deleteProject(TWProjects.selected);
-                    }
-                    break;
-                case "Tasks":
-                    if (TWTasks.selected != null) // We can't edit something we haven't selected!
-                    {
-                        TWTasks.tasks.remove(TWTasks.selected);
-                        controller.deleteTask(TWTasks.selected);
-                    }
-                    break;
-            }
+            confirmMenu.show(deleteButton, Side.BOTTOM, 0, 0);
+
+            cancel.setOnAction(cancelEvent -> confirmMenu.hide());
+            confirm.setOnAction(confirmEvent ->
+            {
+                switch (MainWindow.sender.getText())
+                {
+                    case "Consultants":
+                        if (TWConsultants.selected != null) // We can't edit something we haven't selected!
+                        {
+                            TWConsultants.consultants.remove(TWConsultants.selected);
+                            controller.deleteConsultant(TWConsultants.selected);
+                        }
+                        break;
+
+                    case "Offices":
+                        if (TWOffices.selected != null) // We can't edit something we haven't selected!
+                        {
+                            TWOffices.offices.remove(TWOffices.selected);
+                            controller.deleteOffice(TWOffices.selected);
+                        }
+                        break;
+                    case "Projects":
+                        if (TWProjects.selected != null) // We can't edit something we haven't selected!
+                        {
+                            TWProjects.projects.remove(TWProjects.selected);
+                            controller.deleteProject(TWProjects.selected);
+                        }
+                        break;
+                    case "Tasks":
+                        if (TWTasks.selected != null) // We can't edit something we haven't selected!
+                        {
+                            TWTasks.tasks.remove(TWTasks.selected);
+                            controller.deleteTask(TWTasks.selected);
+                        }
+                        break;
+                }
+            });
         });
         return deleteButton;
     }

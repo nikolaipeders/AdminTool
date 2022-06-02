@@ -69,7 +69,7 @@ public class DialogTasks
             if(timeTextField.getText().length() > maxCharacters) event.consume();
         });
 
-        CheckBox statusCheckBox = new CheckBox("Active");
+        CheckBox statusCheckBox = new CheckBox("Completed");
 
         subRoot.getChildren().addAll(nameTextField, mailTextField, timeTextField, statusCheckBox);
 

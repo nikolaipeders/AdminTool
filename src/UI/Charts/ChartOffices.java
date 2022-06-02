@@ -23,7 +23,8 @@ public class ChartOffices
         // Total capacity
         int capacity = 0;
 
-        for (Office office : TWOffices.offices) {
+        for (Office office : TWOffices.offices)
+        {
             pieChartData.add(new PieChart.Data(office.getName(), office.getCapacity()));
             capacity += office.getCapacity();
         }

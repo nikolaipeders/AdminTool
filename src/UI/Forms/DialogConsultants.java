@@ -56,7 +56,6 @@ public class DialogConsultants
         nameTextField.setPromptText("Name");
         nameTextField.setOnKeyTyped(event -> nameTextField.validate("text"));
 
-
         TextFieldValidation mailTextField = new TextFieldValidation();
         mailTextField.setPromptText("Mail");
         mailTextField.setOnKeyReleased(event -> mailTextField.validate("mail"));
@@ -166,7 +165,6 @@ public class DialogConsultants
 
                 TWConsultants.selected.setActive(statusCheckBox.isSelected());
 
-                //TWConsultants.consultants.add(TWConsultants.selected);
                 dbController.updateOrInsertConsultant(TWConsultants.selected);
 
                 // If it's a new item

@@ -26,18 +26,20 @@ public class ChartProjects
         // Defining the x-axis
         CategoryAxis xAxis = new CategoryAxis();
 
-        xAxis.setCategories(FXCollections.observableArrayList(Collections.singletonList("Number of tasks")));
-        xAxis.setLabel("projects");
+        xAxis.setCategories(FXCollections.observableArrayList(Collections.singletonList("Projects")));
+        xAxis.setLabel("");
 
         // Defining the y-axis
         NumberAxis yAxis = new NumberAxis();
+        yAxis.setAutoRanging(false);
+        yAxis.setUpperBound(TWTasks.tasks.size());
         yAxis.setTickUnit(1);
         yAxis.setMinorTickVisible(false);
         yAxis.setLabel("tasks");
 
         // Creating the Bar chart
         barChart = new BarChart<>(xAxis, yAxis);
-        barChart.setTitle("Number of tasks per project");
+        barChart.setTitle("Projects overview");
 
         for (int i = 0; i < TWProjects.projects.size(); i++)
         {
@@ -54,7 +56,7 @@ public class ChartProjects
                 }
             }
 
-            series.getData().add(new XYChart.Data<>("Number of tasks", value));
+            series.getData().add(new XYChart.Data<>("Projects", value));
 
             barChart.getData().add(series);
         }

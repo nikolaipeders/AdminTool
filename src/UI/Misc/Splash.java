@@ -8,9 +8,9 @@ import Foundation.Loading.LoadTasks;
 import UI.Navigation.Menubar;
 import UI.Navigation.UIButton;
 import UI.TableViews.TWConsultants;
-import javafx.animation.FadeTransition;
-import javafx.animation.Interpolator;
-import javafx.animation.RotateTransition;
+import javafx.animation.*;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -83,8 +83,8 @@ public class Splash
         Label title = new Label("Administration Tool");
         title.setStyle("-fx-font-size: 36; -fx-border-color: transparent transparent lightgrey transparent");
 
-        Label loadingMessage = new Label("Loading");
-        loadingMessage.setStyle("-fx-font-size: 18");
+        Label status = new Label("Loading");
+        status.setStyle("-fx-font-size: 24");
 
         // Create an arc
         Arc arc = new Arc();
@@ -133,7 +133,7 @@ public class Splash
         // Play the transition
         rotate.play();
 
-        loadScreen.getChildren().addAll(title, arc, loadingMessage);
+        loadScreen.getChildren().addAll(title, arc, status);
 
         return loadScreen;
     }

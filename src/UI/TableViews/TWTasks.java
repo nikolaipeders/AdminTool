@@ -7,6 +7,7 @@ import UI.Navigation.ActionBar;
 import UI.Navigation.UIButton;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -44,25 +45,28 @@ public class TWTasks
         taskTableView = new TableView<>();
         taskTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        TableColumn<Task, String> column1 = new TableColumn<>("ID");
-        column1.setCellValueFactory(new PropertyValueFactory<>("id"));
+        TableColumn<Task, String> taskColumn = new TableColumn<>("Task");
+        taskColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
-        TableColumn<Task, String> column2 = new TableColumn<>("Mail");
-        column2.setCellValueFactory(new PropertyValueFactory<>("consultantMail"));
+        TableColumn<Task, String> mailColumn = new TableColumn<>("Consultant Mail");
+        mailColumn.setCellValueFactory(new PropertyValueFactory<>("consultantMail"));
 
-        TableColumn<Task, String> column3 = new TableColumn<>("Project ID");
-        column3.setCellValueFactory(new PropertyValueFactory<>("projectId"));
+        TableColumn<Task, String> timeColumn = new TableColumn<>("Time spent");
+        timeColumn.setCellValueFactory(new PropertyValueFactory<>("timeSpent"));
 
-        TableColumn<Task, String> column4 = new TableColumn<>("Name");
-        column4.setCellValueFactory(new PropertyValueFactory<>("name"));
+        TableColumn<Task, Boolean> statusColumn = new TableColumn<>("Status");
+        statusColumn.setCellValueFactory(new PropertyValueFactory<>("completed"));
+        // Show "completed/in process" instead of true/false
+        statusColumn.setCellFactory(tc -> new TableCell<Task, Boolean>() {
+            @Override
+            protected void updateItem(Boolean item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty ? null :
+                        item ? "Completed" : "In process");
+            }
+        });
 
-        TableColumn<Task, String> column5 = new TableColumn<>("Time spent");
-        column5.setCellValueFactory(new PropertyValueFactory<>("timeSpent"));
-
-        TableColumn<Task, String> column6 = new TableColumn<>("Completed");
-        column6.setCellValueFactory(new PropertyValueFactory<>("completed"));
-
-        taskTableView.getColumns().addAll(column1, column2, column3, column4, column5, column6);
+        taskTableView.getColumns().addAll(taskColumn, mailColumn, timeColumn, statusColumn);
 
         // Enable selecting an item
         taskTableView.setOnMouseClicked(event ->

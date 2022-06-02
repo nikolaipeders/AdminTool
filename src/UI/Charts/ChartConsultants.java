@@ -2,7 +2,6 @@ package UI.Charts;
 
 import UI.TableViews.TWConsultants;
 import UI.TableViews.TWOffices;
-import UI.TableViews.TWTasks;
 import javafx.collections.FXCollections;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
@@ -26,18 +25,22 @@ public class ChartConsultants
         // Defining the x-axis
         CategoryAxis xAxis = new CategoryAxis();
 
-        xAxis.setCategories(FXCollections.observableArrayList(Collections.singletonList("Number of consultants")));
-        xAxis.setLabel("offices");
+        xAxis.setCategories(FXCollections.observableArrayList(Collections.singletonList("Offices")));
+        xAxis.setLabel("");
 
-        // Defining the y-axis
+        /* Defining the y-axis. Apparently, it's not possible to only show integers with AutoRanging, so we
+         set an UpperBound of the total amount of consultants as this is the maximum value a single office can contain.
+        */
         NumberAxis yAxis = new NumberAxis();
+        yAxis.setAutoRanging(false);
+        yAxis.setUpperBound(TWConsultants.consultants.size());
         yAxis.setTickUnit(1);
         yAxis.setMinorTickVisible(false);
         yAxis.setLabel("consultants");
 
         // Creating the Bar chart
         barChart = new BarChart<>(xAxis, yAxis);
-        barChart.setTitle("Consultants Placements");
+        barChart.setTitle("Distribution of consultants");
 
         for (int i = 0; i < TWOffices.offices.size(); i++)
         {
@@ -54,7 +57,7 @@ public class ChartConsultants
                 }
             }
 
-            series.getData().add(new XYChart.Data<>("Number of consultants", value));
+            series.getData().add(new XYChart.Data<>("Offices", value));
 
             barChart.getData().add(series);
         }
