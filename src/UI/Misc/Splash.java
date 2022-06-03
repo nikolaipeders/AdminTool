@@ -64,12 +64,13 @@ public class Splash
             Menubar menubar = new Menubar();
             MainWindow.root.setLeft(menubar.GetMenubarRoot());
 
-            TWConsultants twConsultants = new TWConsultants();
-            MainWindow.root.setCenter(twConsultants.getView());
+            MainWindow.sender = UIButton.consultantsButton;
+
+            UIButton.consultantsButton.fire();
 
             isDone = true;
 
-            MainWindow.sender = UIButton.consultantsButton;
+
 
         });
     }

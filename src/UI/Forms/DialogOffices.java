@@ -62,7 +62,8 @@ public class DialogOffices
         capacityTextField.setOnKeyReleased(event -> capacityTextField.validate("numbers"));
 
         TextFieldValidation consultantsTextField = new TextFieldValidation();
-        consultantsTextField.setPromptText("Consultants");
+        consultantsTextField.setEditable(false);
+        consultantsTextField.setStyle("-fx-background-color: #EDEDED");
         consultantsTextField.setOnKeyReleased(event -> consultantsTextField.validate("numbers"));
 
         subRoot.getChildren().addAll(nameTextField, locationTextField, capacityTextField, consultantsTextField);

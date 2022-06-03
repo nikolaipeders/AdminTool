@@ -2,12 +2,14 @@ package UI.Forms;
 
 import Application.MainWindow;
 import Domain.Consultant;
+import Domain.Office;
 import Foundation.DAO.DBController;
 import Foundation.Modified.TextFieldAutoCompletion;
 import Foundation.Modified.TextFieldValidation;
 import UI.Misc.PopUp;
 import UI.Navigation.UIButton;
 import UI.TableViews.TWConsultants;
+import UI.TableViews.TWOffices;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -64,7 +66,21 @@ public class DialogConsultants
         DBController dbController = new DBController();
         officeTextField.getResults().addAll(dbController.getOfficeNames());
         officeTextField.setPromptText("Office");
-        officeTextField.setOnKeyReleased(event -> officeTextField.validate("text"));
+        officeTextField.setOnKeyReleased(event ->
+        {
+            officeTextField.validate("text");
+
+            officeTextField.isWrongInput = true;
+
+            for (int i = 0; i < TWOffices.offices.size(); i++)
+            {
+                if (officeTextField.getText().equals(TWOffices.offices.get(i).getName()))
+                {
+                    officeTextField.isWrongInput = false;
+                }
+            }
+            officeTextField.changeBackgroundColor(officeTextField.isWrongInput);
+        });
 
         TextFieldValidation workTimeTextField = new TextFieldValidation();
         workTimeTextField.setPrefWidth(100);
@@ -135,6 +151,17 @@ public class DialogConsultants
                 {
                     TWConsultants.selected = new Consultant();
                 }
+
+                // Start by removing the consultant from the office
+                for (int i = 0; i < TWOffices.offices.size(); i++)
+                {
+                    if (TWOffices.offices.get(i).getName().equalsIgnoreCase(TWConsultants.selected.getOffice()))
+                    {
+                        TWOffices.offices.get(i).setConsultantsConnected(TWOffices.offices.get(i).getConsultantsConnected()-1);
+                    }
+                }
+
+                // Then set attributes
                 TWConsultants.selected.setName(nameTextField.getText());
                 TWConsultants.selected.setMail(mailTextField.getText());
                 TWConsultants.selected.setOffice(officeTextField.getText());
@@ -165,9 +192,26 @@ public class DialogConsultants
 
                 TWConsultants.selected.setActive(statusCheckBox.isSelected());
 
+                // Update consultant
                 dbController.updateOrInsertConsultant(TWConsultants.selected);
 
-                // If it's a new item
+                // Run through all offices and update attached consultants
+                for (int i = 0; i < TWOffices.offices.size(); i++)
+                {
+                    dbController.updateOrInsertOffice(TWOffices.offices.get(i));
+                }
+
+                // Also update in our Observable List to save a DB querey
+                for (int i = 0; i < TWOffices.offices.size(); i++)
+                {
+                    if (TWOffices.offices.get(i).getName().equalsIgnoreCase(TWConsultants.selected.getOffice()))
+                    {
+                        TWOffices.offices.get(i).setConsultantsConnected(TWOffices.offices.get(i).getConsultantsConnected()+1);
+                    }
+                }
+
+
+                // If it's a new item -> add to Observable List
                 if (MainWindow.action.equalsIgnoreCase(UIButton.addButton.getText()))
                 {
                     TWConsultants.consultants.add(TWConsultants.selected);
