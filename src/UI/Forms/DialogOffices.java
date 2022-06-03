@@ -105,7 +105,6 @@ public class DialogOffices
                 TWOffices.selected.setName(nameTextField.getText());
                 TWOffices.selected.setLocation(Integer.parseInt(locationTextField.getText()));
                 TWOffices.selected.setCapacity(Integer.parseInt(capacityTextField.getText()));
-                TWOffices.selected.setConsultantsConnected(Integer.parseInt(consultantsTextField.getText()));
 
                 controller.updateOrInsertOffice(TWOffices.selected);
 
