@@ -3,10 +3,13 @@ package UI.Forms;
 import Application.MainWindow;
 import Domain.Task;
 import Foundation.DAO.DBController;
+import Foundation.Modified.TextFieldAutoCompletion;
 import Foundation.Modified.TextFieldValidation;
 import UI.Misc.PopUp;
 import UI.Navigation.UIButton;
 import UI.TableViews.TWConsultants;
+import UI.TableViews.TWOffices;
+import UI.TableViews.TWProjects;
 import UI.TableViews.TWTasks;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -34,7 +37,7 @@ public class DialogTasks
     public void getDialog()
     {
         // Max characters for a time input. We'll use this several times.
-        int maxCharacters = 4;
+        int maxCharacters = 7;
 
         final Stage dialog = new Stage();
         dialog.setResizable(false);
@@ -57,13 +60,33 @@ public class DialogTasks
         nameTextField.setPromptText("Task");
         nameTextField.setOnKeyTyped(event -> nameTextField.validate("text"));
 
+        TextFieldAutoCompletion projectTextField = new TextFieldAutoCompletion();
+        DBController dbController = new DBController();
+        projectTextField.getResults().addAll(dbController.getProjectNames());
+        projectTextField.setPromptText("Project");
+        projectTextField.setOnKeyReleased(event ->
+        {
+            projectTextField.validate("text");
+
+            projectTextField.isWrongInput = true;
+
+            for (int i = 0; i < TWProjects.projects.size(); i++)
+            {
+                if (projectTextField.getText().equals(TWProjects.projects.get(i).getName()))
+                {
+                    projectTextField.isWrongInput = false;
+                }
+            }
+            projectTextField.changeBackgroundColor(projectTextField.isWrongInput);
+        });
+
         TextFieldValidation mailTextField = new TextFieldValidation();
         mailTextField.setPromptText("Cons. Mail");
         mailTextField.setOnKeyReleased(event -> mailTextField.validate("mail"));
 
         TextFieldValidation timeTextField = new TextFieldValidation();
         timeTextField.setPromptText("Time Spent");
-        timeTextField.setOnKeyReleased(event -> timeTextField.validate("time"));
+        timeTextField.setOnKeyReleased(event -> timeTextField.validate("hh:mm:ss"));
         timeTextField.setOnKeyTyped(event ->
         {
             if(timeTextField.getText().length() > maxCharacters) event.consume();
@@ -71,15 +94,16 @@ public class DialogTasks
 
         CheckBox statusCheckBox = new CheckBox("Completed");
 
-        subRoot.getChildren().addAll(nameTextField, mailTextField, timeTextField, statusCheckBox);
+        subRoot.getChildren().addAll(nameTextField, projectTextField, mailTextField, timeTextField, statusCheckBox);
 
         // If the user has selected an item and pressed EDIT
-        if (TWConsultants.selected != null && MainWindow.action.equalsIgnoreCase("edit"))
+        if (TWTasks.selected != null && MainWindow.action.equalsIgnoreCase("edit"))
         {
-            nameTextField.setText(TWConsultants.selected.getName());
-            mailTextField.setText(TWConsultants.selected.getMail());
-            timeTextField.setText(TWConsultants.selected.getWorkTime().toString());
-            statusCheckBox.setSelected(TWConsultants.selected.getActive());
+            nameTextField.setText(TWTasks.selected.getName());
+            projectTextField.setText("" + TWTasks.selected.getProjectId());
+            mailTextField.setText(TWTasks.selected.getConsultantMail());
+            timeTextField.setText(TWTasks.selected.getTimeSpent().toString());
+            statusCheckBox.setSelected(TWTasks.selected.getCompleted());
         }
 
         // Add Save Button (saves to DB)
@@ -107,6 +131,15 @@ public class DialogTasks
                 }
                 TWTasks.selected.setName(nameTextField.getText());
                 TWTasks.selected.setConsultantMail(mailTextField.getText());
+
+                for (int i = 0; i < TWProjects.projects.size(); i++)
+                {
+                    if (projectTextField.getText().equals(TWProjects.projects.get(i).getName()))
+                    {
+                        TWTasks.selected.setProjectId(TWProjects.projects.get(i).getId());
+                    }
+                }
+
                 if (timeTextField.getText().length() <= 5)
                 {
                     TWTasks.selected.setTimeSpent(Time.valueOf("00:" + timeTextField.getText()));
@@ -118,8 +151,7 @@ public class DialogTasks
 
                 TWTasks.selected.setCompleted(statusCheckBox.isSelected());
 
-                DBController dbController = new DBController();
-                dbController.updateOrInsertConsultant(TWConsultants.selected);
+                dbController.updateOrInsertTask(TWTasks.selected);
 
                 // If it's a new item
                 if (MainWindow.action.equalsIgnoreCase(UIButton.addButton.getText()))
@@ -148,7 +180,7 @@ public class DialogTasks
         exitButton.setGraphic(imageView);
         subRoot.getChildren().add(exitButton);
         exitButton.setOnAction(event -> {
-            TWConsultants.selected = TWConsultants.consultantTableView.getSelectionModel().getSelectedItem();
+            TWTasks.selected = TWTasks.taskTableView.getSelectionModel().getSelectedItem();
             dialog.close();
         });
 

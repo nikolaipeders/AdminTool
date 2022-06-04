@@ -14,5 +14,6 @@
     <orderEntry type="library" name="mssql-jdbc-9.4.1.jre16" level="project" />
     <orderEntry type="library" name="log4j-api-2.17.2" level="project" />
     <orderEntry type="library" name="richtextfx-0.10.9" level="project" />
+    <orderEntry type="library" name="Spire.Doc" level="project" />
   </component>
 </module>

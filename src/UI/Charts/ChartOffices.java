@@ -20,20 +20,20 @@ public class ChartOffices
         // Preparing ObservableList object
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
 
-        // Total capacity
-        int capacity = 0;
+        // Total availableSpots
+        int availableSpots = 0;
 
         for (Office office : TWOffices.offices)
         {
-            pieChartData.add(new PieChart.Data(office.getName(), office.getCapacity()));
-            capacity += office.getCapacity();
+            pieChartData.add(new PieChart.Data(office.getName() + " " + office.getConsultantsConnected() + "/" + office.getCapacity(), office.getCapacity()- office.getConsultantsConnected()));
+            availableSpots += office.getCapacity()-office.getConsultantsConnected();
         }
 
         // Creating a Pie chart
         pieChart = new PieChart(pieChartData);
 
         // Setting the title of the Pie chart
-        pieChart.setTitle("Office capacity\nTotal: " + capacity);
+        pieChart.setTitle("Offices");
 
         // Setting the direction to arrange the data
         pieChart.setClockwise(true);

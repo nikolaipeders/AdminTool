@@ -14,7 +14,7 @@ import UI.Forms.DialogConsultants;
 import UI.Forms.DialogOffices;
 import UI.Forms.DialogProjects;
 import UI.Forms.DialogTasks;
-import UI.KeyBindings;
+import UI.Misc.KeyBindings;
 import UI.Report;
 import UI.TableViews.TWConsultants;
 import UI.TableViews.TWOffices;
@@ -546,4 +546,6 @@ public class UIButton
         });
         return chartButton;
     }
+
+    
 }

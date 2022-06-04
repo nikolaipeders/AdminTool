@@ -85,7 +85,7 @@ public class DialogConsultants
         TextFieldValidation workTimeTextField = new TextFieldValidation();
         workTimeTextField.setPrefWidth(100);
         workTimeTextField.setPromptText("Work");
-        workTimeTextField.setOnKeyReleased(event -> workTimeTextField.validate("time"));
+        workTimeTextField.setOnKeyReleased(event -> workTimeTextField.validate("mm:ss"));
         workTimeTextField.setOnKeyTyped(event ->
         {
             if(workTimeTextField.getText().length() > maxCharacters) event.consume();
@@ -94,7 +94,7 @@ public class DialogConsultants
         TextFieldValidation breakTimeTextField = new TextFieldValidation();
         breakTimeTextField.setPrefWidth(100);
         breakTimeTextField.setPromptText("Break");
-        breakTimeTextField.setOnKeyReleased(event -> breakTimeTextField.validate("time"));
+        breakTimeTextField.setOnKeyReleased(event -> breakTimeTextField.validate("mm:ss"));
         breakTimeTextField.setOnKeyTyped(event ->
         {
             if(breakTimeTextField.getText().length() > maxCharacters) event.consume();
@@ -103,7 +103,7 @@ public class DialogConsultants
         TextFieldValidation lBreakTimeTextField = new TextFieldValidation();
         lBreakTimeTextField.setPrefWidth(100);
         lBreakTimeTextField.setPromptText("Long Break");
-        lBreakTimeTextField.setOnKeyReleased(event -> lBreakTimeTextField.validate("time"));
+        lBreakTimeTextField.setOnKeyReleased(event -> lBreakTimeTextField.validate("mm:ss"));
         lBreakTimeTextField.setOnKeyTyped(event ->
         {
             if(lBreakTimeTextField.getText().length() > maxCharacters) event.consume();

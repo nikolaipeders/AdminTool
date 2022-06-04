@@ -19,7 +19,7 @@ public class TextFieldValidation extends TextField
 
     public void validate(String regex)
     {
-        if (regex.equalsIgnoreCase("time"))
+        if (regex.equalsIgnoreCase("mm:ss"))
         {
             pattern = Pattern.compile("^([0-5]?[0-9]|2[0-3]):[0-5][0-9]$");
         }
@@ -39,6 +39,12 @@ public class TextFieldValidation extends TextField
         {
             pattern = Pattern.compile("^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$");
         }
+        if (regex.equalsIgnoreCase("hh:mm:ss"))
+        {
+            pattern = Pattern.compile("^(?:(?:([01]?\\d|2[0-3]):)?([0-5]?\\d):)?([0-5]?\\d)$");
+        }
+
+
 
         Matcher matcher = pattern.matcher(getText());
         boolean matchFound = matcher.find();
@@ -54,9 +60,13 @@ public class TextFieldValidation extends TextField
 
             Tooltip tooltipWrong = new Tooltip();
 
-            if (regex.equalsIgnoreCase("time"))
+            if (regex.equalsIgnoreCase("mm:ss"))
             {
                 tooltipWrong.setText("Input must be of time format MM:SS");
+            }
+            if (regex.equalsIgnoreCase("hh:mm:ss"))
+            {
+                tooltipWrong.setText("Input must be of time format HH:MM:SS");
             }
             else if (regex.equalsIgnoreCase("text"))
             {

@@ -12,6 +12,7 @@ import Foundation.Interfaces.TaskDAO;
 import UI.TableViews.TWConsultants;
 import UI.TableViews.TWOffices;
 import UI.TableViews.TWProjects;
+import UI.TableViews.TWTasks;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -334,6 +335,28 @@ public class DBController implements ConsultantDAO, OfficeDAO, ProjectDAO, TaskD
     }
 
     @Override
+    public LinkedList<String> getProjectNames()
+    {
+        ResultSet rs = null;
+        PreparedStatement cs = null;
+        LinkedList<String> projects = new LinkedList<>();
+        try
+        {
+            cs = con.prepareCall("{call Get_Projects_Names}");
+            rs = cs.executeQuery();
+            while (rs.next())
+            {
+                String name = rs.getString(1);
+                projects.add(name);
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return projects;
+    }
+
+    @Override
     public void updateOrInsertProject(Project project)
     {
         PreparedStatement cs = null;
@@ -462,7 +485,25 @@ public class DBController implements ConsultantDAO, OfficeDAO, ProjectDAO, TaskD
     @Override
     public void updateOrInsertTask(Task task)
     {
+        {
+            PreparedStatement cs = null;
+            try
+            {
+                cs = con.prepareCall("{call updatingTask (?,?,?,?,?,?,?)}");
+                cs.setInt(1, task.getId());
+                cs.setString(2, task.getConsultantMail());
+                cs.setInt(3, task.getProjectId());
+                cs.setString(4, task.getName());
+                cs.setTime(5, task.getTimeSpent());
+                cs.setBoolean(6, task.getCompleted());
+                cs.setInt(7, task.getOrder());
 
+                cs.execute();
+            } catch (SQLException e)
+            {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -482,12 +523,62 @@ public class DBController implements ConsultantDAO, OfficeDAO, ProjectDAO, TaskD
     @Override
     public void moveUpTask(Task task)
     {
+        if (TWTasks.taskTableView.getSelectionModel().getSelectedItem() != null)
+        {
+            if (TWTasks.taskTableView.getSelectionModel().getSelectedIndex() != 0)
+            {
+                // The index of the item we want to move up
+                int index = TWTasks.taskTableView.getSelectionModel().getSelectedIndex();
 
+                // Swap with the index above
+                Collections.swap(TWTasks.tasks, index, index -1);
+
+                index = TWTasks.taskTableView.getSelectionModel().getSelectedIndex();
+
+                PreparedStatement cs = null;
+
+                try
+                {
+                    cs = con.prepareCall("{call move_project_up (?,?)}");
+                    cs.setInt(1, index );
+                    cs.setInt(2, task.getId());
+                    cs.execute();
+                }
+                catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     @Override
     public void moveDownTask(Task task)
     {
+        if (TWTasks.taskTableView.getSelectionModel().getSelectedItem() != null)
+        {
+            if (TWTasks.taskTableView.getSelectionModel().getSelectedIndex() != 0)
+            {
+                // The index of the item we want to move up
+                int index = TWTasks.taskTableView.getSelectionModel().getSelectedIndex();
 
+                // Swap with the index above
+                Collections.swap(TWTasks.tasks, index, index +1);
+
+                index = TWTasks.taskTableView.getSelectionModel().getSelectedIndex();
+
+                PreparedStatement cs = null;
+
+                try
+                {
+                    cs = con.prepareCall("{call move_project_up (?,?)}");
+                    cs.setInt(1, index );
+                    cs.setInt(2, task.getId());
+                    cs.execute();
+                }
+                catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }
