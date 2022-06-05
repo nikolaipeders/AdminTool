@@ -15,6 +15,7 @@ import UI.Forms.DialogOffices;
 import UI.Forms.DialogProjects;
 import UI.Forms.DialogTasks;
 import UI.Misc.KeyBindings;
+import UI.Misc.PopUp;
 import UI.Report;
 import UI.TableViews.TWConsultants;
 import UI.TableViews.TWOffices;
@@ -23,6 +24,7 @@ import UI.TableViews.TWTasks;
 import javafx.geometry.Side;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import jdk.jfr.internal.tool.Main;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -151,39 +153,6 @@ public class UIButton
         });
 
         return tasksButton;
-    }
-
-    public Button reportButton()
-    {
-        Report report = new Report();
-
-        reportButton = new Button("Report");
-        reportButton.setMaxSize(150, 30);
-        reportButton.setMinSize(150, 30);
-
-        ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/resources/report.png")).toExternalForm());
-
-        imageView.setPreserveRatio(true);
-        imageView.fitHeightProperty().bind(reportButton.heightProperty());
-
-        reportButton.setGraphic(imageView);
-
-        reportButton.setOnAction(event -> {
-            try
-            {
-                MainWindow.root.setCenter(report.getView());
-            } catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-            MainWindow.sender.setStyle(null);
-            MainWindow.sender = reportButton;
-
-            // Keep visual track of selected menu button
-            MainWindow.sender.setStyle("-fx-background-color: #FFFFFF; -fx-background-insets: -10 0 -10 0");
-        });
-
-        return reportButton;
     }
 
     public Button bindingsButton()
@@ -547,5 +516,47 @@ public class UIButton
         return chartButton;
     }
 
-    
+    public Button reportButton()
+    {
+        Report report = new Report();
+
+        reportButton = new Button("report");
+        reportButton.setMinSize(30, 30);
+        reportButton.setMaxSize(30, 30);
+        reportButton.setTooltip(new Tooltip("Generate report"));
+
+        ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/resources/report.png")).toExternalForm());
+        imageView.setPreserveRatio(true);
+        imageView.fitHeightProperty().bind(reportButton.heightProperty());
+
+        reportButton.setGraphic(imageView);
+
+        reportButton.setOnAction(event -> {
+            MainWindow.action = reportButton.getText();
+
+            switch (MainWindow.sender.getText())
+            {
+                case "Consultants":
+                    report.consultantsReport();
+                    break;
+
+                case "Offices":
+                    report.officesReport();
+                    break;
+
+                case "Projects":
+                    report.projectsReport();
+                    break;
+
+                case "Tasks":
+                    report.tasksReport();
+                    break;
+            }
+
+            // TODO POP UP WITH "REPORT SAVED"
+            PopUp confirmationPop = new PopUp();
+            confirmationPop.popText("Report saved!", MainWindow.stage, 50, 200);
+        });
+        return reportButton;
+    }
 }

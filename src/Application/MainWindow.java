@@ -21,9 +21,13 @@ public class MainWindow extends Application {
     public static Button sender;
     public static String action;
 
+    public static Stage stage;
+
     @Override
     public void start(Stage primaryStage) throws Exception
     {
+
+        stage = primaryStage;
         int minWidth = 1400;
         int minHeight = 700;
 

@@ -21,8 +21,7 @@ public class Menubar
         menubarRoot.setStyle("-fx-background-color: #EEF5FD; -fx-border-radius: 7px;");
 
         menubarRoot.getChildren().addAll(uiButton.consultantsButton(),
-                uiButton.officesButton(), uiButton.projectsButton(), uiButton.tasksButton(),
-                uiButton.reportButton(), uiButton.bindingsButton());
+                uiButton.officesButton(), uiButton.projectsButton(), uiButton.tasksButton(), uiButton.bindingsButton());
 
         return menubarRoot;
     }
