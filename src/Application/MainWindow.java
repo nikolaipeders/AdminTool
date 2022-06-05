@@ -14,13 +14,16 @@ import java.util.Objects;
 
 public class MainWindow extends Application {
 
-    // Is public and static to enable changing the center from other classes
+    // Is public and static to enable changing the center from other classes.
     public static BorderPane root = new BorderPane();
 
-    // We'll use this to keep track of the latest button pressed!
+    // We'll use this to keep track of the latest menu button pressed.
     public static Button sender;
+
+    // We'll use this to note which action button have been pressed.
     public static String action;
 
+    // For pop-ups, we need access to the stage.
     public static Stage stage;
 
     @Override
@@ -28,13 +31,14 @@ public class MainWindow extends Application {
     {
 
         stage = primaryStage;
+
         int minWidth = 1400;
         int minHeight = 700;
 
         primaryStage.setMinWidth(minWidth);
         primaryStage.setMinHeight(minHeight);
 
-        // This will change in runtime but launches with the home screen
+        // Load splashscreen on launch
         Splash loadScreen = new Splash();
         loadScreen.loadSplashScreen();
 
@@ -75,7 +79,6 @@ public class MainWindow extends Application {
                         }
                     }
                 });
-
 
         primaryStage.setScene(scene);
         primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResource("/resources/logo.png")).toExternalForm()));

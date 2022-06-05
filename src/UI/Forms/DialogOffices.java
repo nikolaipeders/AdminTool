@@ -24,34 +24,41 @@ import java.util.Objects;
 
 public class DialogOffices
 {
+
+    // We'll use the DBController several times.
+    DBController dbController = new DBController();
+
     public DialogOffices(Button sender)
     {
-
     }
 
+    /*
+    Opens a new dialog with TextFields and Buttons.
+     */
     public void getDialog()
     {
         final Stage dialog = new Stage();
         dialog.setResizable(false);
         dialog.initStyle(StageStyle.UNDECORATED);
-        dialog.setTitle("Add " + MainWindow.sender);
+        dialog.setTitle("" + MainWindow.sender);
 
         // Disables the option to use main window when dialog is active
         dialog.initModality(Modality.APPLICATION_MODAL);
 
+        // Parent settings
         HBox subRoot = new HBox(10);
         subRoot.setPadding(new Insets(40, 0, 40, 0));
         subRoot.setStyle("-fx-border-radius: 7px; -fx-background-radius: 7px; -fx-border-color: black; -fx-background-color: #FFFFFF");
         subRoot.setAlignment(Pos.CENTER);
 
+        // Scene settings
         Scene dialogScene = new Scene(subRoot, MainWindow.root.getWidth() - 250, 60);
         dialogScene.getStylesheets().add("dialogStyle.css");
 
-        // TextFields
+        // TextFields. All of these are of "TextFieldValidation" type. This enables the option to use regex for input validation.
         TextFieldValidation nameTextField = new TextFieldValidation();
         nameTextField.setPromptText("Office Name");
         nameTextField.setOnKeyTyped(event -> nameTextField.validate("text"));
-
 
         TextFieldValidation locationTextField = new TextFieldValidation();
         locationTextField.setPromptText("Location");
@@ -61,14 +68,15 @@ public class DialogOffices
         capacityTextField.setPromptText("Capacity");
         capacityTextField.setOnKeyReleased(event -> capacityTextField.validate("numbers"));
 
+        // This TextField can't be edited as it's the amount of consultants connected, which is calculated with SQL.
         TextFieldValidation consultantsTextField = new TextFieldValidation();
         consultantsTextField.setEditable(false);
-        consultantsTextField.setStyle("-fx-background-color: #EDEDED");
+        consultantsTextField.setStyle("-fx-background-color: #EDEDED"); // Help the user understand that this is uneditable.
         consultantsTextField.setOnKeyReleased(event -> consultantsTextField.validate("numbers"));
 
         subRoot.getChildren().addAll(nameTextField, locationTextField, capacityTextField, consultantsTextField);
 
-        // If the user has selected an item and pressed EDIT
+        // If the user has selected an item and pressed EDIT, fill the TextFields with data of this item.
         if (TWOffices.selected != null && MainWindow.action.equalsIgnoreCase("edit"))
         {
             nameTextField.setText(TWOffices.selected.getName());
@@ -90,25 +98,22 @@ public class DialogOffices
 
         subRoot.getChildren().add(saveButton);
 
-        saveButton.setOnAction(event -> {
+        // When user presses the save button, only accept the click if all inputs are of the right format!
+        saveButton.setOnAction(event ->
+        {
             if (!nameTextField.isWrongInput &&
                     !locationTextField.isWrongInput &&
                     !capacityTextField.isWrongInput &&
                     !consultantsTextField.isWrongInput)
             {
-                // SAVE STUFF WITH DB METHOD IF NOT EXIST CREATE ELSE UPDATE
-                DBController controller = new DBController();
-                if (MainWindow.action.equalsIgnoreCase(UIButton.addButton.getText()))
-                {
-                    TWOffices.selected = new Office();
-                }
+                // Then set attributes
                 TWOffices.selected.setName(nameTextField.getText());
                 TWOffices.selected.setLocation(Integer.parseInt(locationTextField.getText()));
                 TWOffices.selected.setCapacity(Integer.parseInt(capacityTextField.getText()));
 
-                controller.updateOrInsertOffice(TWOffices.selected);
+                dbController.updateOrInsertOffice(TWOffices.selected);
 
-                // If it's a new item
+                // If it's a new item -> add to ObservableList
                 if (MainWindow.action.equalsIgnoreCase(UIButton.addButton.getText()))
                 {
                     TWOffices.offices.add(TWOffices.selected);
@@ -134,13 +139,17 @@ public class DialogOffices
 
         exitButton.setGraphic(imageView);
         subRoot.getChildren().add(exitButton);
-        exitButton.setOnAction(event -> {
+        exitButton.setOnAction(event ->
+        {
             TWOffices.selected = TWOffices.tableViewOffices.getSelectionModel().getSelectedItem();
             dialog.close();
         });
 
-        // We want to be able to close the dialog with the ESCAPE key
-        dialogScene.setOnKeyPressed(e -> {
+        /*  We want to be able to close the dialog with the ESCAPE key
+            AND accept input with ENTER key
+         */
+        dialogScene.setOnKeyPressed(e ->
+        {
             if (e.getCode() == KeyCode.ESCAPE)
             {
                 exitButton.fire();

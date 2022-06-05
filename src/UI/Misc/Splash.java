@@ -7,10 +7,7 @@ import Foundation.Loading.LoadProjects;
 import Foundation.Loading.LoadTasks;
 import UI.Navigation.Menubar;
 import UI.Navigation.UIButton;
-import UI.TableViews.TWConsultants;
 import javafx.animation.*;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -23,8 +20,11 @@ public class Splash
 {
     public boolean isDone = false;
 
-    public void loadSplashScreen() {
-
+    /**
+     * Loads a splashscreen which initializes threads all loading data from DB. This gives a startup time of a couple of seconds.
+     */
+    public void loadSplashScreen()
+    {
         MainWindow.root.setCenter(loadingScreen());
 
         // Load splash screen with fade in effect
@@ -42,8 +42,8 @@ public class Splash
         fadeIn.play();
 
         // After fade in, start threads
-        fadeIn.setOnFinished((e) -> {
-
+        fadeIn.setOnFinished((e) ->
+        {
             LoadConsultants loadConsultants = new LoadConsultants();
             loadConsultants.start();
 
@@ -60,7 +60,8 @@ public class Splash
         });
 
         // After fade out, load actual content
-        fadeOut.setOnFinished((e) -> {
+        fadeOut.setOnFinished((e) ->
+        {
             Menubar menubar = new Menubar();
             MainWindow.root.setLeft(menubar.GetMenubarRoot());
 
@@ -69,12 +70,12 @@ public class Splash
             UIButton.consultantsButton.fire();
 
             isDone = true;
-
-
-
         });
     }
 
+    /**
+     * Returns the actual visual splashscreen.
+     */
     public VBox loadingScreen()
     {
         VBox loadScreen = new VBox(10);

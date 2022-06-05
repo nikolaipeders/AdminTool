@@ -1,8 +1,6 @@
 package UI.TableViews;
 
-import Domain.Office;
 import Domain.Project;
-import Foundation.DAO.DBController;
 import UI.Navigation.ActionBar;
 import UI.Navigation.UIButton;
 import javafx.collections.ObservableList;
@@ -23,9 +21,11 @@ public class TWProjects
     public static BorderPane subRoot;
     public TWProjects()
     {
-
     }
 
+    /*
+    Returns a BorderPane with a tableview at the center and a custom menubar at the bottom.
+     */
     public BorderPane getView()
     {
         subRoot = new BorderPane();
@@ -39,6 +39,9 @@ public class TWProjects
         return subRoot;
     }
 
+    /**
+     * @return TableView for the Project domain.
+     */
     public TableView<Project> tableViewProjects()
     {
         projectTableView = new TableView<>();
@@ -83,17 +86,19 @@ public class TWProjects
             {
                 UIButton.deleteButton.fire();
             }
-            if (e.isControlDown() && (e.getCode() == KeyCode.F)) {
+            if (e.isControlDown() && (e.getCode() == KeyCode.F))
+            {
                 ActionBar.searchField.requestFocus();
             }
-            if (e.isControlDown() && (e.getCode() == KeyCode.UP)) {
+            if (e.isControlDown() && (e.getCode() == KeyCode.UP))
+            {
                 UIButton.moveUpButton.fire();
             }
-            if (e.isControlDown() && (e.getCode() == KeyCode.DOWN)) {
+            if (e.isControlDown() && (e.getCode() == KeyCode.DOWN))
+            {
                 UIButton.moveDownButton.fire();
             }
         });
-
         return projectTableView;
     }
 }

@@ -18,12 +18,13 @@ public class ChartProjects
 
     public ChartProjects()
     {
-
     }
 
+    /**
+     * Returns a BarChart showing how many tasks are allocated to each project.
+     */
     public BarChart<String, Number> getBarChart()
     {
-        // Defining the x-axis
         CategoryAxis xAxis = new CategoryAxis();
 
         xAxis.setCategories(FXCollections.observableArrayList(Collections.singletonList("Projects")));

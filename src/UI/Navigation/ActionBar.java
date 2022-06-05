@@ -29,15 +29,18 @@ public class ActionBar
         this.sender = sender;
     }
 
+    // Returns a custom menubar based on a HBox.
     public HBox getBottomBar()
     {
-        // HBox settings
+        // Main HBox. Items are split in left and right side, thus requiring two extra HBox's.
         HBox bottomBar = new HBox(30);
 
+        // Left HBox settings
         HBox leftSide = new HBox();
         leftSide.setAlignment(Pos.CENTER_LEFT);
         HBox.setHgrow(leftSide, Priority.ALWAYS);
 
+        // Depending on the tableview chosen, we'll have different searchbars.
         if (sender.equalsIgnoreCase(UIButton.consultantsButton.getText()))
         {
             leftSide.getChildren().add(searchBarConsultants());
@@ -55,15 +58,6 @@ public class ActionBar
             leftSide.getChildren().add(searchBarTasks());
         }
 
-        HBox rightSide = new HBox(30);
-        rightSide.setAlignment(Pos.CENTER_RIGHT);
-        HBox.setHgrow(rightSide, Priority.ALWAYS);
-        rightSide.setPadding(new Insets(0, 20, 0, 0));
-        rightSide.setMaxHeight(50);
-        rightSide.setMinHeight(50);
-        rightSide.getChildren().addAll(uib.addButton(), uib.editButton(), uib.deleteButton(),
-                uib.moveUpButton(), uib.moveDownButton(), uib.chartButton(), uib.reportButton());
-
         searchField.setOnKeyPressed(e ->
         {
             // Enable opening an item with ENTER key
@@ -73,12 +67,25 @@ public class ActionBar
             }
         });
 
+        // Right HBox settings
+        HBox rightSide = new HBox(30);
+        rightSide.setAlignment(Pos.CENTER_RIGHT);
+        HBox.setHgrow(rightSide, Priority.ALWAYS);
+        rightSide.setPadding(new Insets(0, 20, 0, 0));
+        rightSide.setMaxHeight(50);
+        rightSide.setMinHeight(50);
+        rightSide.getChildren().addAll(uib.addButton(), uib.editButton(), uib.deleteButton(),
+                uib.moveUpButton(), uib.moveDownButton(), uib.chartButton(), uib.reportButton());
+
         // Add all items and return parent HBox
         bottomBar.getChildren().addAll(leftSide, rightSide);
 
         return bottomBar;
     }
 
+    /**
+     * @return a TextField of custom type TextFieldValidation which enables searching for all attributes associated with Consultants.
+     */
     public static TextFieldValidation searchBarConsultants()
     {
         searchField = new TextFieldAutoCompletion();
@@ -136,6 +143,9 @@ public class ActionBar
         return searchField;
     }
 
+    /**
+     * @return a TextField of custom type TextFieldValidation which enables searching for all attributes associated with Offices.
+     */
     public static TextFieldValidation searchBarOffices()
     {
         searchField = new TextFieldAutoCompletion();
@@ -168,6 +178,9 @@ public class ActionBar
         return searchField;
     }
 
+    /**
+     * @return a TextField of custom type TextFieldValidation which enables searching for all attributes associated with Projects.
+     */
     public static TextFieldValidation searchBarProjects()
     {
         searchField = new TextFieldAutoCompletion();
@@ -201,6 +214,9 @@ public class ActionBar
         return searchField;
     }
 
+    /**
+     * @return a TextField of custom type TextFieldValidation which enables searching for all attributes associated with Tasks.
+     */
     public static TextFieldValidation searchBarTasks()
     {
         searchField = new TextFieldAutoCompletion();

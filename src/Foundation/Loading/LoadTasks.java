@@ -5,8 +5,11 @@ import UI.TableViews.TWTasks;
 
 public class LoadTasks extends Thread
 {
-    public void run() {
-
+    /**
+     * Runnable thread for loading all data from the Tasks' table in DB to an observable list found belonging to TWTasks.
+     */
+    public void run()
+    {
         DBController dbController = new DBController();
         TWTasks.tasks = dbController.getAllTasks();
         System.out.println("tasks started");

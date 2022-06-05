@@ -17,12 +17,13 @@ public class ChartTasks
 
     public ChartTasks()
     {
-
     }
 
+    /**
+     * Returns a BarChart showing how consultants a divided in the offices.
+     */
     public BarChart<String, Number> getBarChart()
     {
-        // Defining the x-axis
         CategoryAxis xAxis = new CategoryAxis();
 
         xAxis.setCategories(FXCollections.observableArrayList(Collections.singletonList("Consultants")));

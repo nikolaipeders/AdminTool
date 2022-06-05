@@ -7,8 +7,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class DatabaseConnection {
-
+public class DatabaseConnection
+{
     private static Connection con = null;
     private static String host;
     private static String port;
@@ -16,12 +16,13 @@ public class DatabaseConnection {
     private static String userName;
     private static String password;
 
-    static {
+    static
+    {
         handleDBProperties();
     }
 
-    public static void handleDBProperties() {
-
+    public static void handleDBProperties()
+    {
         Properties props = new Properties();
         String fileName = "db.properties";
         InputStream input;

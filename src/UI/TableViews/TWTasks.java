@@ -1,8 +1,6 @@
 package UI.TableViews;
 
-import Domain.Consultant;
 import Domain.Task;
-import Foundation.DAO.DBController;
 import UI.Navigation.ActionBar;
 import UI.Navigation.UIButton;
 import javafx.collections.ObservableList;
@@ -24,9 +22,11 @@ public class TWTasks
 
     public TWTasks()
     {
-
     }
 
+    /*
+    Returns a BorderPane with a tableview at the center and a custom menubar at the bottom.
+     */
     public BorderPane getView()
     {
         subRoot = new BorderPane();
@@ -40,6 +40,9 @@ public class TWTasks
         return subRoot;
     }
 
+    /**
+     * @return TableView for the Task domain.
+     */
     public TableView<Task> tableViewTasks()
     {
         taskTableView = new TableView<>();
@@ -102,13 +105,16 @@ public class TWTasks
             {
                 UIButton.deleteButton.fire();
             }
-            if (e.isControlDown() && (e.getCode() == KeyCode.F)) {
+            if (e.isControlDown() && (e.getCode() == KeyCode.F))
+            {
                 ActionBar.searchField.requestFocus();
             }
-            if (e.isControlDown() && (e.getCode() == KeyCode.UP)) {
+            if (e.isControlDown() && (e.getCode() == KeyCode.UP))
+            {
                 UIButton.moveUpButton.fire();
             }
-            if (e.isControlDown() && (e.getCode() == KeyCode.DOWN)) {
+            if (e.isControlDown() && (e.getCode() == KeyCode.DOWN))
+            {
                 UIButton.moveDownButton.fire();
             }
         });

@@ -10,13 +10,16 @@ import java.util.regex.Pattern;
 public class TextFieldValidation extends TextField
 {
     public boolean isWrongInput = false;
-    String stdStyle = getStyle();
     Pattern pattern;
 
     public TextFieldValidation()
     {
     }
 
+    /**
+     * Validate a TextField for a given regex
+     * @param regex selects what kind of regex to compile
+     */
     public void validate(String regex)
     {
         if (regex.equalsIgnoreCase("mm:ss"))
@@ -44,20 +47,21 @@ public class TextFieldValidation extends TextField
             pattern = Pattern.compile("^(?:(?:([01]?\\d|2[0-3]):)?([0-5]?\\d):)?([0-5]?\\d)$");
         }
 
-
-
+        // Match TextField with pattern
         Matcher matcher = pattern.matcher(getText());
         boolean matchFound = matcher.find();
+
         if (matchFound)
         {
             isWrongInput = false;
             changeBackgroundColor(isWrongInput);
         }
-        else // Show a tooltip explaining the mistake!
+        else
         {
             isWrongInput = true;
             changeBackgroundColor(isWrongInput);
 
+            // Show a tooltip explaining the mistake
             Tooltip tooltipWrong = new Tooltip();
 
             if (regex.equalsIgnoreCase("mm:ss"))
@@ -88,6 +92,9 @@ public class TextFieldValidation extends TextField
         }
     }
 
+    /**
+     * Show a red color if content of TextField is wrong input, else show a white color.
+     */
     public void changeBackgroundColor(Boolean isWrongInput)
     {
         if (isWrongInput)

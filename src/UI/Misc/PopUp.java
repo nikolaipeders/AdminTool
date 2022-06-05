@@ -9,15 +9,17 @@ import javafx.util.Duration;
 public class PopUp
 {
 
-    public PopUp() {
-
+    public PopUp()
+    {
     }
 
     /**
      * Prompts a small dialog which shows in x amount of seconds
      */
-    public void popText(String text, Stage stage, double height, double width) {
-        try {
+    public void popText(String text, Stage stage, double height, double width)
+    {
+        try
+        {
             Popup popup = new Popup();
             popup.setAutoHide(true);
             popup.setAutoFix(true);
@@ -39,8 +41,11 @@ public class PopUp
             popup.show(stage);
             delay.play();
 
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             System.out.println("Error with popText");
         }
     }
 }
+

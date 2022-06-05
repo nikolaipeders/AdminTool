@@ -1,7 +1,6 @@
 package UI.TableViews;
 
 import Domain.Office;
-import Foundation.DAO.DBController;
 import UI.Navigation.ActionBar;
 import UI.Navigation.UIButton;
 import javafx.collections.ObservableList;
@@ -22,9 +21,11 @@ public class TWOffices
 
     public TWOffices()
     {
-
     }
 
+    /*
+    Returns a BorderPane with a tableview at the center and a custom menubar at the bottom.
+     */
     public BorderPane getView()
     {
         subRoot = new BorderPane();
@@ -38,6 +39,9 @@ public class TWOffices
         return subRoot;
     }
 
+    /**
+     * @return TableView for the Office domain.
+     */
     public TableView<Office> tableViewOffices()
     {
         tableViewOffices = new TableView<>();
@@ -92,17 +96,19 @@ public class TWOffices
             {
                 UIButton.deleteButton.fire();
             }
-            if (e.isControlDown() && (e.getCode() == KeyCode.F)) {
+            if (e.isControlDown() && (e.getCode() == KeyCode.F))
+            {
                 ActionBar.searchField.requestFocus();
             }
-            if (e.isControlDown() && (e.getCode() == KeyCode.UP)) {
+            if (e.isControlDown() && (e.getCode() == KeyCode.UP))
+            {
                 UIButton.moveUpButton.fire();
             }
-            if (e.isControlDown() && (e.getCode() == KeyCode.DOWN)) {
+            if (e.isControlDown() && (e.getCode() == KeyCode.DOWN))
+            {
                 UIButton.moveDownButton.fire();
             }
         });
-
         return tableViewOffices;
     }
 }

@@ -5,8 +5,11 @@ import UI.TableViews.TWConsultants;
 
 public class LoadConsultants extends Thread
 {
-    public void run() {
-
+    /**
+     * Runnable thread for loading all data from the Consultants' table in DB to an observable list belonging to TWConsultants.
+     */
+    public void run()
+    {
         DBController dbController = new DBController();
             TWConsultants.consultants = dbController.getAllConsultants();
             System.out.println("consultants started");

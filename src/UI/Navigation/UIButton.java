@@ -24,9 +24,6 @@ import UI.TableViews.TWTasks;
 import javafx.geometry.Side;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import jdk.jfr.internal.tool.Main;
-
-import java.io.IOException;
 import java.util.Objects;
 
 public class UIButton
@@ -47,6 +44,9 @@ public class UIButton
     {
     }
 
+    /**
+     * @return A button for entering the Consultants menu.
+     */
     public Button consultantsButton()
     {
         TWConsultants listViewConsultant = new TWConsultants();
@@ -74,6 +74,9 @@ public class UIButton
         return consultantsButton;
     }
 
+    /**
+     * @return A button for entering the Offices menu.
+     */
     public Button officesButton()
     {
         TWOffices listViewOffices = new TWOffices();
@@ -101,6 +104,9 @@ public class UIButton
         return officesButton;
     }
 
+    /**
+     * @return A button for entering the Projects menu.
+     */
     public Button projectsButton()
     {
         TWProjects listViewProjects = new TWProjects();
@@ -128,6 +134,9 @@ public class UIButton
         return projectsButton;
     }
 
+    /**
+     * @return A button for entering the Tasks menu.
+     */
     public Button tasksButton()
     {
         TWTasks listViewTasks = new TWTasks();
@@ -155,6 +164,9 @@ public class UIButton
         return tasksButton;
     }
 
+    /**
+     * @return A button for entering the Consultants menu.
+     */
     public Button bindingsButton()
     {
         KeyBindings keyBindings = new KeyBindings();
@@ -183,6 +195,9 @@ public class UIButton
         return bindingsButton;
     }
 
+    /**
+     * @return A button for adding an item to a tableview.
+     */
     public Button addButton()
     {
         addButton = new Button("add");
@@ -224,6 +239,9 @@ public class UIButton
         return addButton;
     }
 
+    /**
+     * @return A button for editing an item to a tableview.
+     */
     public Button editButton()
     {
         editButton = new Button("edit");
@@ -245,25 +263,25 @@ public class UIButton
             switch (MainWindow.sender.getText())
             {
                 case "Consultants":
-                    if (TWConsultants.selected != null) // We can't edit something we haven't selected!
+                    if (TWConsultants.selected != null)
                     {
                         dialogConsultants.getDialog();
                     }
                     break;
                 case "Offices":
-                    if (TWOffices.selected != null) // We can't edit something we haven't selected!
+                    if (TWOffices.selected != null)
                     {
                         dialogOffices.getDialog();
                     }
                     break;
                 case "Projects":
-                    if (TWProjects.selected != null) // We can't edit something we haven't selected!
+                    if (TWProjects.selected != null)
                     {
                         dialogProjects.getDialog();
                     }
                     break;
                 case "Tasks":
-                    if (TWTasks.selected != null) // We can't edit something we haven't selected!
+                    if (TWTasks.selected != null)
                     {
                         dialogTasks.getDialog();
                     }
@@ -272,6 +290,9 @@ public class UIButton
         return editButton;
     }
 
+    /**
+     * @return A button for deleting an item to a tableview.
+     */
     public Button deleteButton()
     {
         deleteButton = new Button("delete");
@@ -302,7 +323,7 @@ public class UIButton
                 switch (MainWindow.sender.getText())
                 {
                     case "Consultants":
-                        if (TWConsultants.selected != null) // We can't edit something we haven't selected!
+                        if (TWConsultants.selected != null)
                         {
                             TWConsultants.consultants.remove(TWConsultants.selected);
                             controller.deleteConsultant(TWConsultants.selected);
@@ -310,14 +331,14 @@ public class UIButton
                         break;
 
                     case "Offices":
-                        if (TWOffices.selected != null) // We can't edit something we haven't selected!
+                        if (TWOffices.selected != null)
                         {
                             TWOffices.offices.remove(TWOffices.selected);
                             controller.deleteOffice(TWOffices.selected);
                         }
                         break;
                     case "Projects":
-                        if (TWProjects.selected != null) // We can't edit something we haven't selected!
+                        if (TWProjects.selected != null)
                         {
                             TWProjects.projects.remove(TWProjects.selected);
                             controller.deleteProject(TWProjects.selected);
@@ -336,6 +357,9 @@ public class UIButton
         return deleteButton;
     }
 
+    /**
+     * @return A button for moving an item up in a tableview.
+     */
     public Button moveUpButton()
     {
         moveUpButton = new Button("moveUp");
@@ -356,7 +380,7 @@ public class UIButton
             switch (MainWindow.sender.getText())
             {
                 case "Consultants":
-                    if (TWConsultants.selected != null) // We can't edit something we haven't selected!
+                    if (TWConsultants.selected != null)
                     {
                         controller.moveUpConsultant(TWConsultants.selected);
                     }
@@ -384,6 +408,9 @@ public class UIButton
         return moveUpButton;
     }
 
+    /**
+     * @return A button for moving an item down in a tableview.
+     */
     public Button moveDownButton()
     {
         moveDownButton = new Button("moveDown");
@@ -404,7 +431,7 @@ public class UIButton
             switch (MainWindow.sender.getText())
             {
                 case "Consultants":
-                    if (TWConsultants.selected != null) // We can't edit something we haven't selected!
+                    if (TWConsultants.selected != null)
                     {
                         controller.moveDownConsultant(TWConsultants.selected);
                     }
@@ -433,6 +460,9 @@ public class UIButton
         return moveDownButton;
     }
 
+    /**
+     * @return A button for showing a chart based on content in a tableview.
+     */
     public Button chartButton()
     {
         chartButton = new Button("chart");
@@ -444,6 +474,7 @@ public class UIButton
         imageView.setPreserveRatio(true);
         imageView.fitHeightProperty().bind(chartButton.heightProperty());
 
+        // Switch icon to a cancel icon to help the user understand that clicking it again hides the chart.
         ImageView alternativeView = new ImageView(Objects.requireNonNull(getClass().getResource("/resources/cancel.png")).toExternalForm());
         alternativeView.setPreserveRatio(true);
         alternativeView.fitHeightProperty().bind(chartButton.heightProperty());
@@ -516,6 +547,9 @@ public class UIButton
         return chartButton;
     }
 
+    /**
+     * @return A button for generating a report based on content in a tableview.
+     */
     public Button reportButton()
     {
         Report report = new Report();
@@ -534,24 +568,7 @@ public class UIButton
         reportButton.setOnAction(event -> {
             MainWindow.action = reportButton.getText();
 
-            switch (MainWindow.sender.getText())
-            {
-                case "Consultants":
-                    report.consultantsReport();
-                    break;
-
-                case "Offices":
-                    report.officesReport();
-                    break;
-
-                case "Projects":
-                    report.projectsReport();
-                    break;
-
-                case "Tasks":
-                    report.tasksReport();
-                    break;
-            }
+            report.saveReport(MainWindow.sender.getText());
 
             // TODO POP UP WITH "REPORT SAVED"
             PopUp confirmationPop = new PopUp();

@@ -12,17 +12,17 @@ import java.util.Collections;
 
 public class ChartConsultants
 {
-
     public static BarChart<String, Number> barChart;
 
     public ChartConsultants()
     {
-
     }
 
+    /**
+     * Returns a BarChart showing how consultants a divided in the offices.
+     */
     public BarChart<String, Number> getBarChart()
     {
-        // Defining the x-axis
         CategoryAxis xAxis = new CategoryAxis();
 
         xAxis.setCategories(FXCollections.observableArrayList(Collections.singletonList("Offices")));
@@ -56,7 +56,6 @@ public class ChartConsultants
                     value++;
                 }
             }
-
             series.getData().add(new XYChart.Data<>("Offices", value));
 
             barChart.getData().add(series);

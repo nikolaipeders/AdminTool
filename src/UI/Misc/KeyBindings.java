@@ -9,9 +9,11 @@ public class KeyBindings
 {
     public KeyBindings()
     {
-
     }
 
+    /**
+     * Simply just returns a VBox with the different keybindings viable in this application.
+     */
     public VBox getView()
     {
         VBox subRoot = new VBox(20);
@@ -53,5 +55,4 @@ public class KeyBindings
 
         return subRoot;
     }
-
 }

@@ -7,8 +7,6 @@ import Foundation.Modified.TextFieldAutoCompletion;
 import Foundation.Modified.TextFieldValidation;
 import UI.Misc.PopUp;
 import UI.Navigation.UIButton;
-import UI.TableViews.TWConsultants;
-import UI.TableViews.TWOffices;
 import UI.TableViews.TWProjects;
 import UI.TableViews.TWTasks;
 import javafx.geometry.Insets;
@@ -29,11 +27,16 @@ import java.util.Objects;
 
 public class DialogTasks
 {
+    // We'll use the DBController several times.
+    DBController dbController = new DBController();
+
     public DialogTasks(Button sender)
     {
-
     }
 
+    /*
+    Opens a new dialog with TextFields and Buttons.
+     */
     public void getDialog()
     {
         // Max characters for a time input. We'll use this several times.
@@ -47,28 +50,28 @@ public class DialogTasks
         // Disables the option to use main window when dialog is active
         dialog.initModality(Modality.APPLICATION_MODAL);
 
+        // Parent settings
         HBox subRoot = new HBox(10);
         subRoot.setPadding(new Insets(40, 0, 40, 0));
         subRoot.setStyle("-fx-border-radius: 7px; -fx-background-radius: 7px; -fx-border-color: black; -fx-background-color: #FFFFFF");
         subRoot.setAlignment(Pos.CENTER);
 
+        // Scene settings
         Scene dialogScene = new Scene(subRoot, MainWindow.root.getWidth() - 250, 60);
         dialogScene.getStylesheets().add("dialogStyle.css");
 
-        // TextFields
+        // TextFields. All of these are of "TextFieldValidation" type. This enables the option to use regex for input validation.
         TextFieldValidation nameTextField = new TextFieldValidation();
         nameTextField.setPromptText("Task");
         nameTextField.setOnKeyTyped(event -> nameTextField.validate("text"));
 
+        // This TextField has autocompletion!
         TextFieldAutoCompletion projectTextField = new TextFieldAutoCompletion();
-        DBController dbController = new DBController();
-        projectTextField.getResults().addAll(dbController.getProjectNames());
+        projectTextField.getResults().addAll(dbController.getProjectNames()); // Autocompletion searches for results in all Projects.
         projectTextField.setPromptText("Project");
         projectTextField.setOnKeyReleased(event ->
         {
-            projectTextField.validate("text");
-
-            projectTextField.isWrongInput = true;
+            projectTextField.isWrongInput = true; // By default, this TextField is of the wrong input. Only if a match is found it turns to right input.
 
             for (int i = 0; i < TWProjects.projects.size(); i++)
             {
@@ -96,7 +99,7 @@ public class DialogTasks
 
         subRoot.getChildren().addAll(nameTextField, projectTextField, mailTextField, timeTextField, statusCheckBox);
 
-        // If the user has selected an item and pressed EDIT
+        // If the user has selected an item and pressed EDIT, fill the TextFields with data of this item.
         if (TWTasks.selected != null && MainWindow.action.equalsIgnoreCase("edit"))
         {
             nameTextField.setText(TWTasks.selected.getName());
@@ -119,16 +122,14 @@ public class DialogTasks
 
         subRoot.getChildren().add(saveButton);
 
+        // When user presses the save button, only accept the click if all inputs are of the right format!
         saveButton.setOnAction(event -> {
             if (!nameTextField.isWrongInput &&
                     !mailTextField.isWrongInput &&
                     !timeTextField.isWrongInput)
             {
-                // SAVE STUFF WITH DB METHOD IF NOT EXIST CREATE ELSE UPDATE
-                if (MainWindow.action.equalsIgnoreCase(UIButton.addButton.getText()))
-                {
-                    TWTasks.selected = new Task();
-                }
+
+                // Then set attributes
                 TWTasks.selected.setName(nameTextField.getText());
                 TWTasks.selected.setConsultantMail(mailTextField.getText());
 
@@ -153,7 +154,7 @@ public class DialogTasks
 
                 dbController.updateOrInsertTask(TWTasks.selected);
 
-                // If it's a new item
+                // If it's a new item -> add to ObservableList
                 if (MainWindow.action.equalsIgnoreCase(UIButton.addButton.getText()))
                 {
                     TWTasks.tasks.add(TWTasks.selected);
@@ -184,8 +185,11 @@ public class DialogTasks
             dialog.close();
         });
 
-        // We want to be able to close the dialog with the ESCAPE key
-        dialogScene.setOnKeyPressed(e -> {
+        /*  We want to be able to close the dialog with the ESCAPE key
+            AND accept input with ENTER key
+         */
+        dialogScene.setOnKeyPressed(e ->
+        {
             if (e.getCode() == KeyCode.ESCAPE)
             {
                 exitButton.fire();

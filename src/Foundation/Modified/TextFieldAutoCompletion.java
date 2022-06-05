@@ -25,6 +25,9 @@ public class TextFieldAutoCompletion extends TextFieldValidation
         search();
     }
 
+    /**
+     * Search content in TextField by adding a listener.
+     */
     private void search()
     {
         // Add a listener to the TextField
@@ -55,6 +58,9 @@ public class TextFieldAutoCompletion extends TextFieldValidation
         focusedProperty().addListener(((observable, oldValue, newValue) -> resultMenu.hide()));
     }
 
+    /**
+     * Fill context menu with results from the search method.
+     */
     private void fillMenu(List<String> searchResult)
     {
         // List of items we want to show
@@ -91,6 +97,9 @@ public class TextFieldAutoCompletion extends TextFieldValidation
         resultMenu.getItems().addAll(menuItems);
     }
 
+    /**
+     * Get possible results
+     */
     public SortedSet<String> getResults()
     {
         return results;

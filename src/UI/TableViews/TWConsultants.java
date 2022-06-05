@@ -26,6 +26,9 @@ public class TWConsultants
     {
     }
 
+    /*
+    Returns a BorderPane with a tableview at the center and a custom menubar at the bottom.
+     */
     public BorderPane getView()
     {
         subRoot = new BorderPane();
@@ -39,6 +42,9 @@ public class TWConsultants
         return subRoot;
     }
 
+    /**
+     * @return TableView for the Consultant domain.
+     */
     public TableView<Consultant> tableViewConsultant()
     {
         consultantTableView = new TableView<>();
@@ -64,8 +70,10 @@ public class TWConsultants
 
         TableColumn<Consultant, Boolean> columnStatus = new TableColumn<>("Status");
         columnStatus.setCellValueFactory(new PropertyValueFactory<>("active"));
+
         // Show "active/inactive instead of true/false
-        columnStatus.setCellFactory(tc -> new TableCell<Consultant, Boolean>() {
+        columnStatus.setCellFactory(tc -> new TableCell<Consultant, Boolean>()
+        {
             @Override
             protected void updateItem(Boolean item, boolean empty) {
                 super.updateItem(item, empty);
@@ -81,7 +89,6 @@ public class TWConsultants
         {
             if (consultantTableView.getSelectionModel().getSelectedItem() != null)
             {
-                System.out.println(consultantTableView.getSelectionModel().getSelectedIndex());
                 selected = consultantTableView.getSelectionModel().getSelectedItem();
             }
             if (event.getButton().equals(MouseButton.PRIMARY))
@@ -111,13 +118,16 @@ public class TWConsultants
             {
                 UIButton.deleteButton.fire();
             }
-            if (e.isControlDown() && (e.getCode() == KeyCode.F)) {
+            if (e.isControlDown() && (e.getCode() == KeyCode.F))
+            {
                 ActionBar.searchField.requestFocus();
             }
-            if (e.isControlDown() && (e.getCode() == KeyCode.UP)) {
+            if (e.isControlDown() && (e.getCode() == KeyCode.UP))
+            {
                 UIButton.moveUpButton.fire();
             }
-            if (e.isControlDown() && (e.getCode() == KeyCode.DOWN)) {
+            if (e.isControlDown() && (e.getCode() == KeyCode.DOWN))
+            {
                 UIButton.moveDownButton.fire();
             }
         });

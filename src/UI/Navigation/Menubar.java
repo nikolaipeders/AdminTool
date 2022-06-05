@@ -12,10 +12,12 @@ public class Menubar
     {
     }
 
+    /**
+     * @return Custom MenuBar based on a VBox. This is the vertical blue menu in the left side of the application.
+     */
     public VBox GetMenubarRoot()
     {
         VBox menubarRoot = new VBox(20);
-
         menubarRoot.setPadding(new Insets(10, 0, 10, 0));
         menubarRoot.setAlignment(Pos.BASELINE_LEFT);
         menubarRoot.setStyle("-fx-background-color: #EEF5FD; -fx-border-radius: 7px;");

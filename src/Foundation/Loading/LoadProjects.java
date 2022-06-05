@@ -5,8 +5,11 @@ import UI.TableViews.TWProjects;
 
 public class LoadProjects extends Thread
 {
-    public void run() {
-
+    /**
+     * Runnable thread for loading all data from the Projects' table in DB to an observable list found belonging to TWProjects.
+     */
+    public void run()
+    {
         DBController dbController = new DBController();
         TWProjects.projects = dbController.getAllProjects();
         System.out.println("projects started");

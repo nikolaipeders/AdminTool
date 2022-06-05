@@ -1,8 +1,6 @@
 package UI.Forms;
 
 import Application.MainWindow;
-import Domain.Consultant;
-import Domain.Office;
 import Foundation.DAO.DBController;
 import Foundation.Modified.TextFieldAutoCompletion;
 import Foundation.Modified.TextFieldValidation;
@@ -28,10 +26,15 @@ import java.util.Objects;
 
 public class DialogConsultants
 {
+    // We'll use the DBController several times.
+    DBController dbController = new DBController();
     public DialogConsultants(Button sender)
     {
     }
 
+    /*
+    Opens a new dialog with TextFields and Buttons.
+     */
     public void getDialog()
     {
         // Max characters for a time input. We'll use this several times.
@@ -40,20 +43,22 @@ public class DialogConsultants
         final Stage dialog = new Stage();
         dialog.setResizable(false);
         dialog.initStyle(StageStyle.UNDECORATED);
-        dialog.setTitle("Add " + MainWindow.sender);
+        dialog.setTitle("" + MainWindow.sender);
 
         // Disables the option to use main window when dialog is active
         dialog.initModality(Modality.APPLICATION_MODAL);
 
+        // Parent settings
         HBox subRoot = new HBox(10);
         subRoot.setPadding(new Insets(40, 0, 40, 0));
         subRoot.setStyle("-fx-border-radius: 7px; -fx-background-radius: 7px; -fx-border-color: black; -fx-background-color: #FFFFFF");
         subRoot.setAlignment(Pos.CENTER);
 
+        // Scene settings
         Scene dialogScene = new Scene(subRoot, MainWindow.root.getWidth() - 250, 60);
         dialogScene.getStylesheets().add("dialogStyle.css");
 
-        // TextFields
+        // TextFields. All of these are of "TextFieldValidation" type. This enables the option to use regex for input validation.
         TextFieldValidation nameTextField = new TextFieldValidation();
         nameTextField.setPromptText("Name");
         nameTextField.setOnKeyTyped(event -> nameTextField.validate("text"));
@@ -62,15 +67,13 @@ public class DialogConsultants
         mailTextField.setPromptText("Mail");
         mailTextField.setOnKeyReleased(event -> mailTextField.validate("mail"));
 
+        // This TextField has autocompletion!
         TextFieldAutoCompletion officeTextField = new TextFieldAutoCompletion();
-        DBController dbController = new DBController();
-        officeTextField.getResults().addAll(dbController.getOfficeNames());
+        officeTextField.getResults().addAll(dbController.getOfficeNames()); // Autocompletion searches for results in all offices.
         officeTextField.setPromptText("Office");
         officeTextField.setOnKeyReleased(event ->
         {
-            officeTextField.validate("text");
-
-            officeTextField.isWrongInput = true;
+            officeTextField.isWrongInput = true; // By default, this TextField is of the wrong input. Only if a match is found it turns to right input.
 
             for (int i = 0; i < TWOffices.offices.size(); i++)
             {
@@ -109,11 +112,12 @@ public class DialogConsultants
             if(lBreakTimeTextField.getText().length() > maxCharacters) event.consume();
         });
 
+        // CheckBox to select the status of a consultant.
         CheckBox statusCheckBox = new CheckBox("Active");
 
         subRoot.getChildren().addAll(nameTextField, mailTextField, officeTextField, workTimeTextField, breakTimeTextField, lBreakTimeTextField, statusCheckBox);
 
-        // If the user has selected an item and pressed EDIT
+        // If the user has selected an item and pressed EDIT, fill the TextFields with data of this item.
         if (TWConsultants.selected != null && MainWindow.action.equalsIgnoreCase(UIButton.editButton.getText()))
         {
             nameTextField.setText(TWConsultants.selected.getName());
@@ -138,7 +142,9 @@ public class DialogConsultants
 
         subRoot.getChildren().add(saveButton);
 
-        saveButton.setOnAction(event -> {
+        // When user presses the save button, only accept the click if all inputs are of the right format!
+        saveButton.setOnAction(event ->
+        {
             if (!nameTextField.isWrongInput &&
                     !mailTextField.isWrongInput &&
                     !officeTextField.isWrongInput &&
@@ -146,13 +152,8 @@ public class DialogConsultants
                     !breakTimeTextField.isWrongInput &&
                     !lBreakTimeTextField.isWrongInput)
             {
-                // SAVE STUFF WITH DB METHOD IF NOT EXIST CREATE ELSE UPDATE
-                if (MainWindow.action.equalsIgnoreCase(UIButton.addButton.getText()))
-                {
-                    TWConsultants.selected = new Consultant();
-                }
 
-                // Start by removing the consultant from the office
+                // Start by removing the consultant from the office.
                 for (int i = 0; i < TWOffices.offices.size(); i++)
                 {
                     if (TWOffices.offices.get(i).getName().equalsIgnoreCase(TWConsultants.selected.getOffice()))
@@ -195,13 +196,13 @@ public class DialogConsultants
                 // Update consultant
                 dbController.updateOrInsertConsultant(TWConsultants.selected);
 
-                // Run through all offices and update attached consultants
+                // Run through all offices and update attached consultants.
                 for (int i = 0; i < TWOffices.offices.size(); i++)
                 {
                     dbController.updateOrInsertOffice(TWOffices.offices.get(i));
                 }
 
-                // Also update in our Observable List to save a DB querey
+                // Also update in our Observable List to save a DB query.
                 for (int i = 0; i < TWOffices.offices.size(); i++)
                 {
                     if (TWOffices.offices.get(i).getName().equalsIgnoreCase(TWConsultants.selected.getOffice()))
@@ -210,8 +211,7 @@ public class DialogConsultants
                     }
                 }
 
-
-                // If it's a new item -> add to Observable List
+                // If it's a new item -> add to ObservableList
                 if (MainWindow.action.equalsIgnoreCase(UIButton.addButton.getText()))
                 {
                     TWConsultants.consultants.add(TWConsultants.selected);
@@ -237,13 +237,18 @@ public class DialogConsultants
 
         exitButton.setGraphic(imageView);
         subRoot.getChildren().add(exitButton);
-        exitButton.setOnAction(event -> {
+
+        exitButton.setOnAction(event ->
+        {
             TWConsultants.selected = TWConsultants.consultantTableView.getSelectionModel().getSelectedItem();
             dialog.close();
         });
 
-        // We want to be able to close the dialog with the ESCAPE key
-        dialogScene.setOnKeyPressed(e -> {
+        /*  We want to be able to close the dialog with the ESCAPE key
+            AND accept input with ENTER key
+         */
+        dialogScene.setOnKeyPressed(e ->
+        {
             if (e.getCode() == KeyCode.ESCAPE)
             {
                 exitButton.fire();
@@ -253,6 +258,7 @@ public class DialogConsultants
                 saveButton.fire();
             }
         });
+
         // Initialize Window
         dialog.setScene(dialogScene);
         dialog.show();
