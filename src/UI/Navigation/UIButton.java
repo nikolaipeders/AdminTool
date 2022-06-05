@@ -26,6 +26,10 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import java.util.Objects;
 
+/**
+ * Created by Nikolai P on 05-06-2022.
+ */
+
 public class UIButton
 {
     public static Button consultantsButton, officesButton, projectsButton, tasksButton, reportButton,

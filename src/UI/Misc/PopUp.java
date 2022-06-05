@@ -6,9 +6,12 @@ import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * Created by Nikolai P on 03-05-2022.
+ */
+
 public class PopUp
 {
-
     public PopUp()
     {
     }

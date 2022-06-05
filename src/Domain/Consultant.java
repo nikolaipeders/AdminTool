@@ -2,6 +2,10 @@ package Domain;
 
 import java.sql.Time;
 
+/**
+ * Created by Nikolai P on 05-06-2022.
+ */
+
 public class Consultant
 {
     int orderNo;

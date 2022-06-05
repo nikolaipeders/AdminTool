@@ -1,7 +1,6 @@
 package UI.Forms;
 
 import Application.MainWindow;
-import Domain.Project;
 import Foundation.DAO.DBController;
 import Foundation.Modified.TextFieldValidation;
 import UI.Misc.PopUp;
@@ -20,6 +19,9 @@ import javafx.stage.StageStyle;
 
 import java.util.Objects;
 
+/**
+ * Created by Nikolai P on 05-06-2022.
+ */
 
 public class DialogProjects
 {

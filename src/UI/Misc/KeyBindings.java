@@ -5,6 +5,10 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
+/**
+ * Created by Nikolai P on 03-05-2022.
+ */
+
 public class KeyBindings
 {
     public KeyBindings()

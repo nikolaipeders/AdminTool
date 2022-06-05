@@ -1,5 +1,9 @@
 package Domain;
 
+/**
+ * Created by Nikolai P on 05-06-2022.
+ */
+
 public class Office
 {
     String name;

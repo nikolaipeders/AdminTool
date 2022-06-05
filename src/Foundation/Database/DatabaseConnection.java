@@ -7,6 +7,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+/**
+ * Created by Nikolai P on 05-06-2022.
+ */
+
 public class DatabaseConnection
 {
     private static Connection con = null;

@@ -23,6 +23,9 @@ import javafx.stage.StageStyle;
 import java.sql.Time;
 import java.util.Objects;
 
+/**
+ * Created by Nikolai P on 05-06-2022.
+ */
 
 public class DialogConsultants
 {

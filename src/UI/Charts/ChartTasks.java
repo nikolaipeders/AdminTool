@@ -10,9 +10,12 @@ import javafx.scene.chart.XYChart;
 
 import java.util.Collections;
 
+/**
+ * Created by Nikolai P on 05-06-2022.
+ */
+
 public class ChartTasks
 {
-
     public static BarChart<String, Number> barChart;
 
     public ChartTasks()

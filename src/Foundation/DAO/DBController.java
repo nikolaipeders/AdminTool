@@ -24,6 +24,10 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.LinkedList;
 
+/**
+ * Created by Nikolai P on 05-06-2022.
+ */
+
 public class DBController implements ConsultantDAO, OfficeDAO, ProjectDAO, TaskDAO
 {
     static Connection con = DatabaseConnection.connect();

@@ -12,6 +12,10 @@ import javafx.stage.Stage;
 
 import java.util.Objects;
 
+/**
+ * Created by Nikolai P on 05-06-2022.
+ */
+
 public class MainWindow extends Application {
 
     // Is public and static to enable changing the center from other classes.

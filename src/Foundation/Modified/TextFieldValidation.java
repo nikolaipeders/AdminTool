@@ -1,11 +1,13 @@
 package Foundation.Modified;
 
-import UI.TableViews.TWOffices;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+/**
+ * Created by Nikolai P on 05-06-2022.
+ */
 
 public class TextFieldValidation extends TextField
 {

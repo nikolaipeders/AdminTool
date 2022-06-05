@@ -16,6 +16,10 @@ import javafx.scene.shape.Arc;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
+/**
+ * Created by Nikolai P on 05-06-2022.
+ */
+
 public class Splash
 {
     public boolean isDone = false;

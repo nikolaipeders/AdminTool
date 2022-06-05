@@ -18,6 +18,10 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 
+/**
+ * Created by Nikolai P on 05-06-2022.
+ */
+
 public class ActionBar
 {
     public static TextFieldAutoCompletion searchField;

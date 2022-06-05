@@ -4,6 +4,10 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;
 
+/**
+ * Created by Nikolai P on 05-06-2022.
+ */
+
 public class Menubar
 {
     UIButton uiButton = new UIButton();

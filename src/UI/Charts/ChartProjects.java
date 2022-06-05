@@ -1,6 +1,5 @@
 package UI.Charts;
 
-import UI.TableViews.TWConsultants;
 import UI.TableViews.TWProjects;
 import UI.TableViews.TWTasks;
 import javafx.collections.FXCollections;
@@ -10,6 +9,10 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 
 import java.util.Collections;
+
+/**
+ * Created by Nikolai P on 05-06-2022.
+ */
 
 public class ChartProjects
 {

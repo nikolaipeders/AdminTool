@@ -2,8 +2,11 @@ package Foundation.Interfaces;
 
 import Domain.Office;
 import javafx.collections.ObservableList;
-
 import java.util.LinkedList;
+
+/**
+ * Created by Nikolai P on 05-06-2022.
+ */
 
 public interface OfficeDAO
 {

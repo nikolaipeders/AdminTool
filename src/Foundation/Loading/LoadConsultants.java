@@ -3,6 +3,10 @@ package Foundation.Loading;
 import Foundation.DAO.DBController;
 import UI.TableViews.TWConsultants;
 
+/**
+ * Created by Nikolai P on 05-06-2022.
+ */
+
 public class LoadConsultants extends Thread
 {
     /**

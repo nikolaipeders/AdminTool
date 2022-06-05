@@ -6,6 +6,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.PieChart;
 
+/**
+ * Created by Nikolai P on 05-06-2022.
+ */
+
 public class ChartOffices
 {
     public static PieChart pieChart;

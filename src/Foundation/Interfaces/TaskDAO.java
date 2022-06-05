@@ -3,6 +3,10 @@ package Foundation.Interfaces;
 import Domain.Task;
 import javafx.collections.ObservableList;
 
+/**
+ * Created by Nikolai P on 05-06-2022.
+ */
+
 public interface TaskDAO
 {
     public ObservableList<Task> getAllTasks();

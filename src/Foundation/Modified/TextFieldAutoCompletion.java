@@ -1,6 +1,5 @@
 package Foundation.Modified;
 
-import UI.TableViews.TWOffices;
 import javafx.geometry.Side;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.CustomMenuItem;
@@ -11,6 +10,10 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
+
+/**
+ * Created by Nikolai P on 05-06-2022.
+ */
 
 public class TextFieldAutoCompletion extends TextFieldValidation
 {
