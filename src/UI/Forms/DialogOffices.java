@@ -65,17 +65,17 @@ public class DialogOffices
 
         TextFieldValidation locationTextField = new TextFieldValidation();
         locationTextField.setPromptText("Location");
-        locationTextField.setOnKeyReleased(event -> locationTextField.validate("numbers"));
+        locationTextField.textProperty().addListener((observable, oldValue, newValue) -> locationTextField.validate("numbers"));
 
         TextFieldAutoCompletion capacityTextField = new TextFieldAutoCompletion();
         capacityTextField.setPromptText("Capacity");
-        capacityTextField.setOnKeyReleased(event -> capacityTextField.validate("numbers"));
+        capacityTextField.textProperty().addListener((observable, oldValue, newValue) -> capacityTextField.validate("numbers"));
 
         // This TextField can't be edited as it's the amount of consultants connected, which is calculated with SQL.
         TextFieldValidation consultantsTextField = new TextFieldValidation();
         consultantsTextField.setEditable(false);
         consultantsTextField.setStyle("-fx-background-color: #EDEDED"); // Help the user understand that this is uneditable.
-        consultantsTextField.setOnKeyReleased(event -> consultantsTextField.validate("numbers"));
+        consultantsTextField.textProperty().addListener((observable, oldValue, newValue) -> consultantsTextField.validate("numbers"));
 
         subRoot.getChildren().addAll(nameTextField, locationTextField, capacityTextField, consultantsTextField);
 

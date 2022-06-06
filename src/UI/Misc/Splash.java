@@ -95,19 +95,15 @@ public class Splash
         // Create an arc
         Arc arc = new Arc();
 
-        // Set center
         arc.setCenterX(100.0f);
         arc.setCenterY(100.0f);
 
-        // Set radius
         arc.setRadiusX(20.0f);
         arc.setRadiusY(20.0f);
 
-        // Set start angle and length
         arc.setStartAngle(0.0f);
         arc.setLength(270.0f);
 
-        // Set colors
         arc.setFill(null);
         arc.setStroke(Color.LIGHTPINK);
         arc.setStrokeWidth(2);
@@ -115,28 +111,21 @@ public class Splash
         // Instantiating RotateTransition class
         RotateTransition rotate = new RotateTransition();
 
-        // Setting Axis of rotation
         rotate.setAxis(Rotate.Z_AXIS);
 
-        // Setting the angle of rotation
         rotate.setByAngle(360);
 
-        // Setting cycle count of the rotation
         rotate.setCycleCount(500);
 
         // Don't stop between cycles
         rotate.setInterpolator(Interpolator.LINEAR);
 
-        // Setting duration of the transition
         rotate.setDuration(Duration.millis(1000));
 
-        // Don't auto reverse on cycle end
         rotate.setAutoReverse(false);
 
-        // Select node to be rotating
         rotate.setNode(arc);
 
-        // Play the transition
         rotate.play();
 
         loadScreen.getChildren().addAll(title, arc, status);

@@ -2,7 +2,9 @@ package UI.Navigation;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 /**
  * Created by Nikolai P on 05-06-2022.

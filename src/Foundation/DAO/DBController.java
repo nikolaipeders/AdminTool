@@ -135,7 +135,7 @@ public class DBController implements ConsultantDAO, OfficeDAO, ProjectDAO, TaskD
     {
         if (TWConsultants.consultantTableView.getSelectionModel().getSelectedItem() != null)
         {
-            if (TWConsultants.consultantTableView.getSelectionModel().getSelectedIndex() != TWConsultants.consultantTableView.getItems().size())
+            if (TWConsultants.consultantTableView.getSelectionModel().getSelectedIndex() != TWConsultants.consultantTableView.getItems().size()-1)
             {
                 // The index of the item we want to move up
                 int index = TWConsultants.consultantTableView.getSelectionModel().getSelectedIndex();
@@ -286,7 +286,7 @@ public class DBController implements ConsultantDAO, OfficeDAO, ProjectDAO, TaskD
 
         if (TWOffices.tableViewOffices.getSelectionModel().getSelectedItem() != null)
         {
-            if (TWOffices.tableViewOffices.getSelectionModel().getSelectedIndex() != TWOffices.tableViewOffices.getItems().size())
+            if (TWOffices.tableViewOffices.getSelectionModel().getSelectedIndex() != TWOffices.tableViewOffices.getItems().size()-1)
             {
                 // The index of the item we want to move up
                 int index = TWOffices.tableViewOffices.getSelectionModel().getSelectedIndex();
@@ -430,7 +430,7 @@ public class DBController implements ConsultantDAO, OfficeDAO, ProjectDAO, TaskD
     {
         if (TWProjects.projectTableView.getSelectionModel().getSelectedItem() != null)
         {
-            if (TWProjects.projectTableView.getSelectionModel().getSelectedIndex() != 0)
+            if (TWProjects.projectTableView.getSelectionModel().getSelectedIndex() != TWProjects.projectTableView.getItems().size()-1)
             {
                 // The index of the item we want to move up
                 int index = TWProjects.projectTableView.getSelectionModel().getSelectedIndex();
@@ -516,7 +516,7 @@ public class DBController implements ConsultantDAO, OfficeDAO, ProjectDAO, TaskD
         PreparedStatement cs = null;
         try
         {
-            cs = con.prepareCall("{call Delete_Task (?)}");
+            cs = con.prepareCall("{call Delete_Tasks (?)}");
             cs.setInt(1, task.getId());
             cs.execute();
         } catch (SQLException e) {
@@ -560,7 +560,7 @@ public class DBController implements ConsultantDAO, OfficeDAO, ProjectDAO, TaskD
     {
         if (TWTasks.taskTableView.getSelectionModel().getSelectedItem() != null)
         {
-            if (TWTasks.taskTableView.getSelectionModel().getSelectedIndex() != 0)
+            if (TWTasks.taskTableView.getSelectionModel().getSelectedIndex() != TWTasks.taskTableView.getItems().size()-1)
             {
                 // The index of the item we want to move up
                 int index = TWTasks.taskTableView.getSelectionModel().getSelectedIndex();

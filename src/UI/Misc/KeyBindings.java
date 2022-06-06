@@ -21,7 +21,7 @@ public class KeyBindings
     public VBox getView()
     {
         VBox subRoot = new VBox(20);
-        subRoot.setPadding(new Insets(100));
+        subRoot.setPadding(new Insets(20));
         subRoot.setAlignment(Pos.TOP_CENTER);
         subRoot.setStyle("-fx-background-color: #FFFFFF");
 

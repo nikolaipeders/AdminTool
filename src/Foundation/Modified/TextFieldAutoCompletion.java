@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class TextFieldAutoCompletion extends TextFieldValidation
 {
     private SortedSet<String> results;
-    private ContextMenu resultMenu;
+    public ContextMenu resultMenu;
 
     public TextFieldAutoCompletion()
     {

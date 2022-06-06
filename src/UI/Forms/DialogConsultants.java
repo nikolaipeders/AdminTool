@@ -64,17 +64,18 @@ public class DialogConsultants
         // TextFields. All of these are of "TextFieldValidation" type. This enables the option to use regex for input validation.
         TextFieldValidation nameTextField = new TextFieldValidation();
         nameTextField.setPromptText("Name");
-        nameTextField.setOnKeyTyped(event -> nameTextField.validate("text"));
+        nameTextField.textProperty().addListener((observable, oldValue, newValue) -> nameTextField.validate("text"));
 
         TextFieldValidation mailTextField = new TextFieldValidation();
         mailTextField.setPromptText("Mail");
-        mailTextField.setOnKeyReleased(event -> mailTextField.validate("mail"));
+        mailTextField.textProperty().addListener((observable, oldValue, newValue) -> mailTextField.validate("mail"));
 
         // This TextField has autocompletion!
         TextFieldAutoCompletion officeTextField = new TextFieldAutoCompletion();
         officeTextField.getResults().addAll(dbController.getOfficeNames()); // Autocompletion searches for results in all offices.
         officeTextField.setPromptText("Office");
-        officeTextField.setOnKeyReleased(event ->
+
+        officeTextField.textProperty().addListener(((observable, oldValue, newValue) ->
         {
             officeTextField.isWrongInput = true; // By default, this TextField is of the wrong input. Only if a match is found it turns to right input.
 
@@ -86,12 +87,12 @@ public class DialogConsultants
                 }
             }
             officeTextField.changeBackgroundColor(officeTextField.isWrongInput);
-        });
+        }));
 
         TextFieldValidation workTimeTextField = new TextFieldValidation();
         workTimeTextField.setPrefWidth(100);
         workTimeTextField.setPromptText("Work");
-        workTimeTextField.setOnKeyReleased(event -> workTimeTextField.validate("mm:ss"));
+        workTimeTextField.textProperty().addListener(((observable, oldValue, newValue) -> workTimeTextField.validate("mm:ss")));
         workTimeTextField.setOnKeyTyped(event ->
         {
             if(workTimeTextField.getText().length() > maxCharacters) event.consume();
@@ -100,7 +101,7 @@ public class DialogConsultants
         TextFieldValidation breakTimeTextField = new TextFieldValidation();
         breakTimeTextField.setPrefWidth(100);
         breakTimeTextField.setPromptText("Break");
-        breakTimeTextField.setOnKeyReleased(event -> breakTimeTextField.validate("mm:ss"));
+        breakTimeTextField.textProperty().addListener(((observable, oldValue, newValue) -> breakTimeTextField.validate("mm:ss")));
         breakTimeTextField.setOnKeyTyped(event ->
         {
             if(breakTimeTextField.getText().length() > maxCharacters) event.consume();
@@ -109,7 +110,7 @@ public class DialogConsultants
         TextFieldValidation lBreakTimeTextField = new TextFieldValidation();
         lBreakTimeTextField.setPrefWidth(100);
         lBreakTimeTextField.setPromptText("Long Break");
-        lBreakTimeTextField.setOnKeyReleased(event -> lBreakTimeTextField.validate("mm:ss"));
+        lBreakTimeTextField.textProperty().addListener(((observable, oldValue, newValue) -> lBreakTimeTextField.validate("mm:ss")));
         lBreakTimeTextField.setOnKeyTyped(event ->
         {
             if(lBreakTimeTextField.getText().length() > maxCharacters) event.consume();

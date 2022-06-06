@@ -65,13 +65,14 @@ public class DialogTasks
         // TextFields. All of these are of "TextFieldValidation" type. This enables the option to use regex for input validation.
         TextFieldValidation nameTextField = new TextFieldValidation();
         nameTextField.setPromptText("Task");
-        nameTextField.setOnKeyTyped(event -> nameTextField.validate("text"));
+        nameTextField.textProperty().addListener((observable, oldValue, newValue) -> nameTextField.validate("text"));
 
         // This TextField has autocompletion!
         TextFieldAutoCompletion projectTextField = new TextFieldAutoCompletion();
         projectTextField.getResults().addAll(dbController.getProjectNames()); // Autocompletion searches for results in all Projects.
         projectTextField.setPromptText("Project");
-        projectTextField.setOnKeyReleased(event ->
+
+        projectTextField.textProperty().addListener((observable, oldValue, newValue) ->
         {
             projectTextField.isWrongInput = true; // By default, this TextField is of the wrong input. Only if a match is found it turns to right input.
 
@@ -87,11 +88,11 @@ public class DialogTasks
 
         TextFieldValidation mailTextField = new TextFieldValidation();
         mailTextField.setPromptText("Cons. Mail");
-        mailTextField.setOnKeyReleased(event -> mailTextField.validate("mail"));
+        mailTextField.textProperty().addListener((observable, oldValue, newValue) -> mailTextField.validate("mail"));
 
         TextFieldValidation timeTextField = new TextFieldValidation();
         timeTextField.setPromptText("Time Spent");
-        timeTextField.setOnKeyReleased(event -> timeTextField.validate("hh:mm:ss"));
+        timeTextField.textProperty().addListener((observable, oldValue, newValue) -> timeTextField.validate("hh:mm:ss"));
         timeTextField.setOnKeyTyped(event ->
         {
             if(timeTextField.getText().length() > maxCharacters) event.consume();

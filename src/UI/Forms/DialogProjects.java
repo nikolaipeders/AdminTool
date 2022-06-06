@@ -58,7 +58,7 @@ public class DialogProjects
         // TextFields. All of these are of "TextFieldValidation" type. This enables the option to use regex for input validation.
         TextFieldValidation nameTextField = new TextFieldValidation();
         nameTextField.setPromptText("Project Name");
-        nameTextField.setOnKeyTyped(event -> nameTextField.validate("text"));
+        nameTextField.textProperty().addListener((observable, oldValue, newValue) -> nameTextField.validate("text"));
 
         subRoot.getChildren().add(nameTextField);
 

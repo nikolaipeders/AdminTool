@@ -24,6 +24,7 @@ import UI.TableViews.TWTasks;
 import javafx.geometry.Side;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+
 import java.util.Objects;
 
 /**
@@ -327,33 +328,44 @@ public class UIButton
                 switch (MainWindow.sender.getText())
                 {
                     case "Consultants":
-                        if (TWConsultants.selected != null)
+                        boolean isDeletable = true;
+
+                        TWConsultants.selected = TWConsultants.consultantTableView.getSelectionModel().getSelectedItem();
+
+                        // Check if any Tasks are bound to this Consultant
+                        for (int i = 0; i < TWTasks.tasks.size(); i++)
                         {
-                            TWConsultants.consultants.remove(TWConsultants.selected);
+                            if (TWTasks.tasks.get(i).getConsultantMail().equalsIgnoreCase(TWConsultants.selected.getMail()))
+                            {
+                                isDeletable = false;
+                                PopUp popUp = new PopUp();
+                                popUp.popText("Can't delete consultant with tasks!", MainWindow.stage, 50, 300);
+                                break;
+                            }
+                        }
+                        if (isDeletable)
+                        {
                             controller.deleteConsultant(TWConsultants.selected);
+                            TWConsultants.consultants.remove(TWConsultants.selected);
                         }
                         break;
 
                     case "Offices":
-                        if (TWOffices.selected != null)
-                        {
-                            TWOffices.offices.remove(TWOffices.selected);
-                            controller.deleteOffice(TWOffices.selected);
-                        }
+                        TWOffices.selected = TWOffices.tableViewOffices.getSelectionModel().getSelectedItem();
+                        controller.deleteOffice(TWOffices.selected);
+                        TWOffices.offices.remove(TWOffices.selected);
                         break;
+
                     case "Projects":
-                        if (TWProjects.selected != null)
-                        {
-                            TWProjects.projects.remove(TWProjects.selected);
-                            controller.deleteProject(TWProjects.selected);
-                        }
+                        TWProjects.selected = TWProjects.projectTableView.getSelectionModel().getSelectedItem();
+                        controller.deleteProject(TWProjects.selected);
+                        TWProjects.projects.remove(TWProjects.selected);
                         break;
+
                     case "Tasks":
-                        if (TWTasks.selected != null) // We can't edit something we haven't selected!
-                        {
-                            TWTasks.tasks.remove(TWTasks.selected);
-                            controller.deleteTask(TWTasks.selected);
-                        }
+                        TWTasks.selected = TWTasks.taskTableView.getSelectionModel().getSelectedItem();
+                        controller.deleteTask(TWTasks.selected);
+                        TWTasks.tasks.remove(TWTasks.selected);
                         break;
                 }
             });
