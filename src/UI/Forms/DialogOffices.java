@@ -1,7 +1,6 @@
 package UI.Forms;
 
 import Application.MainWindow;
-import Domain.Office;
 import Foundation.DAO.DBController;
 import Foundation.Modified.TextFieldAutoCompletion;
 import Foundation.Modified.TextFieldValidation;
@@ -121,7 +120,7 @@ public class DialogOffices
                 {
                     TWOffices.offices.add(TWOffices.selected);
                 }
-                TWOffices.tableViewOffices.refresh();
+                TWOffices.officesTableview.refresh();
                 dialog.close();
             }
             else // Show an error message
@@ -144,7 +143,7 @@ public class DialogOffices
         subRoot.getChildren().add(exitButton);
         exitButton.setOnAction(event ->
         {
-            TWOffices.selected = TWOffices.tableViewOffices.getSelectionModel().getSelectedItem();
+            TWOffices.selected = TWOffices.officesTableview.getSelectionModel().getSelectedItem();
             dialog.close();
         });
 

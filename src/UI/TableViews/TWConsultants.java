@@ -1,9 +1,10 @@
 package UI.TableViews;
 
 import Domain.Consultant;
-import Foundation.DAO.DBController;
+import UI.Misc.FontSlider;
 import UI.Navigation.ActionBar;
 import UI.Navigation.UIButton;
+import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.TableCell;
@@ -20,7 +21,7 @@ import javafx.scene.layout.BorderPane;
 
 public class TWConsultants
 {
-    public static TableView<Consultant> consultantTableView;
+    public static TableView<Consultant> consultantsTableview;
     public static ObservableList<Consultant> consultants;
     public static Consultant selected;
     public static BorderPane subRoot;
@@ -50,8 +51,8 @@ public class TWConsultants
      */
     public TableView<Consultant> tableViewConsultant()
     {
-        consultantTableView = new TableView<>();
-        consultantTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        consultantsTableview = new TableView<>();
+        consultantsTableview.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         TableColumn<Consultant, String> columnName = new TableColumn<>("Name");
         columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -85,14 +86,16 @@ public class TWConsultants
             }
         });
 
-        consultantTableView.getColumns().addAll(columnName, columnMail, columnOffice, columnWorkTime, columnBreakTime, columnLBreakTime, columnStatus);
+        consultantsTableview.getColumns().addAll(columnName, columnMail, columnOffice, columnWorkTime, columnBreakTime, columnLBreakTime, columnStatus);
+
+        TWConsultants.consultantsTableview.styleProperty().bind(Bindings.concat("-fx-font-size: ", FontSlider.sliderFont.valueProperty().asString()));
 
         // Enable selecting an item
-        consultantTableView.setOnMouseClicked(event ->
+        consultantsTableview.setOnMouseClicked(event ->
         {
-            if (consultantTableView.getSelectionModel().getSelectedItem() != null)
+            if (consultantsTableview.getSelectionModel().getSelectedItem() != null)
             {
-                selected = consultantTableView.getSelectionModel().getSelectedItem();
+                selected = consultantsTableview.getSelectionModel().getSelectedItem();
             }
             if (event.getButton().equals(MouseButton.PRIMARY))
             {
@@ -104,12 +107,12 @@ public class TWConsultants
         });
 
         // Enable KEY bindings
-        consultantTableView.setOnKeyPressed(e ->
+        consultantsTableview.setOnKeyPressed(e ->
         {
             // Enable opening an item with ENTER key
             if (e.getCode() == KeyCode.ENTER)
             {
-                selected = consultantTableView.getSelectionModel().getSelectedItem();
+                selected = consultantsTableview.getSelectionModel().getSelectedItem();
                 UIButton.editButton.fire();
             }
             // Enable adding an item with PLUS key
@@ -133,7 +136,11 @@ public class TWConsultants
             {
                 UIButton.moveDownButton.fire();
             }
+            if (e.getCode() == KeyCode.ESCAPE)
+            {
+                TWConsultants.consultantsTableview.getSelectionModel().clearSelection();
+            }
         });
-        return consultantTableView;
+        return consultantsTableview;
     }
 }

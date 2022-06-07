@@ -220,7 +220,7 @@ public class DialogConsultants
                 {
                     TWConsultants.consultants.add(TWConsultants.selected);
                 }
-                TWConsultants.consultantTableView.refresh();
+                TWConsultants.consultantsTableview.refresh();
                 dialog.close();
             }
             else // Show an error message
@@ -244,7 +244,7 @@ public class DialogConsultants
 
         exitButton.setOnAction(event ->
         {
-            TWConsultants.selected = TWConsultants.consultantTableView.getSelectionModel().getSelectedItem();
+            TWConsultants.selected = TWConsultants.consultantsTableview.getSelectionModel().getSelectedItem();
             dialog.close();
         });
 

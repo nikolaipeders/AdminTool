@@ -1,8 +1,10 @@
 package UI.TableViews;
 
 import Domain.Office;
+import UI.Misc.FontSlider;
 import UI.Navigation.ActionBar;
 import UI.Navigation.UIButton;
+import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.TableColumn;
@@ -18,7 +20,7 @@ import javafx.scene.layout.BorderPane;
 
 public class TWOffices
 {
-    public static TableView<Office> tableViewOffices;
+    public static TableView<Office> officesTableview;
     public static ObservableList<Office> offices;
     public static Office selected;
     public static BorderPane subRoot;
@@ -48,8 +50,8 @@ public class TWOffices
      */
     public TableView<Office> tableViewOffices()
     {
-        tableViewOffices = new TableView<>();
-        tableViewOffices.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        officesTableview = new TableView<>();
+        officesTableview.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         TableColumn<Office, String> column1 = new TableColumn<>("Name");
         column1.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -63,15 +65,17 @@ public class TWOffices
         TableColumn<Office, String> column4 = new TableColumn<>("Consultants Connected");
         column4.setCellValueFactory(new PropertyValueFactory<>("consultantsConnected"));
 
-        tableViewOffices.getColumns().addAll(column1, column2, column3, column4);
+        officesTableview.getColumns().addAll(column1, column2, column3, column4);
+
+        TWOffices.officesTableview.styleProperty().bind(Bindings.concat("-fx-font-size: ", FontSlider.sliderFont.valueProperty().asString()));
 
         // Enable selecting an item
-        tableViewOffices.setOnMouseClicked(event ->
+        officesTableview.setOnMouseClicked(event ->
         {
-            if (tableViewOffices.getSelectionModel().getSelectedItem() != null)
+            if (officesTableview.getSelectionModel().getSelectedItem() != null)
             {
-                System.out.println(tableViewOffices.getSelectionModel().getSelectedIndex());
-                selected = tableViewOffices.getSelectionModel().getSelectedItem();
+                System.out.println(officesTableview.getSelectionModel().getSelectedIndex());
+                selected = officesTableview.getSelectionModel().getSelectedItem();
             }
             if (event.getButton().equals(MouseButton.PRIMARY))
             {
@@ -83,12 +87,12 @@ public class TWOffices
         });
 
         // Enable KEY bindings
-        tableViewOffices.setOnKeyPressed(e ->
+        officesTableview.setOnKeyPressed(e ->
         {
             // Enable opening an item with ENTER key
             if (e.getCode() == KeyCode.ENTER)
             {
-                selected = tableViewOffices.getSelectionModel().getSelectedItem();
+                selected = officesTableview.getSelectionModel().getSelectedItem();
                 UIButton.editButton.fire();
             }
             // Enable adding an item with PLUS key
@@ -112,7 +116,11 @@ public class TWOffices
             {
                 UIButton.moveDownButton.fire();
             }
+            if (e.getCode() == KeyCode.ESCAPE)
+            {
+                TWOffices.officesTableview.getSelectionModel().clearSelection();
+            }
         });
-        return tableViewOffices;
+        return officesTableview;
     }
 }

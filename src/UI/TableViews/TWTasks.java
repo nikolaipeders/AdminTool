@@ -1,8 +1,10 @@
 package UI.TableViews;
 
 import Domain.Task;
+import UI.Misc.FontSlider;
 import UI.Navigation.ActionBar;
 import UI.Navigation.UIButton;
+import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.TableCell;
@@ -75,6 +77,8 @@ public class TWTasks
 
         taskTableView.getColumns().addAll(taskColumn, mailColumn, timeColumn, statusColumn);
 
+        TWTasks.taskTableView.styleProperty().bind(Bindings.concat("-fx-font-size: ", FontSlider.sliderFont.valueProperty().asString()));
+
         // Enable selecting an item
         taskTableView.setOnMouseClicked(event ->
         {
@@ -120,6 +124,10 @@ public class TWTasks
             if (e.isControlDown() && (e.getCode() == KeyCode.DOWN))
             {
                 UIButton.moveDownButton.fire();
+            }
+            if (e.getCode() == KeyCode.ESCAPE)
+            {
+                TWTasks.taskTableView.getSelectionModel().clearSelection();
             }
         });
         return taskTableView;

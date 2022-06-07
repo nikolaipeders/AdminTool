@@ -48,7 +48,7 @@ public class MainWindow extends Application {
 
         // CSS
         root.getStylesheets().add("tableviewStyle.css");
-        root.setStyle("-fx-background-color: #FFFFFF");
+        root.setStyle("-fx-background-color: #FFFFFF;");
 
         Scene scene = new Scene(root, minWidth, minHeight);
 
@@ -74,10 +74,6 @@ public class MainWindow extends Application {
                             UIButton.tasksButton.fire();
                         }
                         if (e.getCode() == KeyCode.DIGIT5)
-                        {
-                            UIButton.reportButton.fire();
-                        }
-                        if (e.getCode() == KeyCode.DIGIT6)
                         {
                             UIButton.bindingsButton.fire();
                         }

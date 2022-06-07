@@ -10,12 +10,12 @@ import java.util.LinkedList;
 
 public interface OfficeDAO
 {
-    public ObservableList<Office> getAllOffices();
-    public LinkedList<String> getOfficeNames();
-    public void updateOrInsertOffice(Office office);
-    public void deleteOffice(Office office);
-    public void moveUpOffice(Office office);
-    public void moveDownOffice(Office office);
+    ObservableList<Office> getAllOffices();
+    LinkedList<String> getOfficeNames();
+    void updateOrInsertOffice(Office office);
+    void deleteOffice(Office office);
+    void moveUpOffice(Office office);
+    void moveDownOffice(Office office);
 
 
 }

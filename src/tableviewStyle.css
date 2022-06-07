@@ -1,77 +1,81 @@
 .table-view {
     -fx-background-color: #FFFFFF;
-    -fx-text-alignment: center;
 }
-
 .table-view .column-header .label{
     -fx-alignment:CENTER_LEFT;
-    -fx-padding: 2 0 2 0px;
+    -fx-padding: 5px 5px 5px 5px;
 }
-
 .table-view .column-header-background .filler {
     -fx-background-color: transparent;
     -fx-padding: 1em;
 }
-
 .table-view .column-header-background{
-    -fx-background-color: linear-gradient(to bottom, #FEF8FA, #FFFFFF);
-    -fx-background-radius: 7px 7px 0px 0px;
-    -fx-background-insets: 0 0 0 0;
-    -fx-border-color: #949494;
-    -fx-border-radius: 7px;
-    -fx-padding: 0 0 0 0;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent transparent #f94c57 transparent;
+    -fx-border-radius: 0px;
 }
-
 .table-view .column-header {
-    -fx-text-alignment: center;
     -fx-background-color: transparent;
 }
-
 .table-view .table-cell{
     -fx-border-color: transparent;
     -fx-padding: 5px 5px 5px 5px;
-}
 
+}
 .table-row-cell:odd{
     -fx-background-color: transparent;
     -fx-border-color: lightgrey transparent lightgrey transparent;
-    -fx-border-width: 0.5;
+    -fx-border-width: 0.25;
 }
 .table-row-cell:even{
     -fx-background-color: transparent;
     -fx-border-color: lightgrey transparent lightgrey transparent;
-    -fx-border-width: 0.5;
+    -fx-border-width: 0.25;
 }
 .table-row-cell:selected {
     -fx-background-color: #f94c57;
     -fx-background-insets: 4 0 4 0;
-    -fx-background-radius: 10;
+    -fx-background-radius: 7px;
 }
 
-.table-view .scroll-bar * {
-    -fx-min-width: 0;
-    -fx-pref-width: 0;
-    -fx-max-width: 0;
-
-    -fx-min-height: 0;
-    -fx-pref-height: 0;
-    -fx-max-height: 0;
+.table-view .scroll-bar {
+    -fx-padding: 20 0 20 0;
+    -fx-background-color:transparent;
 }
 
+.table-view .scroll-bar:horizontal {
+    -fx-background-color:transparent;
+}
+
+.table-view .scroll-bar .thumb {
+    -fx-background-color:derive(#f94c57, 50%);
+}
+
+.table-view .scroll-bar .thumb:hover {
+    -fx-background-color:derive(#f94c57, 70%);
+}
+
+.table-view .scroll-bar .increment-button {
+    -fx-background-color:transparent;
+    -fx-padding: 0 0 0 0;
+}
+.table-view .scroll-bar .decrement-button {
+    -fx-background-color:transparent;
+    -fx-padding: 0 0 0 0;
+}
+.table-view .track  {
+    -fx-background-color:transparent;
+}
 .table-row-cell:selected .text {
     -fx-fill: black;
-    -fx-font-weight: bold;
 }
-
 .button {
     -fx-alignment: center-left;
     -fx-background-color: null;
 }
-
 .button:hover {
     -fx-font-weight: bold;
 }
-
 .text-field {
     -fx-background-color: #FFFFFF;
     -fx-border-color: transparent transparent black transparent;
@@ -81,29 +85,42 @@
     -fx-background-color: #FFFFFF;
     -fx-focus-color: #f94c57;
 }
-
 .context-menu {
     -fx-background-radius: 7px;
 }
-
 .menu-item .label {
     -fx-background-radius: 7px;
 }
-
 .menu-item:focused {
     -fx-background-radius: 7px;
     -fx-background-color: #f94c57;
 }
-
 .menu-item:visited {
     -fx-background-radius: 7px;
     -fx-background-color: #f94c57;
 }
-
 .menu-item:hover {
     -fx-background-radius: 7px;
     -fx-background-color: #f94c57;
 }
+
+.slider .track {
+    -fx-background-color:
+            -fx-shadow-highlight-color,
+            derive(-fx-control-inner-background, -9%),
+            derive(-fx-control-inner-background, 0%),
+            derive(-fx-control-inner-background, -5%),
+            derive(-fx-control-inner-background, -12%);
+    -fx-background-insets: 0 0 -1 0, 0, 1;
+    -fx-background-radius: 0.25em, 0.25em, 0.166667em; /* 3 3 2 */
+    -fx-padding: 0.25em; /* 3 */
+}
+
+.slider .thumb {
+    -fx-padding: 7 7 7 7;
+}
+
+
 
 
 

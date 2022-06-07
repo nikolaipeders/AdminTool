@@ -10,10 +10,14 @@ import UI.TableViews.TWConsultants;
 import UI.TableViews.TWOffices;
 import UI.TableViews.TWProjects;
 import UI.TableViews.TWTasks;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Slider;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -140,9 +144,9 @@ public class ActionBar
 
         SortedList<Consultant> sortedList = new SortedList<>(filteredList);
 
-        sortedList.comparatorProperty().bind(TWConsultants.consultantTableView.comparatorProperty());
+        sortedList.comparatorProperty().bind(TWConsultants.consultantsTableview.comparatorProperty());
 
-        TWConsultants.consultantTableView.setItems(sortedList);
+        TWConsultants.consultantsTableview.setItems(sortedList);
 
         return searchField;
     }
@@ -175,9 +179,9 @@ public class ActionBar
 
         SortedList<Office> sortedList = new SortedList<>(filteredList);
 
-        sortedList.comparatorProperty().bind(TWOffices.tableViewOffices.comparatorProperty());
+        sortedList.comparatorProperty().bind(TWOffices.officesTableview.comparatorProperty());
 
-        TWOffices.tableViewOffices.setItems(sortedList);
+        TWOffices.officesTableview.setItems(sortedList);
 
         return searchField;
     }

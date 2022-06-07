@@ -13,7 +13,6 @@ import UI.TableViews.TWConsultants;
 import UI.TableViews.TWOffices;
 import UI.TableViews.TWProjects;
 import UI.TableViews.TWTasks;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -102,17 +101,17 @@ public class DBController implements ConsultantDAO, OfficeDAO, ProjectDAO, TaskD
     @Override
     public void moveUpConsultant(Consultant consultant)
     {
-        if (TWConsultants.consultantTableView.getSelectionModel().getSelectedItem() != null)
+        if (TWConsultants.consultantsTableview.getSelectionModel().getSelectedItem() != null)
         {
-            if (TWConsultants.consultantTableView.getSelectionModel().getSelectedIndex() != 0)
+            if (TWConsultants.consultantsTableview.getSelectionModel().getSelectedIndex() != 0)
             {
                 // The index of the item we want to move up
-                int index = TWConsultants.consultantTableView.getSelectionModel().getSelectedIndex();
+                int index = TWConsultants.consultantsTableview.getSelectionModel().getSelectedIndex();
 
                 // Swap with the index above
                 Collections.swap(TWConsultants.consultants, index, index -1);
 
-                index = TWConsultants.consultantTableView.getSelectionModel().getSelectedIndex();
+                index = TWConsultants.consultantsTableview.getSelectionModel().getSelectedIndex();
 
                 PreparedStatement cs = null;
 
@@ -133,18 +132,18 @@ public class DBController implements ConsultantDAO, OfficeDAO, ProjectDAO, TaskD
     @Override
     public void moveDownConsultant(Consultant consultant)
     {
-        if (TWConsultants.consultantTableView.getSelectionModel().getSelectedItem() != null)
+        if (TWConsultants.consultantsTableview.getSelectionModel().getSelectedItem() != null)
         {
-            if (TWConsultants.consultantTableView.getSelectionModel().getSelectedIndex() != TWConsultants.consultantTableView.getItems().size()-1)
+            if (TWConsultants.consultantsTableview.getSelectionModel().getSelectedIndex() != TWConsultants.consultantsTableview.getItems().size()-1)
             {
                 // The index of the item we want to move up
-                int index = TWConsultants.consultantTableView.getSelectionModel().getSelectedIndex();
+                int index = TWConsultants.consultantsTableview.getSelectionModel().getSelectedIndex();
                 System.out.println(index);
 
                 // Swap with the index above
                 Collections.swap(TWConsultants.consultants, index, index +1);
 
-                index = TWConsultants.consultantTableView.getSelectionModel().getSelectedIndex();
+                index = TWConsultants.consultantsTableview.getSelectionModel().getSelectedIndex();
                 System.out.println(index);
 
                 PreparedStatement cs = null;
@@ -250,18 +249,18 @@ public class DBController implements ConsultantDAO, OfficeDAO, ProjectDAO, TaskD
     @Override
     public void moveUpOffice(Office office)
     {
-        if (TWOffices.tableViewOffices.getSelectionModel().getSelectedItem() != null)
+        if (TWOffices.officesTableview.getSelectionModel().getSelectedItem() != null)
         {
-            if (TWOffices.tableViewOffices.getSelectionModel().getSelectedIndex() != 0)
+            if (TWOffices.officesTableview.getSelectionModel().getSelectedIndex() != 0)
             {
                 // The index of the item we want to move up
-                int index = TWOffices.tableViewOffices.getSelectionModel().getSelectedIndex();
+                int index = TWOffices.officesTableview.getSelectionModel().getSelectedIndex();
                 System.out.println(index);
 
                 // Swap with the index above
                 Collections.swap(TWOffices.offices, index, index -1);
 
-                index = TWOffices.tableViewOffices.getSelectionModel().getSelectedIndex();
+                index = TWOffices.officesTableview.getSelectionModel().getSelectedIndex();
                 System.out.println(index);
 
                 PreparedStatement cs = null;
@@ -284,17 +283,17 @@ public class DBController implements ConsultantDAO, OfficeDAO, ProjectDAO, TaskD
     public void moveDownOffice(Office office)
     {
 
-        if (TWOffices.tableViewOffices.getSelectionModel().getSelectedItem() != null)
+        if (TWOffices.officesTableview.getSelectionModel().getSelectedItem() != null)
         {
-            if (TWOffices.tableViewOffices.getSelectionModel().getSelectedIndex() != TWOffices.tableViewOffices.getItems().size()-1)
+            if (TWOffices.officesTableview.getSelectionModel().getSelectedIndex() != TWOffices.officesTableview.getItems().size()-1)
             {
                 // The index of the item we want to move up
-                int index = TWOffices.tableViewOffices.getSelectionModel().getSelectedIndex();
+                int index = TWOffices.officesTableview.getSelectionModel().getSelectedIndex();
 
                 // Swap with the index above
                 Collections.swap(TWOffices.offices, index, index +1);
 
-                index = TWOffices.tableViewOffices.getSelectionModel().getSelectedIndex();
+                index = TWOffices.officesTableview.getSelectionModel().getSelectedIndex();
 
                 PreparedStatement cs = null;
 

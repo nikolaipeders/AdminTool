@@ -70,10 +70,10 @@ public class UIButton
             MainWindow.root.setCenter(listViewConsultant.getView());
             MainWindow.sender.setStyle(null);
             MainWindow.sender = consultantsButton;
-            TWConsultants.consultantTableView.requestFocus();
+            TWConsultants.consultantsTableview.requestFocus();
 
             // Keep visual track of selected menu button
-            MainWindow.sender.setStyle("-fx-background-color: #FFFFFF; -fx-background-insets: -10 0 -10 0");
+            MainWindow.sender.setStyle("-fx-background-color: #FFFFFF; -fx-background-insets: -5 7 -5 7; -fx-background-radius: 7px");
         });
 
         return consultantsButton;
@@ -100,10 +100,10 @@ public class UIButton
             MainWindow.root.setCenter(listViewOffices.getView());
             MainWindow.sender.setStyle(null);
             MainWindow.sender = officesButton;
-            TWOffices.tableViewOffices.requestFocus();
+            TWOffices.officesTableview.requestFocus();
 
             // Keep visual track of selected menu button
-            MainWindow.sender.setStyle("-fx-background-color: #FFFFFF; -fx-background-insets: -10 0 -10 0;");
+            MainWindow.sender.setStyle("-fx-background-color: #FFFFFF; -fx-background-insets: -5 7 -5 7; -fx-background-radius: 7px");
         });
 
         return officesButton;
@@ -133,7 +133,7 @@ public class UIButton
             TWProjects.projectTableView.requestFocus();
 
             // Keep visual track of selected menu button
-            MainWindow.sender.setStyle("-fx-background-color: #FFFFFF; -fx-background-insets: -10 0 -10 0");
+            MainWindow.sender.setStyle("-fx-background-color: #FFFFFF; -fx-background-insets: -5 7 -5 7; -fx-background-radius: 7px");
         });
 
         return projectsButton;
@@ -163,7 +163,7 @@ public class UIButton
             TWTasks.taskTableView.requestFocus();
 
             // Keep visual track of selected menu button
-            MainWindow.sender.setStyle("-fx-background-color: #FFFFFF; -fx-background-insets: -10 0 -10 0");
+            MainWindow.sender.setStyle("-fx-background-color: #FFFFFF; -fx-background-insets: -5 7 -5 7; -fx-background-radius: 7px");
         });
 
         return tasksButton;
@@ -193,7 +193,7 @@ public class UIButton
             MainWindow.sender = bindingsButton;
 
             // Keep visual track of selected menu button
-            MainWindow.sender.setStyle("-fx-background-color: #FFFFFF; -fx-background-insets: -10 0 -10 0");
+            MainWindow.sender.setStyle("-fx-background-color: #FFFFFF; -fx-background-insets: -5 7 -5 7; -fx-background-radius: 7px");
 
         });
 
@@ -316,7 +316,9 @@ public class UIButton
         {
             ContextMenu confirmMenu = new ContextMenu();
             MenuItem confirm = new MenuItem("Confirm");
+            confirm.setStyle("-fx-font-weight: normal; -fx-text-fill: black;");
             MenuItem cancel = new MenuItem("Cancel");
+            cancel.setStyle("-fx-font-weight: normal; -fx-text-fill: black;");
             SeparatorMenuItem separator = new SeparatorMenuItem();
             confirmMenu.getItems().addAll(cancel, separator, confirm);
 
@@ -329,43 +331,54 @@ public class UIButton
                 {
                     case "Consultants":
                         boolean isDeletable = true;
+                        TWConsultants.selected = TWConsultants.consultantsTableview.getSelectionModel().getSelectedItem();
 
-                        TWConsultants.selected = TWConsultants.consultantTableView.getSelectionModel().getSelectedItem();
-
-                        // Check if any Tasks are bound to this Consultant
-                        for (int i = 0; i < TWTasks.tasks.size(); i++)
+                        if (TWConsultants.selected != null)
                         {
-                            if (TWTasks.tasks.get(i).getConsultantMail().equalsIgnoreCase(TWConsultants.selected.getMail()))
+                            // Check if any Tasks are bound to this Consultant
+                            for (int i = 0; i < TWTasks.tasks.size(); i++)
                             {
-                                isDeletable = false;
-                                PopUp popUp = new PopUp();
-                                popUp.popText("Can't delete consultant with tasks!", MainWindow.stage, 50, 300);
-                                break;
+                                if (TWTasks.tasks.get(i).getConsultantMail().equalsIgnoreCase(TWConsultants.selected.getMail()))
+                                {
+                                    isDeletable = false;
+                                    PopUp popUp = new PopUp();
+                                    popUp.popText("Can't delete consultant with tasks!", MainWindow.stage, 50, 300);
+                                    break;
+                                }
                             }
-                        }
-                        if (isDeletable)
-                        {
-                            controller.deleteConsultant(TWConsultants.selected);
-                            TWConsultants.consultants.remove(TWConsultants.selected);
+                            if (isDeletable && TWConsultants.selected != null)
+                            {
+                                controller.deleteConsultant(TWConsultants.selected);
+                                TWConsultants.consultants.remove(TWConsultants.selected);
+                            }
                         }
                         break;
 
                     case "Offices":
-                        TWOffices.selected = TWOffices.tableViewOffices.getSelectionModel().getSelectedItem();
-                        controller.deleteOffice(TWOffices.selected);
-                        TWOffices.offices.remove(TWOffices.selected);
+                        TWOffices.selected = TWOffices.officesTableview.getSelectionModel().getSelectedItem();
+                        if (TWOffices.selected != null)
+                        {
+                            controller.deleteOffice(TWOffices.selected);
+                            TWOffices.offices.remove(TWOffices.selected);
+                        }
                         break;
 
                     case "Projects":
                         TWProjects.selected = TWProjects.projectTableView.getSelectionModel().getSelectedItem();
-                        controller.deleteProject(TWProjects.selected);
-                        TWProjects.projects.remove(TWProjects.selected);
+                        if (TWProjects.selected != null)
+                        {
+                            controller.deleteProject(TWProjects.selected);
+                            TWProjects.projects.remove(TWProjects.selected);
+                        }
                         break;
 
                     case "Tasks":
                         TWTasks.selected = TWTasks.taskTableView.getSelectionModel().getSelectedItem();
-                        controller.deleteTask(TWTasks.selected);
-                        TWTasks.tasks.remove(TWTasks.selected);
+                        if (TWTasks.selected != null)
+                        {
+                            controller.deleteTask(TWTasks.selected);
+                            TWTasks.tasks.remove(TWTasks.selected);
+                        }
                         break;
                 }
             });
@@ -515,7 +528,7 @@ public class UIButton
                     ChartConsultants chartConsultants = new ChartConsultants();
                     if (TWConsultants.subRoot.getCenter() == ChartConsultants.barChart)
                     {
-                        TWConsultants.subRoot.setCenter(TWConsultants.consultantTableView);
+                        TWConsultants.subRoot.setCenter(TWConsultants.consultantsTableview);
                     }
                     else
                     {
@@ -527,7 +540,7 @@ public class UIButton
                     ChartOffices chartOffices = new ChartOffices();
                     if (TWOffices.subRoot.getCenter() == ChartOffices.pieChart)
                     {
-                        TWOffices.subRoot.setCenter(TWOffices.tableViewOffices);
+                        TWOffices.subRoot.setCenter(TWOffices.officesTableview);
                     }
                     else
                     {

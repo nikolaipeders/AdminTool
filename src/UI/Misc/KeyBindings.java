@@ -23,7 +23,7 @@ public class KeyBindings
         VBox subRoot = new VBox(20);
         subRoot.setPadding(new Insets(20));
         subRoot.setAlignment(Pos.TOP_CENTER);
-        subRoot.setStyle("-fx-background-color: #FFFFFF");
+        subRoot.setStyle("-fx-background-color: transparent");
 
         Label titleLabel = new Label("Key Bindings");
         titleLabel.setStyle("-fx-font-size: 24");
