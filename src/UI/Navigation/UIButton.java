@@ -23,7 +23,12 @@ import UI.TableViews.TWProjects;
 import UI.TableViews.TWTasks;
 import javafx.geometry.Side;
 import javafx.scene.control.*;
+import javafx.scene.effect.BlurType;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Effect;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import jdk.jfr.internal.tool.Main;
 
 import java.util.Objects;
 
@@ -69,11 +74,14 @@ public class UIButton
         consultantsButton.setOnAction(event -> {
             MainWindow.root.setCenter(listViewConsultant.getView());
             MainWindow.sender.setStyle(null);
+            MainWindow.sender.setEffect(null);
             MainWindow.sender = consultantsButton;
             TWConsultants.consultantsTableview.requestFocus();
 
             // Keep visual track of selected menu button
             MainWindow.sender.setStyle("-fx-background-color: #FFFFFF; -fx-background-insets: -5 7 -5 7; -fx-background-radius: 7px");
+
+            MainWindow.sender.setEffect(dropShadow());
         });
 
         return consultantsButton;
@@ -99,11 +107,14 @@ public class UIButton
         officesButton.setOnAction(event -> {
             MainWindow.root.setCenter(listViewOffices.getView());
             MainWindow.sender.setStyle(null);
+            MainWindow.sender.setEffect(null);
             MainWindow.sender = officesButton;
             TWOffices.officesTableview.requestFocus();
 
             // Keep visual track of selected menu button
             MainWindow.sender.setStyle("-fx-background-color: #FFFFFF; -fx-background-insets: -5 7 -5 7; -fx-background-radius: 7px");
+
+            MainWindow.sender.setEffect(dropShadow());
         });
 
         return officesButton;
@@ -129,11 +140,14 @@ public class UIButton
         projectsButton.setOnAction(event -> {
             MainWindow.root.setCenter(listViewProjects.getView());
             MainWindow.sender.setStyle(null);
+            MainWindow.sender.setEffect(null);
             MainWindow.sender = projectsButton;
             TWProjects.projectTableView.requestFocus();
 
             // Keep visual track of selected menu button
             MainWindow.sender.setStyle("-fx-background-color: #FFFFFF; -fx-background-insets: -5 7 -5 7; -fx-background-radius: 7px");
+
+            MainWindow.sender.setEffect(dropShadow());
         });
 
         return projectsButton;
@@ -159,11 +173,14 @@ public class UIButton
         tasksButton.setOnAction(event -> {
             MainWindow.root.setCenter(listViewTasks.getView());
             MainWindow.sender.setStyle(null);
+            MainWindow.sender.setEffect(null);
             MainWindow.sender = tasksButton;
             TWTasks.taskTableView.requestFocus();
 
             // Keep visual track of selected menu button
             MainWindow.sender.setStyle("-fx-background-color: #FFFFFF; -fx-background-insets: -5 7 -5 7; -fx-background-radius: 7px");
+
+            MainWindow.sender.setEffect(dropShadow());
         });
 
         return tasksButton;
@@ -190,10 +207,13 @@ public class UIButton
         bindingsButton.setOnAction(event -> {
             MainWindow.root.setCenter(keyBindings.getView());
             MainWindow.sender.setStyle(null);
+            MainWindow.sender.setEffect(null);
             MainWindow.sender = bindingsButton;
 
             // Keep visual track of selected menu button
             MainWindow.sender.setStyle("-fx-background-color: #FFFFFF; -fx-background-insets: -5 7 -5 7; -fx-background-radius: 7px");
+
+            MainWindow.sender.setEffect(dropShadow());
 
         });
 
@@ -604,5 +624,20 @@ public class UIButton
             confirmationPop.popText("Report saved!", MainWindow.stage, 50, 200);
         });
         return reportButton;
+    }
+
+    /**
+     * @return A drop shadow effect to make buttons feel less "flat".
+     */
+    public Effect dropShadow()
+    {
+        DropShadow effect = new DropShadow();
+        effect.setBlurType(BlurType.GAUSSIAN);
+        effect.setColor(Color.rgb(0,0,0, .5));
+        effect.setSpread(0);
+        effect.setOffsetX(0);
+        effect.setOffsetY(7);
+
+        return effect;
     }
 }

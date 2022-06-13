@@ -75,6 +75,7 @@
 }
 .button:hover {
     -fx-font-weight: bold;
+    -fx-cursor: hand;
 }
 .text-field {
     -fx-background-color: #FFFFFF;

@@ -1,7 +1,13 @@
 package Application;
 
+import Foundation.Loading.LoadConsultants;
+import Foundation.Loading.LoadOffices;
+import Foundation.Loading.LoadProjects;
+import Foundation.Loading.LoadTasks;
 import UI.Misc.Splash;
 import UI.Navigation.UIButton;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -51,6 +57,33 @@ public class MainWindow extends Application {
         root.setStyle("-fx-background-color: #FFFFFF;");
 
         Scene scene = new Scene(root, minWidth, minHeight);
+
+        // Refresh content per minute
+        Timeline timelineRefresher = new Timeline(new KeyFrame(javafx.util.Duration.millis(10000), (e) ->
+        {
+            if (sender != UIButton.consultantsButton)
+            {
+                LoadConsultants loadConsultants = new LoadConsultants();
+                loadConsultants.start();
+            }
+            if (sender != UIButton.officesButton)
+            {
+                LoadOffices loadOffices = new LoadOffices();
+                loadOffices.start();
+            }
+            if (sender != UIButton.projectsButton)
+            {
+                LoadProjects loadProjects = new LoadProjects();
+                loadProjects.start();
+            }
+            if (sender != UIButton.tasksButton)
+            {
+                LoadTasks loadTasks = new LoadTasks();
+                loadTasks.start();
+            }
+        }));
+        timelineRefresher.setCycleCount(Timeline.INDEFINITE);
+        timelineRefresher.play();
 
         // Enabling switching menu with numpad
         scene.setOnKeyPressed(e ->

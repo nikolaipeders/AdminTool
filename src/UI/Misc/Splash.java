@@ -32,7 +32,7 @@ public class Splash
         MainWindow.root.setCenter(loadingScreen());
 
         // Load splash screen with fade in effect
-        FadeTransition fadeIn = new FadeTransition(Duration.seconds(2),loadingScreen());
+        FadeTransition fadeIn = new FadeTransition(Duration.seconds(2), loadingScreen());
         fadeIn.setFromValue(0);
         fadeIn.setToValue(1);
         fadeIn.setCycleCount(1);
@@ -45,23 +45,30 @@ public class Splash
 
         fadeIn.play();
 
-        // After fade in, start threads
-        fadeIn.setOnFinished((e) ->
+        LoadConsultants loadConsultants = new LoadConsultants();
+        loadConsultants.start();
+
+        LoadOffices loadOffices = new LoadOffices();
+        loadOffices.start();
+
+        LoadProjects loadProjects = new LoadProjects();
+        loadProjects.start();
+
+        LoadTasks loadTasks = new LoadTasks();
+        loadTasks.start();
+
+        try
         {
-            LoadConsultants loadConsultants = new LoadConsultants();
-            loadConsultants.start();
+            loadConsultants.join();
+            loadOffices.join();
+            loadProjects.join();
+            loadTasks.join();
+        } catch (InterruptedException ex)
+        {
+            ex.printStackTrace();
+        }
 
-            LoadOffices loadOffices = new LoadOffices();
-            loadOffices.start();
-
-            LoadProjects loadProjects = new LoadProjects();
-            loadProjects.start();
-
-            LoadTasks loadTasks = new LoadTasks();
-            loadTasks.start();
-
-            fadeOut.play();
-        });
+        fadeOut.play();
 
         // After fade out, load actual content
         fadeOut.setOnFinished((e) ->

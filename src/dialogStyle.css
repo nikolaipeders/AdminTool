@@ -20,6 +20,10 @@
     -fx-border-radius: 20px;
 }
 
+.button:hover {
+    -fx-cursor: hand;
+}
+
 .check-box .box {
     -fx-background-color: #FFFFFF;
     -fx-border-color: black;
