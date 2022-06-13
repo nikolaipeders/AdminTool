@@ -152,12 +152,4 @@ public class Testing
         textFieldAutoCompletion.getResults().add("a string");
         Assert.assertNotNull(textFieldAutoCompletion.resultMenu);
     }
-
-
-
-
-
-
-
-
-} // end of class
+}

@@ -1,0 +1,14 @@
+Application
+Domain
+Foundation.DAO
+Foundation.Database
+Foundation.Interfaces
+Foundation.Loading
+Foundation.Modified
+Testing
+UI
+UI.Charts
+UI.Forms
+UI.Misc
+UI.Navigation
+UI.TableViews
