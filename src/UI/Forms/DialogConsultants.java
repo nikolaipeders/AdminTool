@@ -149,7 +149,26 @@ public class DialogConsultants
         // When user presses the save button, only accept the click if all inputs are of the right format!
         saveButton.setOnAction(event ->
         {
-            if (!nameTextField.isWrongInput &&
+            // Check if office is filled before continuing.
+            boolean isFull = false;
+            for (int i = 0; i < TWOffices.offices.size(); i++)
+            {
+                if (TWOffices.offices.get(i).getName().equalsIgnoreCase(officeTextField.getText()))
+                {
+                    if (TWOffices.offices.get(i).getConsultantsConnected() >= TWOffices.offices.get(i).getCapacity())
+                    {
+                        isFull = true;
+                    }
+                }
+            }
+
+            if (isFull)
+            {
+                PopUp errorMessage = new PopUp();
+                errorMessage.popText("This office is filled!", dialog, dialog.getHeight(), dialog.getWidth());
+            }
+
+            else if (!nameTextField.isWrongInput &&
                     !mailTextField.isWrongInput &&
                     !officeTextField.isWrongInput &&
                     !workTimeTextField.isWrongInput &&
@@ -166,7 +185,7 @@ public class DialogConsultants
                     }
                 }
 
-                // Then set attributes
+                // Then set attributes.
                 TWConsultants.selected.setName(nameTextField.getText());
                 TWConsultants.selected.setMail(mailTextField.getText());
                 TWConsultants.selected.setOffice(officeTextField.getText());

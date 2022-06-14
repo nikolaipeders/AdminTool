@@ -61,26 +61,37 @@ public class MainWindow extends Application {
         // Refresh content per minute
         Timeline timelineRefresher = new Timeline(new KeyFrame(javafx.util.Duration.millis(10000), (e) ->
         {
+            primaryStage.setTitle("Updating");
+            try {
             if (sender != UIButton.consultantsButton)
             {
                 LoadConsultants loadConsultants = new LoadConsultants();
                 loadConsultants.start();
+                loadConsultants.join();
             }
             if (sender != UIButton.officesButton)
             {
                 LoadOffices loadOffices = new LoadOffices();
                 loadOffices.start();
+                loadOffices.join();
             }
             if (sender != UIButton.projectsButton)
             {
                 LoadProjects loadProjects = new LoadProjects();
                 loadProjects.start();
+                loadProjects.join();
             }
             if (sender != UIButton.tasksButton)
             {
                 LoadTasks loadTasks = new LoadTasks();
                 loadTasks.start();
+                loadTasks.join();
             }
+            } catch (InterruptedException ex) {
+                throw new RuntimeException(ex);
+            }
+            primaryStage.setTitle("Administration");
+
         }));
         timelineRefresher.setCycleCount(Timeline.INDEFINITE);
         timelineRefresher.play();
