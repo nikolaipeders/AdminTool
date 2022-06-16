@@ -24,7 +24,6 @@ public class Testing
     public void setUp()
     {
         System.out.println("Before ...");
-        JFXPanel fxPanel = new JFXPanel();
         instance = new DatabaseConnection();
     }
 

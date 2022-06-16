@@ -19,7 +19,9 @@ import javafx.stage.Stage;
 import java.util.Objects;
 
 /**
- * Created by Nikolai P on 05-06-2022.
+ * @Author Nikolai P on 05-06-2022.
+ * @Version 1.0
+ * Final release.
  */
 
 public class MainWindow extends Application {
